@@ -1,5 +1,6 @@
-package com.jalen.jo;
+package com.jalen.jo.fragments;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
 import android.support.v7.app.ActionBar;
@@ -17,21 +18,22 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.jalen.jo.R;
+import com.jalen.jo.activities.SignupActivity;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
-public class NavigationDrawerFragment extends Fragment {
+public class NavigationDrawerFragment extends Fragment implements View.OnClickListener {
 
     /**
      * Remember the position of the selected item.
@@ -58,6 +60,9 @@ public class NavigationDrawerFragment extends Fragment {
     private LinearLayout mDrawer;
     private Spinner mSpinner;
     private View mFragmentContainerView;
+    private TextView mDrawerSignup; // 注册id
+    private TextView mDrawerSignin; // 登录id
+    private TextView mDrawerBorrowhistory;  // 借阅历史id
 
     private int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
@@ -96,6 +101,12 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawer = (LinearLayout) inflater.inflate(
                 R.layout.fragment_navigation_drawer, container, false);
         mSpinner = (Spinner) mDrawer.findViewById(R.id.spinner_library_select);
+        mDrawerSignup = (TextView) mDrawer.findViewById(R.id.tv_drawer_signup);
+        mDrawerSignin = (TextView) mDrawer.findViewById(R.id.tv_drawer_signin);
+        mDrawerBorrowhistory = (TextView) mDrawer.findViewById(R.id.tv_drawer_borrowhistory);
+        mDrawerSignin.setOnClickListener(this);
+        mDrawerSignup.setOnClickListener(this);
+        mDrawerBorrowhistory.setOnClickListener(this);
         //将可选内容与ArrayAdapter连接起来
         SpinnerAdapter adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item,m);
 
@@ -252,6 +263,21 @@ public class NavigationDrawerFragment extends Fragment {
 
     private ActionBar getActionBar() {
         return ((ActionBarActivity) getActivity()).getSupportActionBar();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.tv_drawer_signin:
+//                登录
+                break;
+            case R.id.tv_drawer_signup:
+//                注册
+                Toast.makeText(getActivity(), "点击了注册", Toast.LENGTH_SHORT).show();
+                Intent intent2Signup = new Intent(getActivity(), SignupActivity.class);
+                startActivity(intent2Signup);
+                break;
+        }
     }
 
     /**

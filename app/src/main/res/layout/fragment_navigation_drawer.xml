@@ -16,13 +16,14 @@
         android:layout_height="wrap_content">
         <!--用户已登录-->
         <LinearLayout
-            android:id="@+id/ll_drawer_logged"
+            android:id="@+id/ll_drawer_signin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
+            android:visibility="gone"
             android:padding="8dp">
-            <com.jalen.jo.widgets.CircleImageView
+            <com.jalen.jo.views.CircleImageView
                 android:id="@+id/iv_drawer_usericon"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
@@ -38,6 +39,39 @@
                 android:text="张晋瑜"/>
             </LinearLayout>
         <!--用户未登录-->
+        <LinearLayout
+            android:id="@+id/ll_drawer_unsignin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="您还未登录,请"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tv_drawer_signin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="登录"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="，"/>
+                <TextView
+                    android:id="@+id/tv_drawer_signup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_bg"
+                    android:text="注册"/>
+                </LinearLayout>
+            </LinearLayout>
         </FrameLayout>
     <!--图书馆选择-->
     <TextView
@@ -55,6 +89,7 @@
         style="@style/TextView.Title"
         android:text="我的借阅"/>
     <TextView
+        android:id="@+id/tv_drawer_borrowhistory"
         style="@style/TextView"
         android:text="借阅历史"/>
     <TextView

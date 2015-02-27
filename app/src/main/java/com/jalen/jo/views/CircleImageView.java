@@ -1,4 +1,4 @@
-package com.jalen.jo.widgets;
+package com.jalen.jo.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;

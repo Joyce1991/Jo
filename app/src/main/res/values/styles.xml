@@ -3,8 +3,17 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+        <item name="android:actionBarStyle">@style/JoActionBar</item>
+        <!-- Support library compatibility -->
+        <item name="actionBarStyle">@style/JoActionBar</item>
     </style>
-
+    <!--自定义actionbar样式-->
+    <style name="JoActionBar" parent="Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@drawable/actionbar_bg</item>
+        <!-- Support library compatibility -->
+        <item name="background">@drawable/actionbar_bg</item>
+    </style>
+    <!--textview样式-->
     <style name="TextView">
         <item name="android:layout_height">@dimen/navigation_drawer_item_height</item>
         <item name="android:layout_width">match_parent</item>
@@ -18,6 +27,31 @@
         <item name="android:background">@color/blue_light</item>
         <item name="android:textSize">@dimen/navigation_drawer_title_textsize</item>
         <item name="android:gravity">center</item>
+    </style>
+    <!--部件通用样式-->
+    <style name="JoComponentStyle">
+        <!--宽高设置-->
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/jocomponent_layout_height</item>
+        <!--margin设置-->
+        <item name="android:layout_marginTop">@dimen/jocomponent_layout_marginTop</item>
+        <item name="android:layout_marginBottom">@dimen/jocomponent_layout_marginBottom</item>
+        <!--padding设置-->
+        <item name="android:paddingLeft">@dimen/jocomponent_paddingLeft</item>
+        <item name="android:paddingRight">@dimen/jocomponent_paddingRight</item>
+    </style>
+    <!--Button通用样式-->
+    <style name="JoComponentStyle.Button" parent="JoComponentStyle">
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/jocomponent_textsize</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@drawable/btn_bg</item>
+    </style>
+    <style name="JoComponentStyle.TextView" parent="JoComponentStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/jocomponent_textsize</item>
     </style>
 
 </resources>

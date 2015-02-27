@@ -9,4 +9,15 @@
     <dimen name="navigation_drawer_item_height">48dp</dimen>
     <dimen name="navigation_drawer_title_height">40dp</dimen>
     <dimen name="navigation_drawer_title_textsize">14sp</dimen>
+
+    <!--JoComponentStyle通用-->
+    <dimen name="jocomponent_layout_height">40dp</dimen>
+    <dimen name="jocomponent_layout_marginLeft">16dp</dimen>
+    <dimen name="jocomponent_layout_marginRight">16dp</dimen>
+    <dimen name="jocomponent_layout_marginTop">8dp</dimen>
+    <dimen name="jocomponent_layout_marginBottom">8dp</dimen>
+    <dimen name="jocomponent_paddingLeft">8dp</dimen>
+    <dimen name="jocomponent_paddingRight">8dp</dimen>
+    <dimen name="jocomponent_radius">2dp</dimen>
+    <dimen name="jocomponent_textsize">16sp</dimen>
 </resources>
