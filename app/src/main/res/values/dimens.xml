@@ -20,4 +20,5 @@
     <dimen name="jocomponent_paddingRight">8dp</dimen>
     <dimen name="jocomponent_radius">2dp</dimen>
     <dimen name="jocomponent_textsize">16sp</dimen>
+    <dimen name="text_size_logo">24sp</dimen>
 </resources>

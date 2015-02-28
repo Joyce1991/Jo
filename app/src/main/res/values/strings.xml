@@ -19,5 +19,11 @@
     <string name="tv_signup_byemail">使用Email注册</string>
     <string name="tv_signup_author">快捷登录</string>
     <string name="title_activity_signin">用户登录</string>
+    <string name="et_sigin_user">输入手机号码或者用户邮箱</string>
+    <string name="et_signin_pwd">密码</string>
+    <string name="rb_sigin_pwdvisible">显示密码</string>
+    <string name="btn_sigin_sigin">登录</string>
+    <string name="tv_signin_forgotpwd">忘记密码？</string>
+    <string name="tv_sigin_signup">或者，创建账户</string>
 
 </resources>

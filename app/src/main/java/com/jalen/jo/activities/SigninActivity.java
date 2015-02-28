@@ -2,6 +2,7 @@ package com.jalen.jo.activities;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -37,11 +38,17 @@ public class SigninActivity extends BaseActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()){
+/*
+            case android.R.id.home:
+                // 点击Up键调用NavUtils.navigateUpFromSameTask(this)方法，
+                // 这个方法只能适用于父activity和子activity在同一个task中。
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+*/
+            case R.id.action_settings:
+                return true;
         }
 
         return super.onOptionsItemSelected(item);

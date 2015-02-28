@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jalen.jo.R;
+import com.jalen.jo.activities.SigninActivity;
 import com.jalen.jo.activities.SignupActivity;
 
 /**
@@ -270,12 +271,15 @@ public class NavigationDrawerFragment extends Fragment implements View.OnClickLi
         switch (v.getId()){
             case R.id.tv_drawer_signin:
 //                登录
+                Toast.makeText(getActivity(), "点击了登录", Toast.LENGTH_SHORT).show();
+                Intent signinIntent = new Intent(getActivity(), SigninActivity.class);
+                startActivity(signinIntent);
                 break;
             case R.id.tv_drawer_signup:
 //                注册
                 Toast.makeText(getActivity(), "点击了注册", Toast.LENGTH_SHORT).show();
-                Intent intent2Signup = new Intent(getActivity(), SignupActivity.class);
-                startActivity(intent2Signup);
+                Intent signupIntent = new Intent(getActivity(), SignupActivity.class);
+                startActivity(signupIntent);
                 break;
         }
     }

@@ -50,7 +50,7 @@ public class BaseActivity extends ActionBarActivity {
 
     @Override
     protected void onStop() {
-        super.onResume();
+        super.onStop();
         Log.i(this.getClass().getSimpleName(), "---------onStop ");
     }
 
