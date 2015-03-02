@@ -11,17 +11,24 @@
     <EditText
         android:id="@+id/et_signup_inputphone"
         style="@style/JoComponentStyle"
+        android:inputType="phone"
         android:hint="@string/et_signup_inputphone"/>
-    <Button
-        android:id="@+id/btn_sigup_onekeyregistration"
-        style="@style/JoComponentStyle.Button"
+    <EditText
+        android:id="@+id/et_signup_inputpwd"
+        style="@style/JoComponentStyle"
+        android:inputType="textPassword"
         android:layout_below="@id/et_signup_inputphone"
+        android:hint="@string/et_signup_inputpwd"/>
+    <Button
+        android:id="@+id/btn_signup_onekeyregistration"
+        style="@style/JoComponentStyle.Button"
+        android:layout_below="@id/et_signup_inputpwd"
         android:text="@string/btn_sigup_onekeyregistration"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btn_sigup_onekeyregistration"
+        android:layout_below="@id/btn_signup_onekeyregistration"
         android:paddingLeft="24dp"
         android:paddingRight="24dp">
         <TextView
