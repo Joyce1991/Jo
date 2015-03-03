@@ -1,7 +1,7 @@
 package com.jalen.jo.activities;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,22 +9,35 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.jalen.jo.R;
+import com.jalen.jo.fragments.NicknameFragment;
 
+/**
+ * 账户资料管理
+ */
 public class AccountEditActivity extends ActionBarActivity {
+    public static final String EXTRA_FRAGMENT_ID = "com.jalen.jo.activities.fragmentintent.fragment_id";
+
+    private Intent mIntent; // 启动Intent
+    private int mFragmentID;    // fragment_id
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_edit);
+
+        mIntent = getIntent();
+        mFragmentID = mIntent.getIntExtra(EXTRA_FRAGMENT_ID, 0);
+
+
+
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
+          /*  getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, new NicknameFragment())
+                    .commit();*/
         }
     }
 

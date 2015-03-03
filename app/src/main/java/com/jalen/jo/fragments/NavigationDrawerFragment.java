@@ -25,9 +25,11 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.avos.avoscloud.AVUser;
 import com.jalen.jo.R;
 import com.jalen.jo.activities.SigninActivity;
 import com.jalen.jo.activities.SignupActivity;
+import com.jalen.jo.views.CircleImageView;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -56,7 +58,7 @@ public class NavigationDrawerFragment extends Fragment implements View.OnClickLi
      * Helper component that ties the action bar to the navigation drawer.
      */
     private ActionBarDrawerToggle mDrawerToggle;
-
+//    V
     private DrawerLayout mDrawerLayout;
     private LinearLayout mDrawer;
     private Spinner mSpinner;
@@ -64,13 +66,19 @@ public class NavigationDrawerFragment extends Fragment implements View.OnClickLi
     private TextView mDrawerSignup; // 注册id
     private TextView mDrawerSignin; // 登录id
     private TextView mDrawerBorrowhistory;  // 借阅历史id
+    private LinearLayout llSignin;  // 已登录信息面板
+    private LinearLayout llUnsignin;    // 未登录信息面板
+    private CircleImageView civUsericon;   // 用户头像
+    private TextView tvUsername;    // 用户名
 
+//    M
     private int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
     private static final String[] m={"思创（上海）科技有限公司","用友（南昌）科技有限公司","广州工业技术研究院","微软（南昌）"};
 
     public NavigationDrawerFragment() {
+
     }
 
     @Override
@@ -99,14 +107,32 @@ public class NavigationDrawerFragment extends Fragment implements View.OnClickLi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+//        加载XML布局
         mDrawer = (LinearLayout) inflater.inflate(
                 R.layout.fragment_navigation_drawer, container, false);
+//        findviewbyid
         mSpinner = (Spinner) mDrawer.findViewById(R.id.spinner_library_select);
         mDrawerSignup = (TextView) mDrawer.findViewById(R.id.tv_drawer_signup);
         mDrawerSignin = (TextView) mDrawer.findViewById(R.id.tv_drawer_signin);
         mDrawerBorrowhistory = (TextView) mDrawer.findViewById(R.id.tv_drawer_borrowhistory);
-        mDrawerSignin.setOnClickListener(this);
-        mDrawerSignup.setOnClickListener(this);
+        tvUsername = (TextView) mDrawer.findViewById(R.id.tv_drawer_username);
+        llSignin = (LinearLayout) mDrawer.findViewById(R.id.ll_drawer_signin);
+        llUnsignin = (LinearLayout) mDrawer.findViewById(R.id.ll_drawer_unsignin);
+
+//        加载用户信息
+        if (AVUser.getCurrentUser() != null){
+//            已登录
+            llSignin.setVisibility(View.VISIBLE);
+            llUnsignin.setVisibility(View.INVISIBLE);
+            tvUsername.setText(AVUser.getCurrentUser().getUsername());
+        }else {
+            llSignin.setVisibility(View.INVISIBLE);
+            llUnsignin.setVisibility(View.VISIBLE);
+            mDrawerSignin.setOnClickListener(this);
+            mDrawerSignup.setOnClickListener(this);
+        }
+
+
         mDrawerBorrowhistory.setOnClickListener(this);
         //将可选内容与ArrayAdapter连接起来
         SpinnerAdapter adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item,m);

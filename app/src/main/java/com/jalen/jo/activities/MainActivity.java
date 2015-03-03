@@ -23,7 +23,8 @@ public class MainActivity extends BaseActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     /**
-     * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
+     * Fragment：
+     * 管理navigation drawer的 行为、 交互 和 呈现.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
 

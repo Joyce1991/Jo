@@ -10,6 +10,12 @@ import android.util.Log;
  * @see <a href="http://my.oschina.net/kymjs/blog/206178">android应用框架搭建------BaseActivity</a>
  */
 public class BaseActivity extends ActionBarActivity {
+    public String tag;
+
+    public BaseActivity(){
+        super();
+        tag = this.getClass().getSimpleName();
+    }
 
     // 是否允许全屏
     private boolean mAllowFullScreen = true;
@@ -27,7 +33,7 @@ public class BaseActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i(this.getClass().getSimpleName(), "---------onCreat ");
+        Log.i(tag, "---------onCreat ");
         /*// 竖屏锁定
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         if (mAllowFullScreen) {
@@ -39,37 +45,37 @@ public class BaseActivity extends ActionBarActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Log.i(this.getClass().getSimpleName(), "---------onStart ");
+        Log.i(tag, "---------onStart ");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i(this.getClass().getSimpleName(), "---------onResume ");
+        Log.i(tag, "---------onResume ");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.i(this.getClass().getSimpleName(), "---------onStop ");
+        Log.i(tag, "---------onStop ");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.i(this.getClass().getSimpleName(), "---------onPause ");
+        Log.i(tag, "---------onPause ");
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.i(this.getClass().getSimpleName(), "---------onRestart ");
+        Log.i(tag, "---------onRestart ");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i(this.getClass().getSimpleName(), "---------onDestroy ");
+        Log.i(tag, "---------onDestroy ");
 //        JoActivityManager.getAppManager().finishActivity(this);
 
     }
