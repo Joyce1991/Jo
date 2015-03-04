@@ -5,6 +5,12 @@
     <!-- 申请网络访问权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.camera" />
+
+    <!-- 申明所需要的设备功能 -->
+    <uses-feature
+        android:name="android.hardware.camera2."
+        android:required="true" />
 
     <application
         android:name=".JoApp"
@@ -45,6 +51,30 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jalen.jo.activities.MainActivity" />
+        </activity>
+        <activity
+            android:name=".activities.BookDetailActivity"
+            android:label="@string/title_activity_book_detail" >
+        </activity>
+        <activity
+            android:name=".scan.CaptureActivity"
+            android:label="@string/title_activity_capture" >
+        </activity>
+        <activity
+            android:name=".scan.ScanningPreferencesActivity"
+            android:label="@string/title_activity_scanning_preferences"
+            android:parentActivityName=".scan.CaptureActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jalen.jo.scan.CaptureActivity" />
+        </activity>
+        <activity
+            android:name=".scan.ScanningSettingsActivity"
+            android:label="@string/title_activity_scanning_settings"
+            android:parentActivityName=".scan.CaptureActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jalen.jo.scan.CaptureActivity" />
         </activity>
     </application>
 

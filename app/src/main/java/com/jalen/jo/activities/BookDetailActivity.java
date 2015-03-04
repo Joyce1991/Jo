@@ -1,7 +1,7 @@
 package com.jalen.jo.activities;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,34 +9,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
+import android.os.Build;
 
 import com.jalen.jo.R;
 
-/**
- * 账户资料管理
- */
-public class AccountEditActivity extends ActionBarActivity {
-    public static final String EXTRA_FRAGMENT_ID = "com.jalen.jo.activities.fragmentintent.fragment_id";
-
-    private Intent mIntent; // 启动Intent
-    private int mFragmentID;    // fragment_id
+public class BookDetailActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_account_edit);
-
-        mIntent = getIntent();
-        mFragmentID = mIntent.getIntExtra(EXTRA_FRAGMENT_ID, 0);
-
-
-
+        setContentView(R.layout.activity_book_detail);
         if (savedInstanceState == null) {
-          /*  getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new NicknameFragment())
-                    .commit();*/
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, new PlaceholderFragment())
+                    .commit();
         }
     }
 
@@ -44,7 +30,7 @@ public class AccountEditActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_account_edit, menu);
+        getMenuInflater().inflate(R.menu.menu_book_detail, menu);
         return true;
     }
 
@@ -66,12 +52,7 @@ public class AccountEditActivity extends ActionBarActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment implements View.OnClickListener {
-//        M
-        private String mNickname;
-//        V
-        private EditText etNickname;
-        private Button btnSave;
+    public static class PlaceholderFragment extends Fragment {
 
         public PlaceholderFragment() {
         }
@@ -79,22 +60,8 @@ public class AccountEditActivity extends ActionBarActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_account_edit, container, false);
-
-            etNickname = (EditText) rootView.findViewById(R.id.et_account_edit_nickname);
-            btnSave = (Button) rootView.findViewById(R.id.btn_account_edit_save);
-
-            btnSave.setOnClickListener(this);
+            View rootView = inflater.inflate(R.layout.fragment_book_detail, container, false);
             return rootView;
-        }
-
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()){
-                case R.id.btn_account_edit_save:
-
-                    break;
-            }
         }
     }
 }

@@ -16,9 +16,7 @@ import android.widget.Toast;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVUser;
-import com.avos.avoscloud.LogInCallback;
 import com.avos.avoscloud.SignUpCallback;
-import com.jalen.jo.BaseActivity;
 import com.jalen.jo.R;
 import com.jalen.jo.utils.VerifyUtil;
 

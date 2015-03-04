@@ -4,4 +4,12 @@
     <color name="blue_light">#33b5e5</color>
     <color name="blue_dark">#0099cc</color>
     <color name="gray_light">#aaaaaa</color>
+    <color name="transparente">#00000000</color>
+    <color name="gray_dark">#333333</color>
+
+    <!--zXing-->
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="result_view">#b0000000</color>
+    <color name="viewfinder_laser">#ffcc0000</color>
+    <color name="possible_result_points">#c0ffbd21</color>
 </resources>

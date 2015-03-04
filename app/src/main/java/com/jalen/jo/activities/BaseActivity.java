@@ -1,4 +1,4 @@
-package com.jalen.jo;
+package com.jalen.jo.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;

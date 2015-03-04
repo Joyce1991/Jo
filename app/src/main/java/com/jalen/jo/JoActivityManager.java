@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 
+import com.jalen.jo.activities.BaseActivity;
+
 import java.util.Stack;
 
 /**
