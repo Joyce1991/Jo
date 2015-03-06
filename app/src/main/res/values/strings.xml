@@ -56,5 +56,7 @@
     <string name="action_scan">扫一扫</string>
     <string name="title_activity_capture">CaptureActivity</string>
     <string name="title_activity_scanning_preferences">ScanningPreferencesActivity</string>
+    <string name="title_activity_scanning_settings">ScanningPreferencesActivity</string>
+    <string name="title_activity_capture_settings">CaptureSettingsActivity</string>
 
 </resources>

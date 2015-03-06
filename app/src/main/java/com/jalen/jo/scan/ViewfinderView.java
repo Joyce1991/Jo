@@ -10,7 +10,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.hardware.camera2.CameraManager;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -31,6 +30,7 @@ public final class ViewfinderView extends View {
     private static final int MAX_RESULT_POINTS = 20;
     private static final int POINT_SIZE = 6;
 
+    private CameraManager cameraManager;
     private final Paint paint;
     private Bitmap resultBitmap;
     private final int maskColor;
