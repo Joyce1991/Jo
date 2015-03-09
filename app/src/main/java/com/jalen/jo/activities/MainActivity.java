@@ -1,6 +1,7 @@
 package com.jalen.jo.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,6 +17,7 @@ import com.avos.avoscloud.AVAnalytics;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.jalen.jo.fragments.NavigationDrawerFragment;
 import com.jalen.jo.R;
+import com.jalen.jo.scan.CaptureActivity;
 
 
 public class MainActivity extends BaseActivity
@@ -99,6 +101,7 @@ public class MainActivity extends BaseActivity
 
         switch (item.getItemId()){
             case R.id.action_scan:
+/*
                 IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
                 integrator.addExtra("SCAN_WIDTH", 640);
                 integrator.addExtra("SCAN_HEIGHT", 480);
@@ -106,6 +109,9 @@ public class MainActivity extends BaseActivity
                 //customize the prompt message before scanning
                 integrator.addExtra("PROMPT_MESSAGE", "Scanner Start!");
                 integrator.initiateScan(IntentIntegrator.PRODUCT_CODE_TYPES);
+*/
+                Intent captureIntent = new Intent(this, CaptureActivity.class);
+                startActivity(captureIntent);
                 break;
             case R.id.action_settings:
 

@@ -7,7 +7,7 @@
         android:id="@+id/action_scan"
         android:title="@string/action_scan"
         android:text="@string/action_scan"
-        android:icon="@drawable/ic_scan"
+        android:icon="@drawable/ic_action_scan"
         app:showAsAction="withText|ifRoom"/>
 
     <item

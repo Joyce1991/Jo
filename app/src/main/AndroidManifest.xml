@@ -6,12 +6,13 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!--申请相机使用权限-->
-    <uses-permission android:name="android.permission.camera" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <!-- 申明所需要的设备功能 -->
     <uses-feature
-        android:name="android.hardware.camera2."
+        android:name="android.hardware.camera"
         android:required="true" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
         android:name=".JoApp"
@@ -59,24 +60,10 @@
         </activity>
         <activity
             android:name=".scan.CaptureActivity"
-            android:label="@string/title_activity_capture" >
+            android:label="@string/title_activity_capture"
+            android:theme="@style/CaptureActivityTheme">
         </activity>
-        <activity
-            android:name=".scan.ScanningPreferencesActivity"
-            android:label="@string/title_activity_scanning_preferences"
-            android:parentActivityName=".scan.CaptureActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jalen.jo.scan.CaptureActivity" />
-        </activity>
-        <activity
-            android:name=".scan.ScanningSettingsActivity"
-            android:label="@string/title_activity_scanning_settings"
-            android:parentActivityName=".scan.CaptureActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jalen.jo.scan.CaptureActivity" />
-        </activity>
+
         <activity
             android:name=".scan.CaptureSettingsActivity"
             android:label="@string/title_activity_capture_settings"

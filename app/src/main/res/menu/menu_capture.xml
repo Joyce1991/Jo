@@ -2,6 +2,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.jalen.jo.scan.CaptureActivity">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_action_settings"
+        android:title="@string/action_settings"
+        app:showAsAction="ifRoom|withText" />
+    <item
+        android:id="@+id/action_from_album"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_action_camera"
+        android:title="@string/action_from_album"
+        app:showAsAction="ifRoom|withText" />
+    <item
+        android:id="@+id/action_add_a_shortcut"
+        android:orderInCategory="100"
+        android:title="@string/action_add_a_shortcut"
+        app:showAsAction="never" />
 </menu>
