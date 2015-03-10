@@ -14,6 +14,7 @@ import com.jalen.jo.scan.CaptureSettingsActivity;
 import com.jalen.jo.scan.DecodeFormatManager;
 
 import java.util.Collection;
+import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
@@ -53,6 +54,7 @@ public class DecodeThread extends Thread {
      */
     public DecodeThread(CaptureActivity mActivity, Collection<BarcodeFormat> decodeFormats, Map<DecodeHintType, ?> baseHints, String characterSet, ResultPointCallback resultPointCallback) {
         this.mActivity = mActivity;
+        hints = new EnumMap<>(DecodeHintType.class);
         if (baseHints != null){
             hints.putAll(baseHints);
         }
