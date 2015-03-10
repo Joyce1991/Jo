@@ -17,8 +17,19 @@ import com.jalen.jo.activities.BaseActivity;
 public class CaptureSettingsActivity extends BaseActivity {
 
     public static final String KEY_AUTO_FOCUS = "preferences_auto_focus";   // 自动对焦
+    public static final String KEY_PLAY_BEEP = "preferences_play_beep";     // 蜂铃
+    public static final String KEY_VIBRATE = "preferences_vibrate";         // 震动
     public static final String KEY_DISABLE_EXPOSURE = "preferences_disable_exposure";   // 是否可以触摸
     public static final String KEY_DISABLE_AUTO_ORIENTATION = "preferences_orientation";    // 是否自动横竖屏切换
+
+    public static final String KEY_DECODE_1D_PRODUCT = "preferences_decode_1D_product";     // 1D 商品条码
+    public static final String KEY_DECODE_1D_INDUSTRIAL = "preferences_decode_1D_industrial";   // 1D 工业码
+    public static final String KEY_DECODE_QR = "preferences_decode_QR";     // QR二维码
+    public static final String KEY_DECODE_DATA_MATRIX = "preferences_decode_Data_Matrix";   //  Matrix矩阵码
+    public static final String KEY_DECODE_AZTEC = "preferences_decode_Aztec";
+    public static final String KEY_DECODE_PDF417 = "preferences_decode_PDF417";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

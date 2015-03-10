@@ -137,13 +137,15 @@ public final class CameraManager {
     }
 
     /**
-     * Asks the camera hardware to begin drawing preview frames to the screen.
+     * Asks the camera hardware to begin drawing preview frames to the screen.<br/>
+     * 要求camera硬件开始捕获图像，并设置自动聚焦
      */
     public synchronized void startPreview() {
         Camera theCamera = camera;
         if (theCamera != null && !previewing) {
             theCamera.startPreview();
             previewing = true;
+//            自动聚焦
             autoFocusManager = new AutoFocusManager(context, camera);
         }
     }
@@ -185,8 +187,9 @@ public final class CameraManager {
     /**
      * A single preview frame will be returned to the handler supplied. The data will arrive as byte[]
      * in the message.obj field, with width and height encoded as message.arg1 and message.arg2,
-     * respectively.
-     *
+     * respectively.<br/>
+     * 给camera设置一个PreviewCallback回调，并且给这个PreviewCallback设置一下Handler，最终由PreviewCallback
+     * 获取到图像数据data后来通过Handler发送消息
      * @param handler The handler to send the message to.
      * @param message The what field of the message to be sent.
      */
