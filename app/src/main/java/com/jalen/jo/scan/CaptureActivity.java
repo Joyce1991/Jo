@@ -235,11 +235,8 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
         int rotation = getWindowManager().getDefaultDisplay().getRotation();
         switch (rotation) {
             case Surface.ROTATION_0:
-                 return ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
             case Surface.ROTATION_90:
                 return ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
-            case Surface.ROTATION_180:
-                return ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT;
             default:
                 return ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE;
         }
