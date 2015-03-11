@@ -19,7 +19,7 @@ public class CameraConfigurationManager {
     private static final String TAG = "CameraConfiguration";
 
     private final Context context;
-    private Point screenResolution;
+    private Point screenResolution;     // point维护了一个坐标值（x, y）
     private Point cameraResolution;
 
     CameraConfigurationManager(Context context) {
@@ -37,13 +37,15 @@ public class CameraConfigurationManager {
         display.getSize(theScreenResolution);
         screenResolution = theScreenResolution;
         Log.i(TAG, "Screen resolution: " + screenResolution);
+
         cameraResolution = CameraConfigurationUtils.findBestPreviewSizeValue(parameters, screenResolution);
         Log.i(TAG, "Camera resolution: " + cameraResolution);
     }
 
     void setDesiredCameraParameters(Camera camera, boolean safeMode) {
         Camera.Parameters parameters = camera.getParameters();
-
+        //        修改竖屏 第4步 portrait start
+        camera.setDisplayOrientation(90);
         if (parameters == null) {
             Log.w(TAG, "Device error: no camera parameters are available. Proceeding without configuration.");
             return;
@@ -139,7 +141,7 @@ public class CameraConfigurationManager {
     private void doSetTorch(Camera.Parameters parameters, boolean newSetting, boolean safeMode) {
         CameraConfigurationUtils.setTorch(parameters, newSetting);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        if (!safeMode && !prefs.getBoolean(CaptureSettingsActivity.KEY_DISABLE_EXPOSURE, true)) {
+        if (!safeMode && !prefs.getBoolean(CapturePreferencesActivity.KEY_DISABLE_EXPOSURE, true)) {
             CameraConfigurationUtils.setBestExposure(parameters, newSetting);
         }
     }

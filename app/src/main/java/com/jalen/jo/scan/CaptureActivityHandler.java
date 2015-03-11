@@ -70,6 +70,9 @@ public class CaptureActivityHandler extends Handler {
     @Override
     public void handleMessage(Message msg) {
         switch (msg.what) {
+            case R.id.restart_preview:
+                restartPreviewAndDecode();
+                break;
             case R.id.decode_succeeded:
                 // 解码成功
                 mState = State.SUCCESS;
@@ -114,5 +117,28 @@ public class CaptureActivityHandler extends Handler {
             // 通知ViewFinderView重新绘制一遍
             activity.drawViewfinder();
         }
+    }
+
+    /**
+     * 通知不扫描了，关闭相关资源
+     * <br/>
+     * 1.通知CameraManager停止预览
+     * 2.通知DecodeThread停止解析
+     */
+    public void quitSynchronously() {
+        mState = State.DONE;
+        cameraManager.stopPreview();
+        Message quit = Message.obtain(decodeThread.getHandler(), R.id.quit);
+        quit.sendToTarget();
+        try {
+            // Wait at most half a second; should be enough time, and onPause() will timeout quickly
+            decodeThread.join(500L);
+        } catch (InterruptedException e) {
+            // continue
+        }
+
+        // Be absolutely sure we don't send any queued up messages
+        removeMessages(R.id.decode_succeeded);
+        removeMessages(R.id.decode_failed);
     }
 }

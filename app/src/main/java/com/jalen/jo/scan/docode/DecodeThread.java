@@ -10,10 +10,11 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.ResultPointCallback;
 import com.jalen.jo.scan.CaptureActivity;
-import com.jalen.jo.scan.CaptureSettingsActivity;
+import com.jalen.jo.scan.CapturePreferencesActivity;
 import com.jalen.jo.scan.DecodeFormatManager;
 
 import java.util.Collection;
+import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
@@ -40,7 +41,7 @@ public class DecodeThread extends Thread {
     /**
      * hint用来配置哪些码支持，哪些码不支持
      */
-    private Map<DecodeHintType, Object> hints;
+    private EnumMap hints;
 
     /**
      * DecodeThread构造方法
@@ -53,6 +54,7 @@ public class DecodeThread extends Thread {
      */
     public DecodeThread(CaptureActivity mActivity, Collection<BarcodeFormat> decodeFormats, Map<DecodeHintType, ?> baseHints, String characterSet, ResultPointCallback resultPointCallback) {
         this.mActivity = mActivity;
+        hints = new EnumMap<>(DecodeHintType.class);
         if (baseHints != null){
             hints.putAll(baseHints);
         }
@@ -63,26 +65,26 @@ public class DecodeThread extends Thread {
 //            创建一个空的Enum Set，里面的元素限制为类型为BarcodeFormat
             decodeFormats = EnumSet.noneOf(BarcodeFormat.class);
 //            读取设置配置，是否支持相关制式的码
-            if (prefs.getBoolean(CaptureSettingsActivity.KEY_DECODE_1D_PRODUCT, true)) {
+            if (prefs.getBoolean(CapturePreferencesActivity.KEY_DECODE_1D_PRODUCT, true)) {
                 decodeFormats.addAll(DecodeFormatManager.PRODUCT_FORMATS);
             }
-            if (prefs.getBoolean(CaptureSettingsActivity.KEY_DECODE_1D_INDUSTRIAL, true)) {
+            if (prefs.getBoolean(CapturePreferencesActivity.KEY_DECODE_1D_INDUSTRIAL, true)) {
                 decodeFormats.addAll(DecodeFormatManager.INDUSTRIAL_FORMATS);
             }
-            if (prefs.getBoolean(CaptureSettingsActivity.KEY_DECODE_QR, true)) {
+            if (prefs.getBoolean(CapturePreferencesActivity.KEY_DECODE_QR, true)) {
                 decodeFormats.addAll(DecodeFormatManager.QR_CODE_FORMATS);
             }
-            if (prefs.getBoolean(CaptureSettingsActivity.KEY_DECODE_DATA_MATRIX, true)) {
+            if (prefs.getBoolean(CapturePreferencesActivity.KEY_DECODE_DATA_MATRIX, true)) {
                 decodeFormats.addAll(DecodeFormatManager.DATA_MATRIX_FORMATS);
             }
-            if (prefs.getBoolean(CaptureSettingsActivity.KEY_DECODE_AZTEC, false)) {
+            if (prefs.getBoolean(CapturePreferencesActivity.KEY_DECODE_AZTEC, false)) {
                 decodeFormats.addAll(DecodeFormatManager.AZTEC_FORMATS);
             }
-            if (prefs.getBoolean(CaptureSettingsActivity.KEY_DECODE_PDF417, false)) {
+            if (prefs.getBoolean(CapturePreferencesActivity.KEY_DECODE_PDF417, false)) {
                 decodeFormats.addAll(DecodeFormatManager.PDF417_FORMATS);
             }
 //            这些都是支持的码
-            hints.put(DecodeHintType.POSSIBLE_FORMATS, hints);
+            hints.put(DecodeHintType.POSSIBLE_FORMATS, decodeFormats);
 //            设置数据编码格式
             if (characterSet != null) {
                 hints.put(DecodeHintType.CHARACTER_SET, characterSet);

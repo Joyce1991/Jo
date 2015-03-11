@@ -14,11 +14,12 @@ import android.os.Build;
 import com.jalen.jo.R;
 import com.jalen.jo.activities.BaseActivity;
 
-public class CaptureSettingsActivity extends BaseActivity {
+public class CapturePreferencesActivity extends BaseActivity {
 
     public static final String KEY_AUTO_FOCUS = "preferences_auto_focus";   // 自动对焦
     public static final String KEY_PLAY_BEEP = "preferences_play_beep";     // 蜂铃
     public static final String KEY_VIBRATE = "preferences_vibrate";         // 震动
+    public static final String KEY_FRONT_LIGHT_MODE = "preferences_front_light_mode";   // 闪光灯模式[ON|AUTO|OFF]
     public static final String KEY_DISABLE_EXPOSURE = "preferences_disable_exposure";   // 是否可以触摸
     public static final String KEY_DISABLE_AUTO_ORIENTATION = "preferences_orientation";    // 是否自动横竖屏切换
 

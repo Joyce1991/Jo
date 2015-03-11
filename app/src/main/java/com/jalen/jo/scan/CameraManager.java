@@ -63,6 +63,7 @@ public final class CameraManager {
     public CameraManager(Context context) {
         this.context = context;
         this.configManager = new CameraConfigurationManager(context);
+
         previewCallback = new PreviewCallback(configManager);
     }
 
@@ -115,7 +116,6 @@ public final class CameraManager {
                 }
             }
         }
-
     }
 
     public synchronized boolean isOpen() {
@@ -205,7 +205,7 @@ public final class CameraManager {
      * Calculates the framing rect which the UI should draw to show the user where to place the
      * barcode. This target helps with alignment as well as forces the user to hold the device
      * far enough away to ensure the image will be in focus.
-     * 计算出扫描区矩形框对象Rect
+     * 计算出扫描区矩形框对象Rect，图像识别只识别这个rect区域，zxing的viewfinderview也是根据这个rect来绘制的
      * @return The rectangle to draw on screen in window coordinates.
      */
     public synchronized Rect getFramingRect() {
@@ -218,10 +218,11 @@ public final class CameraManager {
                 // Called early, before init even finished
                 return null;
             }
-
+//            计算rect矩形区域的宽高
             int width = findDesiredDimensionInRange(screenResolution.x, MIN_FRAME_WIDTH, MAX_FRAME_WIDTH);
-            int height = findDesiredDimensionInRange(screenResolution.y, MIN_FRAME_HEIGHT, MAX_FRAME_HEIGHT);
-
+//            int height = findDesiredDimensionInRange(screenResolution.y, MIN_FRAME_HEIGHT, MAX_FRAME_HEIGHT);
+            int height = width;
+//            计算Rect矩形区域的坐标位置
             int leftOffset = (screenResolution.x - width) / 2;
             int topOffset = (screenResolution.y - height) / 2;
             framingRect = new Rect(leftOffset, topOffset, leftOffset + width, topOffset + height);
@@ -260,10 +261,18 @@ public final class CameraManager {
                 // Called early, before init even finished
                 return null;
             }
+/*
             rect.left = rect.left * cameraResolution.x / screenResolution.x;
             rect.right = rect.right * cameraResolution.x / screenResolution.x;
             rect.top = rect.top * cameraResolution.y / screenResolution.y;
             rect.bottom = rect.bottom * cameraResolution.y / screenResolution.y;
+*/
+//            修改竖屏 第二步 portrait start
+            rect.left = rect.left * cameraResolution.y / screenResolution.x;
+            rect.right = rect.right * cameraResolution.y / screenResolution.x;
+            rect.top = rect.top * cameraResolution.x / screenResolution.y;
+            rect.bottom = rect.bottom * cameraResolution.x / screenResolution.y;    // end
+
             framingRectInPreview = rect;
         }
         return framingRectInPreview;

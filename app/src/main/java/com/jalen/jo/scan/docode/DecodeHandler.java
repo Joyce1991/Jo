@@ -65,6 +65,15 @@ public class DecodeHandler extends Handler {
     private void decode(byte[] data, int width, int height) {
         long start = System.currentTimeMillis();
         Result rawResult = null;
+//        修改竖屏 第一步 portrait start
+        byte[] rotatedData = new byte[data.length];
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++)
+                rotatedData[x * height + height - y - 1] = data[x + y * width];
+        }
+        int tmp = width;
+        width = height;
+        height = tmp;   // end
 //        LuminanceSource的子类，封装的图像元数据               ==> 第一次封装
         PlanarYUVLuminanceSource source = mActivity.getCameraManager().buildLuminanceSource(data, width, height);
         if (source != null) {
