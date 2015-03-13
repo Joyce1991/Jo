@@ -37,8 +37,10 @@ public class CameraConfigurationManager {
         Log.i(TAG, "Screen resolution: " + screenResolution);
 
         cameraResolution = CameraConfigurationUtils.findBestPreviewSizeValue(parameters, screenResolution);
+
         Log.i(TAG, "Camera resolution: " + cameraResolution);
     }
+
 
     /**
      * 设置相机的参数
@@ -48,6 +50,7 @@ public class CameraConfigurationManager {
     void setDesiredCameraParameters(Camera camera, boolean safeMode) {
         Camera.Parameters parameters = camera.getParameters();
         //        修改竖屏 第4步 portrait start
+
 //        camera.setDisplayOrientation(90);
         if (parameters == null) {
             Log.w(TAG, "Device error: no camera parameters are available. Proceeding without configuration.");
