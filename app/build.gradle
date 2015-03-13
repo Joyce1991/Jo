@@ -35,8 +35,7 @@ dependencies {
 
     //zXing-core核心包
     compile 'com.google.zxing:core:3.2.0'
-    compile 'com.google.zxing:android-integration:3.2.0'
-    compile 'com.google.zxing:android-core:3.2.0'
+//    compile 'com.google.zxing:android-integration:3.2.0'
 
     //avoscloud-sdk 为 LeanCloud基础包
     compile 'cn.leancloud.android:avoscloud-sdk:v2.6.+'

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -19,6 +21,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.Result;
 
+import com.google.zxing.ResultPoint;
 import com.jalen.jo.R;
 import com.jalen.jo.activities.BaseActivity;
 import com.jalen.jo.utils.InactivityTimer;
@@ -38,10 +41,8 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
     private AmbientLightManager ambientLightManager;    // 闪光灯管理
     private BeepManager beepManager;        // “哔哔声”和“震动”管理
 //    V
-    private SurfaceView mSurfaceView;
     private ViewfinderView mViewFinderView;
 //    C
-    private SurfaceHolder mSurfaceHolder;   // surface <=> surfaceholder <=> surfaceview
     private CaptureActivityHandler handler; // activity <=> handler <=> view （在initCamera()方法中进行初始化）
     private InactivityTimer inactivityTimer;    // 这是一个工具类，用于消灭使用了有一段时间没有活动的activity
     @Override
@@ -60,10 +61,6 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
         beepManager = new BeepManager(this);
         ambientLightManager = new AmbientLightManager(this);
 
-//        初始化视图
-        mSurfaceView = (SurfaceView) findViewById(R.id.surface_preview);
-        mSurfaceHolder = mSurfaceView.getHolder();
-        mViewFinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
 
 //        赶紧让设置信息生效
 //        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
@@ -106,13 +103,18 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
         characterSet = null;
 //        初始化相机管理类
         mCameraManager = new CameraManager(getApplicationContext());
+        mViewFinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
+        mViewFinderView.setCameraManager(mCameraManager);
+
 //        根据配置文件设置横竖屏配置
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+/*        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         if (prefs.getBoolean(CapturePreferencesActivity.KEY_DISABLE_AUTO_ORIENTATION, true)) {
             setRequestedOrientation(getCurrentOrientation());
         } else {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
-        }
+        }*/
+        SurfaceView surfaceView = (SurfaceView) findViewById(R.id.surface_preview);
+        SurfaceHolder mSurfaceHolder = surfaceView.getHolder();
 //        判断是否有Surface对象
         if (hasSurface){
 //            stop状态时camera已经关闭， 但是surface还在
@@ -122,7 +124,6 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
             mSurfaceHolder.addCallback(this);
         }
 
-        mViewFinderView.setCameraManager(mCameraManager);
 
         inactivityTimer.onResume();
         ambientLightManager.start(mCameraManager);
@@ -148,6 +149,8 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
         mCameraManager.closeDriver();
         if (!hasSurface){
             // 移除surface
+            SurfaceView surfaceView = (SurfaceView) findViewById(R.id.surface_preview);
+            SurfaceHolder mSurfaceHolder = surfaceView.getHolder();
             mSurfaceHolder.removeCallback(this);
         }
 
@@ -231,6 +234,7 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
      * 获取当前屏幕的旋转方向
      * @return
      */
+/*
     private int getCurrentOrientation() {
         int rotation = getWindowManager().getDefaultDisplay().getRotation();
         switch (rotation) {
@@ -241,6 +245,7 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
                 return ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE;
         }
     }
+*/
 //    getter方法  start
     public CameraManager getCameraManager() {
         return mCameraManager;

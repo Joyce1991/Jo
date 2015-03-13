@@ -62,6 +62,7 @@ public class CaptureActivityHandler extends Handler {
         decodeThread.start();
 
         // 开始捕获图像
+        mState = State.SUCCESS;         // 这里一定要一开始是State.SUCCESS
         cameraManager.startPreview();
         restartPreviewAndDecode();
     }
@@ -94,8 +95,7 @@ public class CaptureActivityHandler extends Handler {
                 // 处理解析结果
 //                activity.handleDecode((Result) msg.obj, barcode, scaleFactor);
                 Result result = (Result) msg.obj;
-                Toast.makeText(activity, "result: " + "barcodeformat: " + result.getBarcodeFormat()
-                        + " text: " + result.getText(), Toast.LENGTH_SHORT).show();
+                activity.handleDecode(result, barcode, scaleFactor);
                 break;
             case R.id.decode_failed:
                 // 解码失败,设置状态为PREVIEW，重新获取预览图并解码

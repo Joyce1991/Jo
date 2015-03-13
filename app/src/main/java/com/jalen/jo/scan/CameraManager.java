@@ -84,6 +84,7 @@ public final class CameraManager {
             camera = theCamera;
         }
         theCamera.setPreviewDisplay(holder);
+        Log.d(TAG, "开启相机，并搭载到SurfaceHolder上");
 
         if (!initialized) {
             initialized = true;
@@ -99,7 +100,9 @@ public final class CameraManager {
         String parametersFlattened = parameters == null ? null : parameters.flatten(); // Save these, temporarily
         try {
             configManager.setDesiredCameraParameters(theCamera, false);
+            Log.d(TAG, "相机设置为非安全模式");
         } catch (RuntimeException re) {
+            Log.d(TAG, "相机设置为安全模式");
             // Driver failed
             Log.w(TAG, "Camera rejected parameters. Setting only minimal safe-mode parameters");
             Log.i(TAG, "Resetting to saved camera params: " + parametersFlattened);
@@ -261,17 +264,17 @@ public final class CameraManager {
                 // Called early, before init even finished
                 return null;
             }
-/*
             rect.left = rect.left * cameraResolution.x / screenResolution.x;
             rect.right = rect.right * cameraResolution.x / screenResolution.x;
             rect.top = rect.top * cameraResolution.y / screenResolution.y;
             rect.bottom = rect.bottom * cameraResolution.y / screenResolution.y;
-*/
 //            修改竖屏 第二步 portrait start
+/*
             rect.left = rect.left * cameraResolution.y / screenResolution.x;
             rect.right = rect.right * cameraResolution.y / screenResolution.x;
             rect.top = rect.top * cameraResolution.x / screenResolution.y;
             rect.bottom = rect.bottom * cameraResolution.x / screenResolution.y;    // end
+*/
 
             framingRectInPreview = rect;
         }

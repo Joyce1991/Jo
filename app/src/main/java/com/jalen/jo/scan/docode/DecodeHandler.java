@@ -66,6 +66,7 @@ public class DecodeHandler extends Handler {
         long start = System.currentTimeMillis();
         Result rawResult = null;
 //        修改竖屏 第一步 portrait start
+/*
         byte[] rotatedData = new byte[data.length];
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++)
@@ -74,6 +75,7 @@ public class DecodeHandler extends Handler {
         int tmp = width;
         width = height;
         height = tmp;   // end
+*/
 //        LuminanceSource的子类，封装的图像元数据               ==> 第一次封装
         PlanarYUVLuminanceSource source = mActivity.getCameraManager().buildLuminanceSource(data, width, height);
         if (source != null) {
@@ -84,6 +86,7 @@ public class DecodeHandler extends Handler {
                 rawResult = multiFormatReader.decodeWithState(bitmap);
             } catch (ReaderException re) {
                 // continue
+                Log.e(TAG, "调用zXing-core的MultiFormatReader.decodeWithState()方法解析抛出异常：" + re.getMessage());
             } finally {
                 multiFormatReader.reset();
             }
@@ -93,10 +96,12 @@ public class DecodeHandler extends Handler {
         Handler handler = mActivity.getHandler();   // 获取CaptureActivity线程的Handler-->CaptureActivityHandler
         if (rawResult != null) {
             // 解析成功
+            Log.d(TAG, "解析成功");
             // Don't log the barcode contents for security.
             long end = System.currentTimeMillis();
             Log.d(TAG, "Found barcode in " + (end - start) + " ms");
             if (handler != null) {
+
                 Message message = Message.obtain(handler, R.id.decode_succeeded, rawResult);
                 //  把缩略图也携带上
                 Bundle bundle = new Bundle();
@@ -106,6 +111,7 @@ public class DecodeHandler extends Handler {
             }
         } else {
             // 解析失败
+            Log.d(TAG, "解析失败");
             if (handler != null) {
                 Message message = Message.obtain(handler, R.id.decode_failed);
                 message.sendToTarget();

@@ -9,8 +9,6 @@ import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 
-import com.google.zxing.client.android.camera.CameraConfigurationUtils;
-
 /**
  * Created by jh on 2015/3/4.
  */
@@ -42,60 +40,26 @@ public class CameraConfigurationManager {
         Log.i(TAG, "Camera resolution: " + cameraResolution);
     }
 
+    /**
+     * 设置相机的参数
+     * @param camera    相机
+     * @param safeMode  是否为安全模式(一般都是为false)
+     */
     void setDesiredCameraParameters(Camera camera, boolean safeMode) {
         Camera.Parameters parameters = camera.getParameters();
         //        修改竖屏 第4步 portrait start
-        camera.setDisplayOrientation(90);
+//        camera.setDisplayOrientation(90);
         if (parameters == null) {
             Log.w(TAG, "Device error: no camera parameters are available. Proceeding without configuration.");
             return;
         }
-
         Log.i(TAG, "Initial camera parameters: " + parameters.flatten());
-
         if (safeMode) {
             Log.w(TAG, "In camera config safe mode -- most settings will not be honored");
         }
-
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-
-        initializeTorch(parameters, prefs, safeMode);
-
-/*
-        CameraConfigurationUtils.setFocus(
-                parameters,
-                prefs.getBoolean(PreferencesActivity.KEY_AUTO_FOCUS, true),
-                prefs.getBoolean(PreferencesActivity.KEY_DISABLE_CONTINUOUS_FOCUS, true),
-                safeMode);
-*/
-        CameraConfigurationUtils.setFocus(parameters, true, true, safeMode);
-
-
-/*
-        if (!safeMode) {
-            if (prefs.getBoolean(PreferencesActivity.KEY_INVERT_SCAN, false)) {
-                CameraConfigurationUtils.setInvertColor(parameters);
-            }
-
-            if (!prefs.getBoolean(PreferencesActivity.KEY_DISABLE_BARCODE_SCENE_MODE, true)) {
-                CameraConfigurationUtils.setBarcodeSceneMode(parameters);
-            }
-
-            if (!prefs.getBoolean(PreferencesActivity.KEY_DISABLE_METERING, true)) {
-                CameraConfigurationUtils.setVideoStabilization(parameters);
-                CameraConfigurationUtils.setFocusArea(parameters);
-                CameraConfigurationUtils.setMetering(parameters);
-            }
-        }
-*/
-
-
         parameters.setPreviewSize(cameraResolution.x, cameraResolution.y);
-
         Log.i(TAG, "Final camera parameters: " + parameters.flatten());
-
         camera.setParameters(parameters);
-
         Camera.Parameters afterParameters = camera.getParameters();
         Camera.Size afterSize = afterParameters.getPreviewSize();
         if (afterSize!= null && (cameraResolution.x != afterSize.width || cameraResolution.y != afterSize.height)) {
