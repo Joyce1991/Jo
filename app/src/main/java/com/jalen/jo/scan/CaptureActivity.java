@@ -1,17 +1,11 @@
 package com.jalen.jo.scan;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
@@ -21,9 +15,9 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.Result;
 
-import com.google.zxing.ResultPoint;
 import com.jalen.jo.R;
 import com.jalen.jo.activities.BaseActivity;
+import com.jalen.jo.scan.camera.CameraManager;
 import com.jalen.jo.utils.InactivityTimer;
 
 import java.io.IOException;

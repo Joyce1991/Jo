@@ -5,12 +5,12 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.Result;
 import com.jalen.jo.R;
+import com.jalen.jo.scan.camera.CameraManager;
 import com.jalen.jo.scan.docode.DecodeThread;
 
 import java.util.Collection;

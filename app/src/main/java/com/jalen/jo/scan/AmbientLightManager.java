@@ -24,6 +24,8 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.preference.PreferenceManager;
 
+import com.jalen.jo.scan.camera.CameraManager;
+
 /**
  * Detects ambient light and switches on the front light when very dark, and off again when sufficiently light.
  * <br/><br/>

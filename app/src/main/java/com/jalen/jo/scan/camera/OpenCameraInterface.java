@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.jalen.jo.scan;
+package com.jalen.jo.scan.camera;
 
 import android.hardware.Camera;
 import android.util.Log;
