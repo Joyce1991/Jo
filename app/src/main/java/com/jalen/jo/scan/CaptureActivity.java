@@ -3,6 +3,7 @@ package com.jalen.jo.scan;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -57,7 +58,7 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
 
 
 //        赶紧让设置信息生效
-//        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
     }
 
     @Override

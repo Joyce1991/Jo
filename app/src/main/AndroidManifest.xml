@@ -5,7 +5,7 @@
     <!-- 申请网络访问权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!--申请相机使用权限-->
+    <!-- 申请相机使用权限 -->
     <uses-permission android:name="android.permission.CAMERA" />
 
     <!-- 申明所需要的设备功能 -->
@@ -61,9 +61,8 @@
         <activity
             android:name=".scan.CaptureActivity"
             android:label="@string/title_activity_capture"
-            android:theme="@style/CaptureActivityTheme">
+            android:theme="@style/CaptureActivityTheme" >
         </activity>
-
         <activity
             android:name=".scan.CapturePreferencesActivity"
             android:label="@string/title_activity_capture_settings"
@@ -71,6 +70,14 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jalen.jo.scan.CaptureActivity" />
+        </activity>
+        <activity
+            android:name=".activities.BookInfoActivity"
+            android:label="@string/title_activity_book_info"
+            android:parentActivityName=".activities.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jalen.jo.activities.MainActivity" />
         </activity>
     </application>
 

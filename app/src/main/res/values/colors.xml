@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="white">#ffffffff</color>
-    <color name="blue_light">#33b5e5</color>
-    <color name="blue_light_transparent_33">#3333b5e5</color>
-    <color name="blue_dark">#0099cc</color>
+    <color name="blue_light">#22ac38</color>
+    <color name="blue_light_transparent_33">#33009944</color>
+    <color name="blue_dark">#009944</color>
     <color name="gray_light">#aaaaaa</color>
     <color name="transparente">#00000000</color>
     <color name="gray_dark">#333333</color>
