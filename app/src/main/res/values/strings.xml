@@ -5,12 +5,10 @@
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
+
+    <!--navigation 模块-->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="action_example">Example action</string>
-    <string name="action_settings">设置</string>
-    <string name="title_activity_signup">创建用户</string>
-    <string name="hello_world">Hello world!</string>
 
     <!--注册模块-->
     <string name="et_signup_inputphone">请输入手机号码</string>
@@ -25,41 +23,43 @@
     <string name="btn_sigin_sigin">登录</string>
     <string name="tv_signin_forgotpwd">忘记密码？</string>
     <string name="tv_sigin_signup">或者，创建账户</string>
-
     <string name="et_signup_inputpwd">输入密码</string>
 
-    <string name="title_activity_account_edit">AccountEditActivity</string>
     <string name="btn_account_edit_save">保存</string>
     <string name="tv_dialog_loading_text">正在加载信息……</string>
 
+
+    <!--dialog text-->
+    <string name="dialog_loading_signin_text">正在登录……</string>
+    <string name="dialog_loading_signup_text">正在注册……</string>
+
+    <!--toast text-->
     <string name="toast_signup_failed">注册失败</string>
     <string name="toast_signup_success">注册成功</string>
     <string name="toast_phone_input_error">手机号码输入错误</string>
-
-    <string name="dialog_loading_signin_text">正在登录……</string>
-    <string name="dialog_loading_signup_text">正在注册……</string>
     <string name="toast_signin_success">登录成功</string>
     <string name="toast_signin_failed">登录失败</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <!--图书信息模块-->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_book_detail">BookDetailActivity</string>
-    <string name="tv_book_detail_title">图书标题</string>
-    <string name="tv_book_detail_subtitle">图书小标题</string>
-    <string name="tv_book_detail_author">作者：张晋瑜</string>
-    <string name="tv_book_detail_translator">译者</string>
-    <string name="tv_book_detail_pages">页数：201</string>
-    <string name="btn_book_detail_borrow">借阅</string>
-    <string name="tv_book_detail_brief">简介</string>
-    <string name="tv_book_detail_catalog">目录</string>
-    <string name="tv_book_detail_author_brief">作者</string>
-    <string name="action_scan">扫一扫</string>
+    <string name="tv_book_info_title">图书标题</string>
+    <string name="tv_book_info_subtitle">图书小标题</string>
+    <string name="tv_book_info_author">作者：</string>
+    <string name="tv_book_info_translator">译者：</string>
+    <string name="tv_book_info_pages">页数：</string>
+    <string name="btn_book_info_borrow">借阅</string>
+    <string name="tv_book_info_brief">简介</string>
+    <string name="tv_book_info_catalog">目录</string>
+    <string name="tv_book_info_author_brief">作者</string>
+
+    <!--activity 标题-->
+    <string name="title_activity_book_info">图书信息</string>
     <string name="title_activity_capture">二维码/条形码</string>
-    <string name="title_activity_scanning_preferences">ScanningPreferencesActivity</string>
-    <string name="title_activity_scanning_settings">ScanningPreferencesActivity</string>
+    <string name="title_activity_scanning_preferences">扫一扫设置</string>
     <string name="title_activity_capture_settings">扫一扫设置</string>
-    <string name="action_from_album">从相册选择一张图片</string>
-    <string name="action_add_a_shortcut">将扫一扫添加到桌面</string>
+    <string name="title_activity_account_edit">账户信息编辑</string>
+    <string name="title_activity_signup">创建用户</string>
+    <string name="title_activity_book_detail">图书信息</string>
 
     <!--扫一扫设置-->
     <string name="preferences_actions_title">找到条码时</string>
@@ -103,9 +103,15 @@
     <string name="preferences_supplemental_summary">尝试检索关于条码内容的更多信息</string>
     <string name="preferences_supplemental_title">检索更多信息</string>
     <string name="preferences_vibrate_title">振动</string>
-    <string name="title_activity_book_info">BookInfoActivity</string>
+
+    <!--action text-->
+    <string name="action_from_album">从相册选择一张图片</string>
+    <string name="action_add_a_shortcut">将扫一扫添加到桌面</string>
+    <string name="action_scan">扫一扫</string>
     <string name="action_share">分享</string>
     <string name="action_search">搜索</string>
     <string name="action_feedback">反馈报告</string>
+    <string name="action_example">Example action</string>
+    <string name="action_settings">设置</string>
 
 </resources>

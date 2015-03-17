@@ -41,5 +41,6 @@ public class CapturePreferencesActivity extends BaseActivity {
                     .replace(android.R.id.content, new CapturePreferencesFragment())
                     .commit();
         }
+
     }
 }

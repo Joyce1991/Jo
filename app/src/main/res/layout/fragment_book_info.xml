@@ -1,12 +1,224 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+<com.jalen.jo.views.OverScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context="com.jalen.jo.activities.BookInfoActivity$PlaceholderFragment">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
 
-</RelativeLayout>
+        <android.support.v7.widget.CardView
+            android:id="@+id/ll_book_info_head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            card_view:cardCornerRadius="@dimen/cardview_default_radius"
+            card_view:cardElevation="@dimen/cardview_default_elevation">
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/book_width"
+                    android:layout_height="@dimen/book_height"
+                    android:background="@drawable/book_bg"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/book_pic" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <!--图书标题-->
+                    <TextView
+                        android:id="@+id/tv_book_info_title"
+                        style="@style/JoComponentStyle.TextView"
+                        android:layout_margin="0dp"
+                        android:text="打造高质量Android应用"
+                        android:textStyle="bold" />
+                    <!--图书子标题-->
+                    <TextView
+                        android:id="@+id/tv_book_info_title_subtitle"
+                        style="@style/JoComponentStyle.TextView"
+                        android:text="Android开发必知的50个诀窍" />
+                    <!--作者-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="0dp">
+
+                        <TextView
+                            style="@style/JoComponentStyle.TextView"
+                            android:text="@string/tv_book_info_author" />
+
+                        <TextView
+                            android:id="@+id/tv_book_info_author"
+                            style="@style/JoComponentStyle.TextView" />
+                    </LinearLayout>
+                    <!--译者-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="0dp">
+
+                        <TextView
+                            style="@style/JoComponentStyle.TextView"
+                            android:text="@string/tv_book_info_translator" />
+
+                        <TextView
+                            android:id="@+id/tv_book_info_translator"
+                            style="@style/JoComponentStyle.TextView" />
+                    </LinearLayout>
+                    <!--页数-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="0dp">
+
+                        <TextView
+                            style="@style/JoComponentStyle.TextView"
+                            android:text="@string/tv_book_info_pages" />
+
+                        <TextView
+                            android:id="@+id/tv_book_info_pages"
+                            style="@style/JoComponentStyle.TextView" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+        <!--简介-->
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardview_book_info_brief"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_book_info_head"
+            card_view:cardCornerRadius="@dimen/cardview_default_radius"
+            card_view:cardElevation="@dimen/cardview_default_elevation">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/JoComponentStyle.TextView"
+                    android:padding="8dp"
+                    android:text="@string/tv_book_info_brief"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_light" />
+
+                <TextView
+                    android:id="@+id/tv_book_info_brief"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="《海量运维、运营规划之道》作者具有腾讯、百度等中国一线互联网公司多年从业经历，书中依托工作实践，以互联网海量产品质量、效率、成本为核心，从规划、速度、监控、告警、安全、管理、流程、预案、考核、设备、带宽等方面，结合大量案例与读者分享了作者对互联网海量运维、运营规划的体会。\n《海量运维、运营规划之道》全面介绍大型互联网公司运维工作所涉及的各个方面，是每个互联网运维工程师、架构师、管理人员不可或缺的宝贵参考书。" />
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparente"
+                    android:src="@drawable/ic_action_expand" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <!--目录-->
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardview_book_info_catalog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cardview_book_info_brief"
+            card_view:cardCornerRadius="@dimen/cardview_default_radius"
+            card_view:cardElevation="@dimen/cardview_default_elevation">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/JoComponentStyle.TextView"
+                    android:padding="8dp"
+                    android:text="@string/tv_book_info_catalog"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_light" />
+
+                <TextView
+                    android:id="@+id/tv_book_info_catalog"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="第1部分 质量\n第1章 规划\n1.1 架构规划\n1.1.1 新趋势、新机遇、新挑战\n1.1.2 产品、架构、成本的生命周期\n1.1.3 质量、速度、成本\n1.1.4 专业化、平台化、持续化\n1.1.5 可伸缩、可调度、可扩展\n1.1.6 Set模型，集装箱改变世界\n1.1.7 全网调度，速度与容灾并进\n1.1.8 海量导致架构取向，适用是王道\n1.1.9 大系统简单做、小做\n1.2 IDC规划\n1.2.1 全球最复杂的基础网络\n1.2.2 IDC属性、瓶颈分析及建议\n1.2.3 IDC策略，分布制胜、速度第一\n1.3 CDN规划\n1.3.1 CDN发展现状与趋势分析\n1.3.2 CDN厂商分析及外包细节\n1.3.3 CDN节点分布及解析策略\n1.3.4 CDN外包质量和风险控制\n1.4 预算规划\n1.4.1 预算的作用及预算推导\n1.4.2 服务器定制，切合应用与性价比\n1.4.3 服务器需求，用数据说话\n第2章 速度\n2.1 网站速度优化介绍\n2.1.1 什么是网站速度优化\n2.1.2 网站速度优化的价值\n2.1.3 网站速度关键指标\n2.1.4 影响网站速度的因素\n2.2 网站速度监测实践\n2.2.1 网站速度监测概述\n2.2.2 网站速度主动监测\n2.2.3 网站速度被动监测\n2.3 网站速度分析实践\n2.3.1 网站速度分析概述\n2.3.2 网站速度分析工具\n2.3.3 网站速度分析案例\n2.4 网站速度优化实践\n2.4.1 网站速度优化概述\n2.4.2 网络速度优化及案例\n2.4.3 系统速度优化及案例\n2.4.4 前端速度优化及案例\n2.5 防止网站速度退化\n2.5.1 通过规范防止速度退化\n2.5.2 通过工具防止速度退化\n第3章 监控\n3.1 监控概述\n3.1.1 监控定义和价值\n3.1.2 监控体系和实现途径\n3.2 用户监控实践\n3.2.1 访问监控，获取用户访问速度\n3.2.2 URL监控，服务实时访问状态\n3.2.3 劫持监控，了解全国劫持状态\n3.2.4 内容监控，掌握网页元素变化\n3.3 机器监控实践\n3.4 网络监控实践\n3.4.1 网络监控，时刻掌控广域网变化\n3.4.2 响应监控，IDC内服务响应监控\n3.4.3 域名监控，做精准的DNS解析\n3.5 应用监控实践\n3.5.1 模块监控，动态应用模块监控\n3.5.2 数据库监控，数据库运行可视化\n第4章 告警\n4.1 告警概述\n4.1.1 告警定义和途径\n4.1.2 告警问题和规避方法\n4.2 告警模型\n4.2.1 告警分类，将告警分类区分对待\n4.2.2 告警模型，如何建立告警模型\n4.3 告警优化\n4.3.1 告警收敛，规避被告警淹没\n4.3.2 告警关联，让告警更具价值\n4.3.3 告警分析，用数据说话\n第5章 安全\n5.1 Web漏洞扫描\n5.2 域名劫持扫描\n5.3 DDoS攻击扫描\n5.4 敏感信息扫描\n5.5 网页篡改扫描\n第2部分 效率\n第6章 管理\n6.1 配置管理，标识所有的资源并记录在册\n6.2 事件管理，记录、分类、诊断、解决问题\n6.3 问题管理，消除引起问题的根本原因\n6.4 变更管理，串联变更原因、过程、结果\n6.5 容量管理，对运营指标未来的量化、预测\n第7章 流程\n7.1 业务运维管理规范\n7.2 系统用户管理规范\n7.3 设备使用管理规范\n7.4 应用安全管理规范\n7.5 开发与编译环境安全规范\n7.6 故障分级和处罚规范\n第8章 预案\n8.1 预案，从容有序应对危机\n8.2 预演，提高故障执行力\n第9章 考核\n9.1 运维能力考核\n9.2 架构能力考核\n9.3 运营预算考核\n第3部分 成本\n第10章 基础\n10.1 规模化导致运营成本凸显\n10.2 运营成本优化方向和策略\n10.3 工具协助成本可持续优化\n第11章 设备\n11.1 服务器分类、分级、分层定制\n11.2 业务分类平台化减少运营成本\n11.3 混布最大限度提高资源利用率\n第12章 带宽\n12.1 通过改变产品形态减少数百万成本\n12.2 通过降低带宽单价减少成本\n12.3 通过自动优化减少带宽成本" />
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparente"
+                    android:src="@drawable/ic_action_expand" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <!--作者-->
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardview_book_info_author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cardview_book_info_catalog"
+            card_view:cardCornerRadius="@dimen/cardview_default_radius"
+            card_view:cardElevation="@dimen/cardview_default_elevation">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/JoComponentStyle.TextView"
+                    android:padding="8dp"
+                    android:text="@string/tv_book_info_catalog"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_light" />
+
+                <TextView
+                    android:id="@+id/tv_book_info_author_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="唐文，先后在腾讯、盛大、百度工作，曾负责腾讯四大平台之一网络媒体整体运维、运营，对海量互联网产品运维支撑、运营规划、性能优化、成本优化、平台研发、质量效率等有丰富的实践，目前就职于百度，T7架构师，负责百度产品线访问速度优化改进工作，百度速度监测平台(UAQ)、百度移动云应用性能监测平台(APM)负责人，百度学院讲师。" />
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparente"
+                    android:src="@drawable/ic_action_expand" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+    </RelativeLayout>
+</com.jalen.jo.views.OverScrollView>

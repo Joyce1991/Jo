@@ -18,6 +18,7 @@ import com.google.zxing.Result;
 
 import com.jalen.jo.R;
 import com.jalen.jo.activities.BaseActivity;
+import com.jalen.jo.activities.BookInfoActivity;
 import com.jalen.jo.scan.camera.CameraManager;
 import com.jalen.jo.utils.InactivityTimer;
 
@@ -81,6 +82,10 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
             case R.id.action_settings:
                 Intent captureSettingsIntent = new Intent(this, CapturePreferencesActivity.class);
                 startActivity(captureSettingsIntent);
+                break;
+            case R.id.action_add_a_shortcut:
+                Intent bookinfoIntent = new Intent(this, BookInfoActivity.class);
+                startActivity(bookinfoIntent);
                 break;
         }
 
@@ -215,6 +220,21 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
 //            显示扫描结果信息(DecodeFormat/Text)
             Toast.makeText(this, "DecodeFormat: " + rawResult.getBarcodeFormat() + "\n" + "Text: " + rawResult.getText(),
                     Toast.LENGTH_SHORT).show();
+            switch (rawResult.getBarcodeFormat()){
+//                EAN_13
+                case EAN_13:
+                    if (rawResult.getText().startsWith("978") || rawResult.getText().startsWith("979")){
+                        //            跳转至图书信息页
+                        Intent bookinfoIntent = new Intent(this, BookInfoActivity.class);
+                        bookinfoIntent.putExtra(BookInfoActivity.EXTRA_BOOK_ISBN, rawResult.getText());
+                        startActivity(bookinfoIntent);
+                    }
+                    break;
+//                QR_CODE
+                case QR_CODE:
+//                    图书馆id，跳转至图书馆信息页
+                    break;
+            }
         }
     }
 
