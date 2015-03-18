@@ -19,6 +19,7 @@ import com.google.zxing.Result;
 import com.jalen.jo.R;
 import com.jalen.jo.activities.BaseActivity;
 import com.jalen.jo.activities.BookInfoActivity;
+import com.jalen.jo.fragments.BookinfoFragment;
 import com.jalen.jo.scan.camera.CameraManager;
 import com.jalen.jo.utils.InactivityTimer;
 
@@ -226,7 +227,7 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
                     if (rawResult.getText().startsWith("978") || rawResult.getText().startsWith("979")){
                         //            跳转至图书信息页
                         Intent bookinfoIntent = new Intent(this, BookInfoActivity.class);
-                        bookinfoIntent.putExtra(BookInfoActivity.EXTRA_BOOK_ISBN, rawResult.getText());
+                        bookinfoIntent.putExtra(BookinfoFragment.EXTRA_BOOK_ISBN, rawResult.getText());
                         startActivity(bookinfoIntent);
                     }
                     break;

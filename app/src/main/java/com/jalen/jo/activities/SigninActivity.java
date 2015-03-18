@@ -160,6 +160,7 @@ public class SigninActivity extends BaseActivity {
             }
         }
 
+
         /**
          * 设置密码的可见性
          * @param isVisible 是否可见

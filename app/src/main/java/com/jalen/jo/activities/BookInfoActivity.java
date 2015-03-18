@@ -1,34 +1,27 @@
 package com.jalen.jo.activities;
 
-import android.app.AlertDialog;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
+import android.content.UriMatcher;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.jalen.jo.R;
+import com.jalen.jo.fragments.BookNotfoundFragment;
+import com.jalen.jo.fragments.BookinfoFragment;
 
-public class BookInfoActivity extends ActionBarActivity {
-    public static final String EXTRA_BOOK_ISBN = "com.jalen.jo.activities.BookInfoActivity.BookISBN";
-
+public class BookInfoActivity extends BaseActivity implements BookinfoFragment.OnFragmentInteractionListener {
+    private String mParamISBN;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_info);
+        mParamISBN = getIntent().getStringExtra(BookinfoFragment.EXTRA_BOOK_ISBN);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
+                    .add(R.id.container, BookinfoFragment.newInstance(mParamISBN))
                     .commit();
         }
     }
@@ -56,53 +49,19 @@ public class BookInfoActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        private AlertDialog mDialog;
+    @Override
+    public void onFragmentInteraction(int id) {
+        switch (id){
+            case R.id.book_not_found:
+//                替换fragment（booknotfoundfragment）
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, BookNotfoundFragment.newInstance(mParamISBN))
+                        .commit();
+                break;
 
-        public PlaceholderFragment() {
+            case R.id.book_found:
 
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_book_info, container, false);
-            return rootView;
-        }
-
-        /**
-         * 关闭一个对话框
-         */
-        private void dismissDialog() {
-            if (mDialog != null && mDialog.isShowing()){
-                mDialog.dismiss();
-                mDialog = null;
-            }
-        }
-
-        /**
-         * 显示一个对话框
-         * @param msg   对话框内容
-         */
-        private void showDialog(CharSequence msg) {
-            if (mDialog != null){
-                mDialog.show();
-            }else{
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(getActivity());
-                // Get the layout inflater
-                LayoutInflater inflater = getActivity().getLayoutInflater();
-                RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.dialog_loading, null);
-                TextView tv_msg = (TextView) view.findViewById(R.id.tv_dialog_loading_text);
-                tv_msg.setText(msg);
-                mBuilder.setView(view);
-                mDialog = mBuilder.create();
-                mDialog.show();
-            }
+                break;
         }
     }
-
-
 }
