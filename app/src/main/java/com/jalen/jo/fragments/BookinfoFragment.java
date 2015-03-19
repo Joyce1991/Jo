@@ -8,6 +8,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -17,6 +19,7 @@ import com.jalen.jo.beans.Book;
 import com.jalen.jo.beans.ErrorDouban;
 import com.jalen.jo.http.JoRestClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.apache.http.Header;
 import org.json.JSONObject;
@@ -34,6 +37,19 @@ public class BookinfoFragment extends Fragment {
     public static final String EXTRA_BOOK_ISBN = "com.jalen.jo.fragments.BookinfoFragment.BookISBN";
 
     private AlertDialog mDialog;
+    private ImageView ivBookPic;    // 图书图片
+    private TextView tvBookTitle;   // 图书标题
+    private TextView tvBookSubtitle;// 图书子标题
+    private TextView tvBookAuthor;  // 图书作者
+    private TextView tvBookTranslator;  // 译者
+    private TextView tvBookPages;   // 页数
+    private TextView tvBookBrief;   // 图书简介
+    private TextView tvBookCatalog; // 图书目录
+    private TextView tvBookAuthorinfo;  // 图书作者信息
+
+    private ImageButton ibBookBrief;        // 图书简介expand按钮
+    private ImageButton ibBookCatalog;      // 图书目录expand按钮
+    private ImageButton ibBookAuthorinfo;   // 图书作者信息expand按钮
 
     // TODO: Rename and change types of parameters
     private String mParamISBN;
@@ -79,6 +95,21 @@ public class BookinfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_book_info, container, false);
+
+        ivBookPic = (ImageView) rootView.findViewById(R.id.iv_book_info_pic);
+        tvBookTitle = (TextView) rootView.findViewById(R.id.tv_book_info_title);
+        tvBookSubtitle = (TextView) rootView.findViewById(R.id.tv_book_info_title_subtitle);
+        tvBookAuthor = (TextView) rootView.findViewById(R.id.tv_book_info_author);
+        tvBookTranslator = (TextView) rootView.findViewById(R.id.tv_book_info_translator);
+        tvBookPages = (TextView) rootView.findViewById(R.id.tv_book_info_pages);
+        tvBookBrief = (TextView) rootView.findViewById(R.id.tv_book_info_brief);
+        tvBookCatalog = (TextView) rootView.findViewById(R.id.tv_book_info_catalog);
+        tvBookAuthorinfo = (TextView) rootView.findViewById(R.id.tv_book_info_author_info);
+
+        ibBookBrief = (ImageButton) rootView.findViewById(R.id.ib_book_info_brief);
+        ibBookCatalog = (ImageButton) rootView.findViewById(R.id.ib_book_info_catalog);
+        ibBookAuthorinfo = (ImageButton) rootView.findViewById(R.id.ib_book_info_author_info);
+
         return rootView;
     }
 
@@ -158,6 +189,26 @@ public class BookinfoFragment extends Fragment {
                 case 200:
                     mBook = JSON.parseObject(response.toString(), Book.class);
 
+ /*                 ivBookPic = (ImageView) rootView.findViewById(R.id.iv_book_info_pic);
+                    tvBookTitle = (TextView) rootView.findViewById(R.id.tv_book_info_title);
+                    tvBookSubtitle = (TextView) rootView.findViewById(R.id.tv_book_info_title_subtitle);
+                    tvBookAuthor = (TextView) rootView.findViewById(R.id.tv_book_info_author);
+                    tvBookTranslator = (TextView) rootView.findViewById(R.id.tv_book_info_translator);
+                    tvBookPages = (TextView) rootView.findViewById(R.id.tv_book_info_pages);
+                    tvBookBrief = (TextView) rootView.findViewById(R.id.tv_book_info_brief);
+                    tvBookCatalog = (TextView) rootView.findViewById(R.id.tv_book_info_catalog);
+                    tvBookAuthorinfo = (TextView) rootView.findViewById(R.id.tv_book_info_author_info);
+*/
+
+                    ImageLoader.getInstance().displayImage(mBook.getImage(), ivBookPic);
+                    tvBookAuthor.setText(mBook.getAuthor().get(0));
+                    tvBookTitle.setText(mBook.getTitle());
+                    tvBookSubtitle.setText(mBook.getSubtitle());
+                    tvBookTranslator.setText(mBook.getTranslator().size() == 0 ? "" : mBook.getTranslator().get(0));
+                    tvBookPages.setText(mBook.getPages());
+                    tvBookBrief.setText(mBook.getSummary());
+                    tvBookCatalog.setText(mBook.getCatalog());
+                    tvBookAuthorinfo.setText(mBook.getAuthor_intro());
                     break;
             }
 
@@ -172,7 +223,7 @@ public class BookinfoFragment extends Fragment {
                 case 404:
                     // not found
                     // 告诉activity没有找到书籍信息，让它替换fragment（booknotfoundfragment）
-//                    mListener.onFragmentInteraction(R.id.book_not_found);
+                    mListener.onFragmentInteraction(R.id.book_not_found);
                     break;
             }
             dismissDialog();

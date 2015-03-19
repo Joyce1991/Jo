@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- 申请相机使用权限 -->
     <uses-permission android:name="android.permission.CAMERA" />
+    <!--SD卡访问权限-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <!-- 申明所需要的设备功能 -->
     <uses-feature
@@ -53,10 +55,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jalen.jo.activities.MainActivity" />
-        </activity>
-        <activity
-            android:name=".activities.BookDetailActivity"
-            android:label="@string/title_activity_book_detail" >
         </activity>
         <activity
             android:name=".scan.CaptureActivity"
