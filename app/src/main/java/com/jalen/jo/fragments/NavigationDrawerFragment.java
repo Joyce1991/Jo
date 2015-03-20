@@ -27,25 +27,28 @@ import android.widget.Toast;
 
 import com.avos.avoscloud.AVUser;
 import com.jalen.jo.R;
+import com.jalen.jo.activities.AccountEditActivity;
 import com.jalen.jo.activities.SigninActivity;
 import com.jalen.jo.activities.SignupActivity;
 import com.jalen.jo.views.CircleImageView;
 
 /**
- * Fragment used for managing interactions for and presentation of a navigation drawer.
- * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
- * design guidelines</a> for a complete explanation of the behaviors implemented here.
+ * 抽屉导航面板
+ * 1、当前用户（头像、名称）
+ * 2、书架（在读、想要读、已阅读）
+ * 3、提醒（还书提醒）
+ * 4、图书馆（图书馆创建、图书馆查询、图书馆加入）
+ *
  */
 public class NavigationDrawerFragment extends Fragment implements View.OnClickListener {
 
     /**
-     * Remember the position of the selected item.
+     * 记住选中的item的position
      */
     private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
 
     /**
-     * Per the design guidelines, you should show the drawer on launch until the user manually
-     * expands it. This shared preference tracks this.
+     * 鉴于设计指南，你应该在当用户启动APP是显示这个抽屉面板给用户看，除非用户手动拓展了它，这个用来记录配置
      */
     private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
 
@@ -125,6 +128,7 @@ public class NavigationDrawerFragment extends Fragment implements View.OnClickLi
             llSignin.setVisibility(View.VISIBLE);
             llUnsignin.setVisibility(View.INVISIBLE);
             tvUsername.setText(AVUser.getCurrentUser().getUsername());
+            llSignin.setOnClickListener(this);
         }else {
             llSignin.setVisibility(View.INVISIBLE);
             llUnsignin.setVisibility(View.VISIBLE);
@@ -308,6 +312,12 @@ public class NavigationDrawerFragment extends Fragment implements View.OnClickLi
                 Toast.makeText(getActivity(), "点击了注册", Toast.LENGTH_SHORT).show();
                 Intent signupIntent = new Intent(getActivity(), SignupActivity.class);
                 startActivity(signupIntent);
+                break;
+            case R.id.ll_drawer_signin:
+//                点击账户
+                Toast.makeText(getActivity(), "点击了账户", Toast.LENGTH_SHORT).show();
+                Intent accountIntent = new Intent(getActivity(), AccountEditActivity.class);
+                startActivity(accountIntent);
                 break;
         }
     }

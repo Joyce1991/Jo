@@ -18,6 +18,7 @@
     <dimen name="jocomponent_layout_marginBottom">8dp</dimen>
     <dimen name="jocomponent_paddingLeft">8dp</dimen>
     <dimen name="jocomponent_paddingRight">8dp</dimen>
+    <dimen name="jocomponent_paddin">8dp</dimen>
     <dimen name="jocomponent_radius">2dp</dimen>
     <dimen name="jocomponent_textsize">16sp</dimen>
     <dimen name="jocomponent_layout_margin">0dp</dimen>

@@ -189,17 +189,6 @@ public class BookinfoFragment extends Fragment {
                 case 200:
                     mBook = JSON.parseObject(response.toString(), Book.class);
 
- /*                 ivBookPic = (ImageView) rootView.findViewById(R.id.iv_book_info_pic);
-                    tvBookTitle = (TextView) rootView.findViewById(R.id.tv_book_info_title);
-                    tvBookSubtitle = (TextView) rootView.findViewById(R.id.tv_book_info_title_subtitle);
-                    tvBookAuthor = (TextView) rootView.findViewById(R.id.tv_book_info_author);
-                    tvBookTranslator = (TextView) rootView.findViewById(R.id.tv_book_info_translator);
-                    tvBookPages = (TextView) rootView.findViewById(R.id.tv_book_info_pages);
-                    tvBookBrief = (TextView) rootView.findViewById(R.id.tv_book_info_brief);
-                    tvBookCatalog = (TextView) rootView.findViewById(R.id.tv_book_info_catalog);
-                    tvBookAuthorinfo = (TextView) rootView.findViewById(R.id.tv_book_info_author_info);
-*/
-
                     ImageLoader.getInstance().displayImage(mBook.getImage(), ivBookPic);
                     tvBookAuthor.setText(mBook.getAuthor().get(0));
                     tvBookTitle.setText(mBook.getTitle());

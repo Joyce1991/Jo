@@ -114,6 +114,8 @@
     <string name="action_feedback">反馈报告</string>
     <string name="action_example">Example action</string>
     <string name="action_settings">设置</string>
+    <string name="action_account_settings">账户设置</string>
+    <string name="action_signout">退出登录</string>
 
 
 </resources>

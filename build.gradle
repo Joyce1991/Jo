@@ -2,11 +2,15 @@
 
 buildscript {
     repositories {
+        maven { url "http://dl.bintray.com/populov/maven" }
+        mavenCentral()
         jcenter()
         //这里是 LeanCloud 的包仓库
         maven {
             url "http://mvn.leancloud.cn/nexus/content/repositories/releases"
         }
+
+
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.0.0'
@@ -18,10 +22,14 @@ buildscript {
 
 allprojects {
     repositories {
+        maven { url "http://dl.bintray.com/populov/maven" }
+        mavenCentral()
         jcenter()
         //这里是 LeanCloud 的包仓库
         maven {
             url "http://mvn.leancloud.cn/nexus/content/repositories/releases"
         }
+
+
     }
 }
