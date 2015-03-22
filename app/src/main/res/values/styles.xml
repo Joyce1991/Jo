@@ -4,8 +4,14 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="android:actionBarStyle">@style/JoActionBar</item>
+        <item name="android:actionBarSize">48dp</item>
+        <!--<item name="android:windowContentOverlay">@drawable/solid_line</item>-->
+
         <!-- Support library compatibility -->
         <item name="actionBarStyle">@style/JoActionBar</item>
+        <item name="actionBarSize">48dp</item>
+        <!--<item name="windowContentOverlay">@drawable/solid_line</item>-->
+
     </style>
     <!--自定义actionbar样式-->
     <style name="JoActionBar" parent="Widget.AppCompat.Light.ActionBar.Solid.Inverse">
@@ -52,6 +58,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/jocomponent_textsize</item>
+        <item name="android:layout_margin">@dimen/jocomponent_layout_margin</item>
     </style>
 
     <!-- CaptureActivity theme. -->
@@ -59,10 +66,14 @@
         <!-- Customize your theme here. -->
         <item name="android:actionBarStyle">@style/CaptureActionBarStyle</item>
         <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_action_remove</item>
+        <item name="android:actionBarSize">48dp</item>
 
         <!-- Support library compatibility -->
         <item name="actionBarStyle">@style/CaptureActionBarStyle</item>
         <item name="windowActionBarOverlay">true</item>
+        <item name="homeAsUpIndicator">@drawable/ic_action_remove</item>
+        <item name="actionBarSize">48dp</item>
 
     </style>
     <!--CaptureActivity.ActionBarStyle-->
@@ -70,9 +81,13 @@
         <item name="android:background">@drawable/actionbar_capture_bg</item>
         <item name="android:actionBarDivider">@drawable/actionbar_capture_divider</item>
         <item name="android:showDividers">middle</item>
+
         <!-- Support library compatibility -->
         <item name="background">@drawable/actionbar_capture_bg</item>
         <item name="actionBarDivider">@drawable/actionbar_capture_divider</item>
         <item name="showDividers">middle</item>
+
     </style>
+
+
 </resources>

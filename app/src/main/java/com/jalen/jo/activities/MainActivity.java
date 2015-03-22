@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 
 import com.avos.avoscloud.AVAnalytics;
-import com.google.zxing.integration.android.IntentIntegrator;
 import com.jalen.jo.fragments.NavigationDrawerFragment;
 import com.jalen.jo.R;
 import com.jalen.jo.scan.CaptureActivity;

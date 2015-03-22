@@ -1,15 +1,16 @@
 package com.jalen.jo.scan;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
@@ -17,6 +18,9 @@ import com.google.zxing.Result;
 
 import com.jalen.jo.R;
 import com.jalen.jo.activities.BaseActivity;
+import com.jalen.jo.activities.BookInfoActivity;
+import com.jalen.jo.fragments.BookinfoFragment;
+import com.jalen.jo.scan.camera.CameraManager;
 import com.jalen.jo.utils.InactivityTimer;
 
 import java.io.IOException;
@@ -31,12 +35,12 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
     private Collection<BarcodeFormat> decodeFormats;    // 码格式集合
     private Map<DecodeHintType,?> decodeHints;      // hints
     private String characterSet;        // 码内容编码
+    private AmbientLightManager ambientLightManager;    // 闪光灯管理
+    private BeepManager beepManager;        // “哔哔声”和“震动”管理
 //    V
-    private SurfaceView mSurfaceView;
     private ViewfinderView mViewFinderView;
 //    C
-    private SurfaceHolder mSurfaceHolder;   // surface <=> surfaceholder <=> surfaceview
-    private CaptureActivityHandler handler; // activity <=> handler <=> view
+    private CaptureActivityHandler handler; // activity <=> handler <=> view （在initCamera()方法中进行初始化）
     private InactivityTimer inactivityTimer;    // 这是一个工具类，用于消灭使用了有一段时间没有活动的activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +55,12 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
 //        初始化数据
         hasSurface = false;
         inactivityTimer = new InactivityTimer(this);
+        beepManager = new BeepManager(this);
+        ambientLightManager = new AmbientLightManager(this);
 
-//        初始化视图
-        mSurfaceView = (SurfaceView) findViewById(R.id.surface_preview);
-        mSurfaceHolder = mSurfaceView.getHolder();
-        mViewFinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
 
+//        赶紧让设置信息生效
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
     }
 
     @Override
@@ -72,12 +76,17 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
         // automatically handle clicks on the Home/Up butto n, so long
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()){
-            case R.id.home:
+            case android.R.id.home:
+                Toast.makeText(this, "点击了Up键", Toast.LENGTH_SHORT).show();
                 finish();
                 break;
             case R.id.action_settings:
-                Intent captureSettingsIntent = new Intent(this, CaptureSettingsActivity.class);
+                Intent captureSettingsIntent = new Intent(this, CapturePreferencesActivity.class);
                 startActivity(captureSettingsIntent);
+                break;
+            case R.id.action_add_a_shortcut:
+                Intent bookinfoIntent = new Intent(this, BookInfoActivity.class);
+                startActivity(bookinfoIntent);
                 break;
         }
 
@@ -87,12 +96,26 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
     @Override
     protected void onResume() {
         super.onResume();
-//    数据初始化
+
+//    数据重置
         lastResult = null;
+        handler = null;
+        decodeFormats = null;
+        characterSet = null;
 //        初始化相机管理类
         mCameraManager = new CameraManager(getApplicationContext());
-//        ？根据配置文件设置横竖屏配置
+        mViewFinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
+        mViewFinderView.setCameraManager(mCameraManager);
 
+//        根据配置文件设置横竖屏配置
+/*        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        if (prefs.getBoolean(CapturePreferencesActivity.KEY_DISABLE_AUTO_ORIENTATION, true)) {
+            setRequestedOrientation(getCurrentOrientation());
+        } else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+        }*/
+        SurfaceView surfaceView = (SurfaceView) findViewById(R.id.surface_preview);
+        SurfaceHolder mSurfaceHolder = surfaceView.getHolder();
 //        判断是否有Surface对象
         if (hasSurface){
 //            stop状态时camera已经关闭， 但是surface还在
@@ -102,22 +125,36 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
             mSurfaceHolder.addCallback(this);
         }
 
-        mViewFinderView.setCameraManager(mCameraManager);
 
         inactivityTimer.onResume();
+        ambientLightManager.start(mCameraManager);
+        beepManager.updatePrefs();
+
+
 
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        if (handler != null) {
+            handler.quitSynchronously();
+            handler = null;
+        }
         inactivityTimer.onPause();
+        // 关闭闪光灯管理
+        ambientLightManager.stop();
+        // 这里主要是资源释放
+        beepManager.close();
 //        关闭相机
         mCameraManager.closeDriver();
-        if (hasSurface){
+        if (!hasSurface){
             // 移除surface
+            SurfaceView surfaceView = (SurfaceView) findViewById(R.id.surface_preview);
+            SurfaceHolder mSurfaceHolder = surfaceView.getHolder();
             mSurfaceHolder.removeCallback(this);
         }
+
     }
 
     @Override
@@ -126,7 +163,7 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
         inactivityTimer.shutdown();
     }
 
-    //    surface的生命周期方法  START
+    //  *****************************  surface的生命周期方法  **********************************START
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         // 初始化相机
@@ -138,18 +175,14 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        try {
-            mCameraManager.startPreview();
-        } catch (Exception e) {
-            Log.e(tag, "Could not start preview", e);
-            mCameraManager.stopPreview();
-        }
+
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        mCameraManager.stopPreview();
-    }   // END
+        hasSurface = false;
+    }
+    //  *****************************  surface的生命周期方法  **********************************END
 
     /**
      * 初始化相机
@@ -175,50 +208,36 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
 
     /**
      * A valid barcode has been found, so give an indication of success and show the results.<br/>
-     * 已经发现一个可用的barcode，所以提示用户扫描成功并且给出结果
+     * （UI层对解码结果的响应）已经发现一个可用的barcode，所以提示用户扫描成功并且给出结果
      * @param rawResult The contents of the barcode.结果对象
      * @param scaleFactor amount by which thumbnail was scaled  缩放比例
      * @param barcode   A greyscale bitmap of the camera data which was decoded.   灰度位图
      */
-/*    public void handleDecode(Result rawResult, Bitmap barcode, float scaleFactor) {
+    public void handleDecode(Result rawResult, Bitmap barcode, float scaleFactor) {
         inactivityTimer.onActivity();
         lastResult = rawResult;
-        ResultHandler resultHandler = ResultHandlerFactory.makeResultHandler(this, rawResult);
 
-        boolean fromLiveScan = barcode != null;
-        if (fromLiveScan) {
-            historyManager.addHistoryItem(rawResult, resultHandler);
-            // Then not from history, so beep/vibrate and we have an image to draw on
-            beepManager.playBeepSoundAndVibrate();
-            drawResultPoints(barcode, scaleFactor, rawResult);
+        if (barcode != null){
+//            显示扫描结果信息(DecodeFormat/Text)
+            Toast.makeText(this, "DecodeFormat: " + rawResult.getBarcodeFormat() + "\n" + "Text: " + rawResult.getText(),
+                    Toast.LENGTH_SHORT).show();
+            switch (rawResult.getBarcodeFormat()){
+//                EAN_13
+                case EAN_13:
+                    if (rawResult.getText().startsWith("978") || rawResult.getText().startsWith("979")){
+                        //            跳转至图书信息页
+                        Intent bookinfoIntent = new Intent(this, BookInfoActivity.class);
+                        bookinfoIntent.putExtra(BookinfoFragment.EXTRA_BOOK_ISBN, rawResult.getText());
+                        startActivity(bookinfoIntent);
+                    }
+                    break;
+//                QR_CODE
+                case QR_CODE:
+//                    图书馆id，跳转至图书馆信息页
+                    break;
+            }
         }
-
-        switch (source) {
-            case NATIVE_APP_INTENT:
-            case PRODUCT_SEARCH_LINK:
-                handleDecodeExternally(rawResult, resultHandler, barcode);
-                break;
-            case ZXING_LINK:
-                if (scanFromWebPageManager == null || !scanFromWebPageManager.isScanFromWebPage()) {
-                    handleDecodeInternally(rawResult, resultHandler, barcode);
-                } else {
-                    handleDecodeExternally(rawResult, resultHandler, barcode);
-                }
-                break;
-            case NONE:
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-                if (fromLiveScan && prefs.getBoolean(PreferencesActivity.KEY_BULK_MODE, false)) {
-                    Toast.makeText(getApplicationContext(),
-                            getResources().getString(R.string.msg_bulk_mode_scanned) + " (" + rawResult.getText() + ')',
-                            Toast.LENGTH_SHORT).show();
-                    // Wait a moment or else it will scan the same barcode continuously about 3 times
-                    restartPreviewAfterDelay(BULK_MODE_SCAN_DELAY_MS);
-                } else {
-                    handleDecodeInternally(rawResult, resultHandler, barcode);
-                }
-                break;
-        }
-    }*/
+    }
 
     /**
      * 调用ViewFinderView的drawViewfinder()方法，重新绘制一遍ViewFinderView控件
@@ -227,6 +246,22 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
         mViewFinderView.drawViewfinder();
     }
 
+    /**
+     * 获取当前屏幕的旋转方向
+     * @return
+     */
+/*
+    private int getCurrentOrientation() {
+        int rotation = getWindowManager().getDefaultDisplay().getRotation();
+        switch (rotation) {
+            case Surface.ROTATION_0:
+            case Surface.ROTATION_90:
+                return ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+            default:
+                return ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE;
+        }
+    }
+*/
 //    getter方法  start
     public CameraManager getCameraManager() {
         return mCameraManager;

@@ -1,8 +1,10 @@
 package com.jalen.jo.activities;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.Window;
 
 /**
  * Created by jh on 2015/2/27.  <br/>
@@ -34,11 +36,14 @@ public class BaseActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i(tag, "---------onCreat ");
-        /*// 竖屏锁定
+        // 竖屏锁定
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        getSupportActionBar().setElevation(0);
+/*
         if (mAllowFullScreen) {
             requestWindowFeature(Window.FEATURE_NO_TITLE); // 取消标题
-        }*/
+        }
+*/
 //        JoActivityManager.getAppManager().addActivity(this);
     }
 

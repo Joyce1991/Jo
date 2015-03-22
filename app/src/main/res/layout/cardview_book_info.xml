@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardCornerRadius="@dimen/cardview_default_radius"
+    card_view:cardElevation="@dimen/cardview_default_elevation">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/JoComponentStyle.TextView"
+            android:padding="8dp"
+            android:text="@string/tv_book_info_brief"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_light" />
+
+        <TextView
+            android:id="@+id/tv_book_info_brief"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="唐文，先后在腾讯、盛大、百度工作，曾负责腾讯四大平台之一网络媒体整体运维、运营，对海量互联网产品运维支撑、运营规划、性能优化、成本优化、平台研发、质量效率等有丰富的实践，目前就职于百度，T7架构师，负责百度产品线访问速度优化改进工作，百度速度监测平台(UAQ)、百度移动云应用性能监测平台(APM)负责人，百度学院讲师。"/>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

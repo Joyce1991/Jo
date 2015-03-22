@@ -5,12 +5,12 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.Result;
 import com.jalen.jo.R;
+import com.jalen.jo.scan.camera.CameraManager;
 import com.jalen.jo.scan.docode.DecodeThread;
 
 import java.util.Collection;
@@ -62,6 +62,7 @@ public class CaptureActivityHandler extends Handler {
         decodeThread.start();
 
         // 开始捕获图像
+        mState = State.SUCCESS;         // 这里一定要一开始是State.SUCCESS
         cameraManager.startPreview();
         restartPreviewAndDecode();
     }
@@ -70,6 +71,9 @@ public class CaptureActivityHandler extends Handler {
     @Override
     public void handleMessage(Message msg) {
         switch (msg.what) {
+            case R.id.restart_preview:
+                restartPreviewAndDecode();
+                break;
             case R.id.decode_succeeded:
                 // 解码成功
                 mState = State.SUCCESS;
@@ -91,8 +95,7 @@ public class CaptureActivityHandler extends Handler {
                 // 处理解析结果
 //                activity.handleDecode((Result) msg.obj, barcode, scaleFactor);
                 Result result = (Result) msg.obj;
-                Toast.makeText(activity, "result: " + "barcodeformat: " + result.getBarcodeFormat()
-                        + " text: " + result.getText(), Toast.LENGTH_SHORT).show();
+                activity.handleDecode(result, barcode, scaleFactor);
                 break;
             case R.id.decode_failed:
                 // 解码失败,设置状态为PREVIEW，重新获取预览图并解码
@@ -114,5 +117,28 @@ public class CaptureActivityHandler extends Handler {
             // 通知ViewFinderView重新绘制一遍
             activity.drawViewfinder();
         }
+    }
+
+    /**
+     * 通知不扫描了，关闭相关资源
+     * <br/>
+     * 1.通知CameraManager停止预览
+     * 2.通知DecodeThread停止解析
+     */
+    public void quitSynchronously() {
+        mState = State.DONE;
+        cameraManager.stopPreview();
+        Message quit = Message.obtain(decodeThread.getHandler(), R.id.quit);
+        quit.sendToTarget();
+        try {
+            // Wait at most half a second; should be enough time, and onPause() will timeout quickly
+            decodeThread.join(500L);
+        } catch (InterruptedException e) {
+            // continue
+        }
+
+        // Be absolutely sure we don't send any queued up messages
+        removeMessages(R.id.decode_succeeded);
+        removeMessages(R.id.decode_failed);
     }
 }

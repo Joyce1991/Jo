@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.jalen.jo.scan;
+package com.jalen.jo.scan.camera;
 
 import android.graphics.Point;
 import android.hardware.Camera;
@@ -41,6 +41,7 @@ final class PreviewCallback implements Camera.PreviewCallback {
 
   @Override
   public void onPreviewFrame(byte[] data, Camera camera) {
+      Log.d(TAG, "Got preview callback");
 //      把扫描到得data数据通过消息机制发送给解码线程DecodeThread进行解析
     Point cameraResolution = configManager.getCameraResolution();
     Handler thePreviewHandler = previewHandler;

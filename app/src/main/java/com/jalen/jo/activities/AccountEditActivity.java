@@ -13,11 +13,12 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.jalen.jo.R;
+import com.jalen.jo.fragments.AccountEditFragment;
 
 /**
  * 账户资料管理
  */
-public class AccountEditActivity extends ActionBarActivity {
+public class AccountEditActivity extends BaseActivity {
     public static final String EXTRA_FRAGMENT_ID = "com.jalen.jo.activities.fragmentintent.fragment_id";
 
     private Intent mIntent; // 启动Intent
@@ -31,12 +32,10 @@ public class AccountEditActivity extends ActionBarActivity {
         mIntent = getIntent();
         mFragmentID = mIntent.getIntExtra(EXTRA_FRAGMENT_ID, 0);
 
-
-
         if (savedInstanceState == null) {
-          /*  getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new NicknameFragment())
-                    .commit();*/
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, AccountEditFragment.newInstance())
+                    .commit();
         }
     }
 
@@ -63,38 +62,4 @@ public class AccountEditActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment implements View.OnClickListener {
-//        M
-        private String mNickname;
-//        V
-        private EditText etNickname;
-        private Button btnSave;
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_account_edit, container, false);
-
-            etNickname = (EditText) rootView.findViewById(R.id.et_account_edit_nickname);
-            btnSave = (Button) rootView.findViewById(R.id.btn_account_edit_save);
-
-            btnSave.setOnClickListener(this);
-            return rootView;
-        }
-
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()){
-                case R.id.btn_account_edit_save:
-
-                    break;
-            }
-        }
-    }
 }

@@ -32,7 +32,7 @@ public class NicknameFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_account_edit, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_account_nickname_edit, container, false);
 
         etNickname = (EditText) rootView.findViewById(R.id.et_account_edit_nickname);
         btnSave = (Button) rootView.findViewById(R.id.btn_account_edit_save);

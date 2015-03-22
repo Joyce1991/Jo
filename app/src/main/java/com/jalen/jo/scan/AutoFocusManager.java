@@ -30,7 +30,7 @@ import java.util.concurrent.RejectedExecutionException;
 /**
  * Camera自动对焦管理
  */
-final class AutoFocusManager implements Camera.AutoFocusCallback {
+public class AutoFocusManager implements Camera.AutoFocusCallback {
 
   private static final String TAG = AutoFocusManager.class.getSimpleName();
 
@@ -48,12 +48,12 @@ final class AutoFocusManager implements Camera.AutoFocusCallback {
   private final Camera camera;
   private AsyncTask<?,?,?> outstandingTask;
 
-  AutoFocusManager(Context context, Camera camera) {
+  public AutoFocusManager(Context context, Camera camera) {
     this.camera = camera;
     SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
     String currentFocusMode = camera.getParameters().getFocusMode();
     useAutoFocus =
-        sharedPrefs.getBoolean(CaptureSettingsActivity.KEY_AUTO_FOCUS, true) &&
+        sharedPrefs.getBoolean(CapturePreferencesActivity.KEY_AUTO_FOCUS, true) &&
         FOCUS_MODES_CALLING_AF.contains(currentFocusMode);
     Log.i(TAG, "Current focus mode '" + currentFocusMode + "'; use auto focus? " + useAutoFocus);
     start();
@@ -77,7 +77,7 @@ final class AutoFocusManager implements Camera.AutoFocusCallback {
     }
   }
 
-  synchronized void start() {
+  public synchronized void start() {
     if (useAutoFocus) {
       outstandingTask = null;
       if (!stopped && !focusing) {
@@ -103,7 +103,7 @@ final class AutoFocusManager implements Camera.AutoFocusCallback {
     }
   }
 
-  synchronized void stop() {
+  public synchronized void stop() {
     stopped = true;
     if (useAutoFocus) {
       cancelOutstandingTask();
