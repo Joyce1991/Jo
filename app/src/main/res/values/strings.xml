@@ -116,6 +116,8 @@
     <string name="action_settings">设置</string>
     <string name="action_account_settings">账户设置</string>
     <string name="action_signout">退出登录</string>
+    <string name="action_new">新建</string>
+    <string name="action_style">样式</string>
 
 
 </resources>

@@ -5,6 +5,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -102,4 +105,36 @@ public class LibraryFragment extends Fragment {
         public void onFragmentInteraction(Uri uri);
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_library, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_new:
+                // 创建新的图书馆
+
+                break;
+            case R.id.action_search:
+                // 搜索有哪些图书馆
+
+                break;
+            case R.id.action_scan:
+                // 扫一扫
+
+                break;
+            case R.id.action_settings:
+                // 设置
+
+                break;
+            case R.id.action_style:
+                // 显示风格样式选择
+
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
