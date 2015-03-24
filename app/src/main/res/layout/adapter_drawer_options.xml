@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/navigation_drawer_item_height"
+    android:padding="@dimen/jocomponent_paddin"
+    android:paddingLeft="@dimen/jocomponent_paddingLeft"
+    android:background="@drawable/item_bg">
+    <TextView
+        android:id="@+id/tv_option_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:textColor="@drawable/item_color_selector"/>
+
+    <TextView
+        android:id="@+id/tv_option_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/jocomponent_paddingLeft"
+        android:paddingRight="@dimen/jocomponent_paddingRight"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/shape_count"
+        android:textColor="@color/white"/>
+
+</RelativeLayout>

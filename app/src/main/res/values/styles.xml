@@ -90,4 +90,14 @@
     </style>
 
 
+    <!--textView 文本选择或者按下时的效果-->
+    <style name="textStyle_selected_pressed">
+        <item name="android:textColor">@color/blue_light</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="textStyle_default">
+        <item name="android:textColor">@color/gray_dark</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
 </resources>

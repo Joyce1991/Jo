@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">图书管</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="app_name">Jo爱读书</string>
+    <string name="title_section1">图书馆</string>
+    <string name="title_section2">书架</string>
+    <string name="title_section3">关注的图书</string>
+    <string name="title_section4">提醒</string>
+    <string name="title_section5">关于</string>
 
     <!--navigation 模块-->
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -118,6 +120,7 @@
     <string name="action_signout">退出登录</string>
     <string name="action_new">新建</string>
     <string name="action_style">样式</string>
+    <string name="tv_drawer_help_and_feedback">帮助与反馈</string>
 
 
 </resources>

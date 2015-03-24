@@ -5,6 +5,7 @@
     <color name="blue_light_transparent_33">#33009944</color>
     <color name="blue_dark">#009944</color>
     <color name="gray_light">#aaaaaa</color>
+    <color name="gray_light_2">#e5e5e5</color>
     <color name="transparente">#00000000</color>
     <color name="gray_dark">#333333</color>
 
@@ -14,4 +15,5 @@
     <color name="viewfinder_laser">#ffcc0000</color>
     <color name="possible_result_points">#c0ffbd21</color>
     <color name="result_points">#c099cc00</color> <!-- Android standard ICS color -->
+
 </resources>

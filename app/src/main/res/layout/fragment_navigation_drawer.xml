@@ -1,101 +1,123 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:dividerHeight="0dp"
     android:background="@color/white"
-    android:orientation="vertical"
-    tools:context=".NavigationDrawerFragment" >
-    <TextView
-        style="@style/TextView.Title"
-        android:text="欢迎使用"/>
+    android:dividerHeight="0dp"
+    tools:context=".NavigationDrawerFragment">
+
     <FrameLayout
         android:id="@+id/fl_drawer_userinfo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/drawer_user_height">
         <!--用户已登录-->
         <LinearLayout
             android:id="@+id/ll_drawer_signin"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_height="match_parent"
+            android:background="@color/blue_light"
             android:gravity="center_vertical"
-            android:visibility="gone"
-            android:padding="8dp">
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:visibility="gone">
+
             <com.jalen.jo.views.CircleImageView
                 android:id="@+id/iv_drawer_usericon"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_centerInParent="true"
-                app:border_width="2dp"
+                android:src="@drawable/tulips"
                 app:border_color="@color/white"
-                android:src="@drawable/tulips"/>
+                app:border_width="2dp" />
+
             <TextView
                 android:id="@+id/tv_drawer_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
-                android:text="张晋瑜"/>
-            </LinearLayout>
+                android:text="张晋瑜" />
+        </LinearLayout>
         <!--用户未登录-->
         <LinearLayout
             android:id="@+id/ll_drawer_unsignin"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="16dp"
-            android:paddingTop="8dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
             android:paddingBottom="8dp"
-            android:orientation="vertical">
+            android:paddingLeft="16dp"
+            android:paddingTop="8dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="您还未登录,请"/>
+                android:text="您还未登录,请" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/tv_drawer_signin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/btn_bg"
-                    android:text="登录"/>
+                    android:text="登录" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="，"/>
+                    android:text="，" />
+
                 <TextView
                     android:id="@+id/tv_drawer_signup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/btn_bg"
-                    android:text="注册"/>
-                </LinearLayout>
+                    android:text="注册" />
             </LinearLayout>
-        </FrameLayout>
-    <!--图书馆选择-->
-    <TextView
-        style="@style/TextView.Title"
-        android:text="图书馆"/>
-
-    <Spinner
-        android:id="@+id/spinner_library_select"
+        </LinearLayout>
+    </FrameLayout>
+    <!--drawer上的选项-->
+    <ListView
+        android:id="@+id/lv_drawer_options"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/navigation_drawer_item_height"
-        android:paddingLeft="16dp"
-        android:spinnerMode="dropdown" />
-    <!--我的借阅-->
-    <TextView
-        style="@style/TextView.Title"
-        android:text="我的借阅"/>
-    <TextView
-        android:id="@+id/tv_drawer_borrowhistory"
-        style="@style/TextView"
-        android:text="借阅历史"/>
-    <TextView
-        style="@style/TextView"
-        android:text="正在阅读"/>
+        android:layout_height="match_parent"
+        android:choiceMode="singleChoice"
+        android:layout_below="@id/fl_drawer_userinfo"
+        android:divider="@null" />
 
 
-</LinearLayout>
+    <!--设置、帮助与反馈-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/jocomponent_layout_marginBottom"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/tv_drawer_setting"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/navigation_drawer_item_height"
+            android:gravity="center_vertical"
+            android:padding="@dimen/jocomponent_paddin"
+            android:text="@string/action_settings"
+            android:clickable="true"
+            android:background="@drawable/item_bg"
+            android:textColor="@drawable/item_color_selector"/>
+
+        <TextView
+            android:id="@+id/tv_drawer_help_and_feedback"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/navigation_drawer_item_height"
+            android:gravity="center_vertical"
+            android:layout_below="@id/tv_drawer_setting"
+            android:padding="@dimen/jocomponent_paddin"
+            android:background="@drawable/item_bg"
+            android:clickable="true"
+            android:text="@string/tv_drawer_help_and_feedback"
+
+            android:textColor="@drawable/item_color_selector"/>
+    </RelativeLayout>
+</RelativeLayout>

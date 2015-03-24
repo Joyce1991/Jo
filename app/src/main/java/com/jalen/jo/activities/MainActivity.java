@@ -2,6 +2,7 @@ package com.jalen.jo.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,13 +15,21 @@ import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 
 import com.avos.avoscloud.AVAnalytics;
+import com.jalen.jo.fragments.AboutFragment;
 import com.jalen.jo.fragments.NavigationDrawerFragment;
 import com.jalen.jo.R;
+import com.jalen.jo.fragments.UserAlarmFragment;
+import com.jalen.jo.fragments.UserFavoritesFragment;
+import com.jalen.jo.fragments.UserLibraryFragment;
+import com.jalen.jo.fragments.UserShelfFragment;
 import com.jalen.jo.scan.CaptureActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends BaseActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, ActionBar.TabListener {
 
     /**
      * Fragment：
@@ -58,6 +67,33 @@ public class MainActivity extends BaseActivity
         fragmentManager.beginTransaction()
                 .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
                 .commit();
+        switch (position){
+            case 0:
+                ActionBar.Tab tab = getSupportActionBar().newTab().setText("第一项").setTabListener(this);
+                getSupportActionBar().addTab(tab);
+                tab = getSupportActionBar().newTab().setText("第二项").setTabListener(this);
+                getSupportActionBar().addTab(tab);
+                getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, UserLibraryFragment.newInstance()).commit();
+                break;
+            case 1:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, UserShelfFragment.newInstance()).commit();
+                break;
+            case 2:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, UserFavoritesFragment.newInstance()).commit();
+                break;
+            case 3:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, UserAlarmFragment.newInstance()).commit();
+                break;
+            case 4:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, AboutFragment.newInstance()).commit();
+                break;
+        }
     }
 
     public void onSectionAttached(int number) {
@@ -70,6 +106,12 @@ public class MainActivity extends BaseActivity
                 break;
             case 3:
                 mTitle = getString(R.string.title_section3);
+                break;
+            case 4:
+                mTitle = getString(R.string.title_section4);
+                break;
+            case 5:
+                mTitle = getString(R.string.title_section5);
                 break;
         }
     }
@@ -118,6 +160,21 @@ public class MainActivity extends BaseActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
+    }
+
+    @Override
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
+    }
+
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
     }
 
     /**

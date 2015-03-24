@@ -14,8 +14,8 @@
     <dimen name="jocomponent_layout_height">40dp</dimen>
     <dimen name="jocomponent_layout_marginLeft">16dp</dimen>
     <dimen name="jocomponent_layout_marginRight">16dp</dimen>
-    <dimen name="jocomponent_layout_marginTop">8dp</dimen>
-    <dimen name="jocomponent_layout_marginBottom">8dp</dimen>
+    <dimen name="jocomponent_layout_marginTop">16dp</dimen>
+    <dimen name="jocomponent_layout_marginBottom">16dp</dimen>
     <dimen name="jocomponent_paddingLeft">8dp</dimen>
     <dimen name="jocomponent_paddingRight">8dp</dimen>
     <dimen name="jocomponent_paddin">8dp</dimen>
@@ -27,4 +27,6 @@
     <!--书本图片的宽高-->
     <dimen name="book_height">120dp</dimen>
     <dimen name="book_width">96dp</dimen>
+
+    <dimen name="drawer_user_height">96dp</dimen>
 </resources>
