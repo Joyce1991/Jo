@@ -3,21 +3,21 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="android:actionBarStyle">@style/JoActionBar</item>
-        <item name="android:actionBarSize">48dp</item>
-        <!--<item name="android:windowContentOverlay">@drawable/solid_line</item>-->
+        <item name="windowActionBar">false</item>
+        <item name="actionBarStyle">@style/JoActionBarStyle</item>
 
-        <!-- Support library compatibility -->
-        <item name="actionBarStyle">@style/JoActionBar</item>
-        <item name="actionBarSize">48dp</item>
-        <!--<item name="windowContentOverlay">@drawable/solid_line</item>-->
+        <!-- colorPrimary is used for the default action bar background -->
+        <item name="colorPrimary">@color/jo_actionbar_color</item>
+        <!-- colorPrimaryDark is used for the status bar -->
+        <item name="colorPrimaryDark">@color/jo_actionbar_dark_color</item>
+        <!-- colorAccent is used as the default value for colorControlActivated,
+         which is used to tint widgets -->
+        <item name="colorAccent">@color/jo_actionbar_accent</item>
 
     </style>
     <!--自定义actionbar样式-->
-    <style name="JoActionBar" parent="Widget.AppCompat.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@drawable/actionbar_bg</item>
-        <!-- Support library compatibility -->
-        <item name="background">@drawable/actionbar_bg</item>
+    <style name="JoActionBarStyle" parent="Theme.AppCompat.Light.DarkActionBar">
+
     </style>
     <!--textview样式-->
     <style name="TextView">

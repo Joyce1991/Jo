@@ -50,6 +50,8 @@ dependencies {
     compile 'cn.leancloud.android:avoscloud-feedback:v2.6.+@aar'
     //avoscloud-search 为 LeanCloud 应用内搜索包
     compile 'cn.leancloud.android:avoscloud-search:v2.6.+@aar'
+    //avoscloud-search 为 LeanCloud 推送
+    compile 'cn.leancloud.android:avoscloud-push:v2.6.+@aar'
 
 
 }

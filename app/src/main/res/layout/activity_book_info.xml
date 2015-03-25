@@ -1,7 +1,25 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.jalen.jo.activities.BookInfoActivity"
-    tools:ignore="MergeRootFrame" />
+    tools:context="com.jalen.jo.activities.BookInfoActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_book_info_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:navigationIcon="@drawable/ic_action_back"/>
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_below="@id/my_book_info_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</RelativeLayout>
+

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,6 +29,9 @@ public class AccountEditActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_edit);
+        // 用Toolbar替换actionbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         mIntent = getIntent();
         mFragmentID = mIntent.getIntExtra(EXTRA_FRAGMENT_ID, 0);

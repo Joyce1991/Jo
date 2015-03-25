@@ -24,4 +24,5 @@ public class JoLibrary {
      * 图书集合(图书对象id集合)
      */
     private List<String> books;
+
 }

@@ -1,9 +1,14 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="com.jalen.jo.fragments.UserLibraryFragment">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.jalen.jo.fragments.UserLibraryFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <com.jalen.jo.views.EmptyRecyclerView
+        android:id="@+id/rv_library_join"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical" />
 
-</FrameLayout>
+
+</RelativeLayout>

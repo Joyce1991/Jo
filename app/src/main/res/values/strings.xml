@@ -121,6 +121,9 @@
     <string name="action_new">新建</string>
     <string name="action_style">样式</string>
     <string name="tv_drawer_help_and_feedback">帮助与反馈</string>
+    <string name="tv_library_collection">藏书量：</string>
+    <string name="emptycardview_new_detail">创建或者删除你自己的图书馆，从此开启掌上管理图书。无论你是公司行政、还是个人</string>
+    <string name="emptycardview_new">创建我的图书馆</string>
 
 
 </resources>

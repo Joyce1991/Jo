@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.jalen.jo.views.EmptyRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/cardview_library_height"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/library_pic"
+            android:layout_width="@dimen/cardview_library_height"
+            android:layout_height="@dimen/cardview_library_height"
+            android:src="@drawable/pic_library_default"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            
+            <LinearLayout
+                android:id="@+id/creator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/library_creator_pic"
+                    android:layout_width="@dimen/cardview_creator_pic"
+                    android:layout_height="@dimen/cardview_creator_pic"
+                    android:src="@drawable/ic_launcher"/>
+                <TextView
+                    android:id="@+id/library_creator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="扫码兽团队"/>
+                </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_overflow"
+                android:layout_width="@dimen/cardview_overflow_width"
+                android:layout_height="@dimen/cardview_overflow_height"
+                android:src="@drawable/ic_action_overflow"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_toLeftOf="@id/iv_overflow"
+                android:layout_alignBottom="@id/creator">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_library_collection"/>
+                <TextView
+                    android:id="@+id/library_collection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="256"
+                    android:textColor="@color/red_light"/>
+                </LinearLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/jocomponent_paddin"
+                android:layout_toLeftOf="@id/iv_overflow"
+                android:layout_above="@id/creator"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true">
+                <TextView
+                    android:id="@+id/library_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:singleLine="true"
+                    android:text="打造高质量Android应用"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/library_brief"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:lines="2"
+                    android:text="   广州图书馆是广州市政府主办的公益性文化设施……"/>
+            </RelativeLayout>
+
+            </RelativeLayout>
+        </LinearLayout>
+
+</com.jalen.jo.views.EmptyRecyclerView>

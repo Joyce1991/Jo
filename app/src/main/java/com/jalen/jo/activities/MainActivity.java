@@ -3,10 +3,12 @@ package com.jalen.jo.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +25,7 @@ import com.jalen.jo.fragments.UserFavoritesFragment;
 import com.jalen.jo.fragments.UserLibraryFragment;
 import com.jalen.jo.fragments.UserShelfFragment;
 import com.jalen.jo.scan.CaptureActivity;
+import com.jalen.jo.views.SlidingTabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,11 +44,21 @@ public class MainActivity extends BaseActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+    private SlidingTabLayout mSlidingTabLayout;
+    private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // 用Toolbar替换actionbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
+        setSupportActionBar(toolbar);
+/*
+        mViewPager = new ViewPager(this);
+        mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+        mSlidingTabLayout.setViewPager(mViewPager);
+*/
 
 //        跟踪统计应用的打开情况
         AVAnalytics.trackAppOpened(getIntent());
@@ -69,11 +82,13 @@ public class MainActivity extends BaseActivity
                 .commit();
         switch (position){
             case 0:
+/*
                 ActionBar.Tab tab = getSupportActionBar().newTab().setText("第一项").setTabListener(this);
                 getSupportActionBar().addTab(tab);
                 tab = getSupportActionBar().newTab().setText("第二项").setTabListener(this);
                 getSupportActionBar().addTab(tab);
                 getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+*/
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, UserLibraryFragment.newInstance()).commit();
                 break;
@@ -118,7 +133,7 @@ public class MainActivity extends BaseActivity
 
     public void restoreActionBar() {
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+//        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
     }

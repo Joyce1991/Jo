@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,6 +34,9 @@ public class SigninActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
+        // 用Toolbar替换actionbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
