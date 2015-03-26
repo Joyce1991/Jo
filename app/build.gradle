@@ -42,6 +42,9 @@ dependencies {
     // viewpagerindicator
     compile 'com.viewpagerindicator:library:2.4.1@aar'
 
+    // alibaba
+    compile 'in.srain.cube:ultra-ptr:1.0.8@aar'
+
     //avoscloud-sdk 为 LeanCloud基础包
     compile 'cn.leancloud.android:avoscloud-sdk:v2.6.+'
     //avoscloud-statistics 为 LeanCloud 统计包
