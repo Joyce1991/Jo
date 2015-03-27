@@ -33,7 +33,7 @@ public class MainActivity extends BaseActivity
 
     /**
      * Fragment：
-     * 管理navigation drawer的 行为、 交互 和 呈现.
+     * 管理navigation drawer的行为、 交互 和 呈现.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
 
