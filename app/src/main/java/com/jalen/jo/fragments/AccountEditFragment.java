@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jalen.jo.R;
+import com.jalen.jo.library.AllLibraryFragment;
 import com.jalen.jo.views.CircleImageView;
 import com.viewpagerindicator.TabPageIndicator;
 
@@ -61,7 +62,7 @@ public class AccountEditFragment extends Fragment implements View.OnClickListene
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fragments = new ArrayList<Fragment>();
-        fragments.add(UserLibraryFragment.newInstance());
+        fragments.add(new AllLibraryFragment());
         fragments.add(UserShelfFragment.newInstance());
         fragments.add(UserFavoritesFragment.newInstance());
     }

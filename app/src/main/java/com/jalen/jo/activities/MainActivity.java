@@ -22,13 +22,10 @@ import com.jalen.jo.fragments.NavigationDrawerFragment;
 import com.jalen.jo.R;
 import com.jalen.jo.fragments.UserAlarmFragment;
 import com.jalen.jo.fragments.UserFavoritesFragment;
-import com.jalen.jo.fragments.UserLibraryFragment;
+import com.jalen.jo.library.AllLibraryFragment;
 import com.jalen.jo.fragments.UserShelfFragment;
 import com.jalen.jo.scan.CaptureActivity;
 import com.jalen.jo.views.SlidingTabLayout;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class MainActivity extends BaseActivity
@@ -90,7 +87,7 @@ public class MainActivity extends BaseActivity
                 getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 */
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, UserLibraryFragment.newInstance()).commit();
+                        .replace(R.id.container, new AllLibraryFragment()).commit();
                 break;
             case 1:
                 fragmentManager.beginTransaction()

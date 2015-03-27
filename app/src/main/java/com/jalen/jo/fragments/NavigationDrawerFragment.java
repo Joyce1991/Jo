@@ -118,6 +118,9 @@ public class NavigationDrawerFragment extends Fragment implements View.OnClickLi
         option = new DrawerOption("关于", 0);
         options.add(option);
 
+        // 初始化mCurrentSelectedPosition
+        selectItem(mCurrentSelectedPosition);
+
     }
 
     @Override

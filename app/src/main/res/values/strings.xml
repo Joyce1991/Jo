@@ -126,4 +126,8 @@
     <string name="emptycardview_new">创建我的图书馆</string>
 
 
+    <string-array name="tabs_all_library">
+        <item>  私馆  </item>
+        <item>  公馆  </item>
+    </string-array>
 </resources>

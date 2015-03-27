@@ -1,4 +1,4 @@
-package com.jalen.jo.fragments;
+package com.jalen.jo.library;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.jalen.jo.R;
 import com.jalen.jo.beans.JoLibrary;
+import com.jalen.jo.fragments.BaseFragment;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -26,9 +27,15 @@ import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
 
-public class UserLibraryFragment extends Fragment {
-    private static final String TAG = "UserLibraryFragment";
-
+/**
+ * A simple {@link Fragment} subclass.
+ * Activities that contain this fragment must implement the
+ * {@link LibraryListFragment.OnFragmentInteractionListener} interface
+ * to handle interaction events.
+ * Use the {@link LibraryListFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class LibraryListFragment extends BaseFragment {
     private List<JoLibrary> libraries;
 
     private PtrClassicDefaultHeader mPtrClassicHeader;
@@ -39,13 +46,13 @@ public class UserLibraryFragment extends Fragment {
 
 //    private OnFragmentInteractionListener mListener;
 
-    public static UserLibraryFragment newInstance() {
-        UserLibraryFragment fragment = new UserLibraryFragment();
+    public static LibraryListFragment newInstance(CharSequence mTitle, int mIndicatorColor, int mDividerColor) {
+        LibraryListFragment fragment = new LibraryListFragment();
 
         return fragment;
     }
 
-    public UserLibraryFragment() {
+    public LibraryListFragment() {
         // Required empty public constructor
     }
 
@@ -60,13 +67,14 @@ public class UserLibraryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_user_library, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_library_list, container, false);
         mEmptyView = (CardView) rootView.findViewById(R.id.empty_view);
         ImageView mCardNew = (ImageView) rootView.findViewById(R.id.emptycardview_new);
         mCardNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // 启动创建图书馆页面
+                Log.i(tag, "点击创建图书馆");
             }
         });
 
@@ -205,11 +213,11 @@ public class UserLibraryFragment extends Fragment {
             MyViewHolder viewholder = new MyViewHolder(v, new MyViewHolder.IMyViewHolderClicks(){
                 @Override
                 public void onItemClicked(View caller, int position) {
-                    Log.i(TAG, "点击了Item, 位置position为：" + position);
+                    Log.i(tag, "点击了Item, 位置position为：" + position);
                 }
                 @Override
                 public void onOverflowClicked(ImageView callerImage, int position) {
-                    Log.i(TAG, "点击了Item的overflow, 位置position为：" + position);
+                    Log.i(tag, "点击了Item的overflow, 位置position为：" + position);
                 }
             });
             return viewholder;
@@ -217,7 +225,7 @@ public class UserLibraryFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            Log.d(TAG, "Element " + position + " set.");
+            Log.d(tag, "Element " + position + " set.");
             JoLibrary library = libraries.get(position);
             MyViewHolder myViewHolder = (MyViewHolder) holder;
 
@@ -321,4 +329,5 @@ public class UserLibraryFragment extends Fragment {
         }
 
     }
+
 }
