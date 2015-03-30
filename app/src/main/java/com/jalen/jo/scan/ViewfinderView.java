@@ -204,7 +204,7 @@ public final class ViewfinderView extends View {
 		lineRect.top = slideTop;
 		lineRect.bottom = (slideTop + MIDDLE_LINE_WIDTH);
 		canvas.drawBitmap(((BitmapDrawable) (BitmapDrawable) getResources()
-				.getDrawable(R.drawable.scan_laser)).getBitmap(), null,
+				.getDrawable(R.drawable.pic_scan_laser)).getBitmap(), null,
 				lineRect, paint);
 
 	}

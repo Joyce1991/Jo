@@ -12,6 +12,7 @@
     <color name="red_dark">#CC0000</color>
     <color name="transparente">#00000000</color>
     <color name="gray_dark">#333333</color>
+    <color name="blue_indigo">#274760</color>
     <color name="jo_actionbar_color">#22ac38</color>
     <color name="jo_actionbar_dark_color">#009944</color>
     <color name="jo_actionbar_accent">#33009944</color>

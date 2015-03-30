@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <!--SD卡访问权限-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--账户访问权限-->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
     <!-- 申明所需要的设备功能 -->
     <uses-feature
@@ -49,8 +51,9 @@
                 android:value="com.jalen.jo.activities.MainActivity" />
         </activity>
         <activity
-            android:name=".activities.AccountEditActivity"
+            android:name=".activities.AccountActivity"
             android:label="@string/title_activity_account_edit"
+            android:theme="@style/AccountTheme"
             android:parentActivityName=".activities.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

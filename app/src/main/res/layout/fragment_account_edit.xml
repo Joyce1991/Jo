@@ -1,40 +1,145 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:paddingBottom="16dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingTop="16dp"
+    android:background="@color/dim_foreground_disabled_material_dark"
+    tools:context="com.jalen.jo.fragments.AccountEditFragment">
 
-    <RelativeLayout
-        android:id="@+id/rl_account_head"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@color/blue_light">
-        <com.jalen.jo.views.CircleImageView
-            android:id="@+id/civ_account_pic"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:src="@drawable/tulips"
-            android:layout_centerInParent="true" />
-        <TextView
-            android:id="@+id/tv_account_username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/civ_account_pic"
-            android:layout_centerHorizontal="true"
-            android:text="张晋瑜"
-            android:padding="@dimen/jocomponent_paddin"
-            android:textColor="@color/white"/>
-        </RelativeLayout>
-    <!--水平指示器-->
-    <com.viewpagerindicator.TabPageIndicator
-        android:id="@+id/indicator_account"
-        android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:layout_alignBottom="@id/rl_account_head"/>
-    <!--viewpager-->
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager_account"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/rl_account_head"/>
-</RelativeLayout>
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/userdata_update"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/pic_user"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_alignParentLeft="true"
+                android:src="@drawable/ic_launcher" />
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/pic_user"
+                android:padding="8dp"
+                android:text="Jalen1991"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_action_next_item" />
+        </RelativeLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="补全头像，让小伙伴们认识你"
+            android:padding="8dp"
+            android:textColor="@color/red_light"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/ic_email"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_alignParentLeft="true"
+                android:src="@drawable/ic_action_email"/>
+            <EditText
+                android:layout_toRightOf="@id/ic_email"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="激活"/>
+            </RelativeLayout>
+
+        <!--账号绑定-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="账号绑定"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/ic_xilang"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_alignParentLeft="true"
+                android:src="@drawable/ic_action_email"/>
+            <TextView
+                android:layout_toRightOf="@id/ic_xilang"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="新浪微博"
+                android:textSize="18sp"
+                android:layout_centerVertical="true"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="绑定"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/ic_qq"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_alignParentLeft="true"
+                android:src="@drawable/ic_action_email"/>
+            <TextView
+                android:layout_toRightOf="@id/ic_qq"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="腾讯QQ"
+                android:textSize="18sp"
+                android:layout_centerVertical="true"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="绑定"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+
+</ScrollView>

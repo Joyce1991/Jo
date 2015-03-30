@@ -10,7 +10,7 @@ public class TabItem {
     private final int mIndicatorColor;
     private final int mDividerColor;
 
-    TabItem(CharSequence title, int indicatorColor, int dividerColor) {
+    public TabItem(CharSequence title, int indicatorColor, int dividerColor) {
         mTitle = title;
         mIndicatorColor = indicatorColor;
         mDividerColor = dividerColor;
@@ -34,14 +34,14 @@ public class TabItem {
     /**
      * @return the color to be used for indicator on the {@link com.jalen.jo.views.SlidingTabLayout}
      */
-    int getIndicatorColor() {
+    public int getIndicatorColor() {
         return mIndicatorColor;
     }
 
     /**
      * @return the color to be used for right divider on the {@link com.jalen.jo.views.SlidingTabLayout}
      */
-    int getDividerColor() {
+    public int getDividerColor() {
         return mDividerColor;
     }
 }

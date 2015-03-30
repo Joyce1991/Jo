@@ -118,7 +118,6 @@ public class LibraryListFragment extends BaseFragment {
         library.setLibraryBrief("fakisodhgfiashndifdklfhnjkasd");
         library.setLibraryId("0215");
         library.setLibraryManager("joyce");
-        library.setLibraryManagerPicUrl("https://raw.githubusercontent.com/aosp-exchange-group/about/master/weixin-qrcode.jpg");
         library.setLibraryName("东软北京图书馆");
         library.setLibraryPic("https://raw.githubusercontent.com/aosp-exchange-group/about/master/weixin-qrcode.jpg");
         libraries.add(library);
@@ -230,7 +229,6 @@ public class LibraryListFragment extends BaseFragment {
             MyViewHolder myViewHolder = (MyViewHolder) holder;
 
             myViewHolder.getCreatorName().setText(library.getLibraryManager());
-            ImageLoader.getInstance().displayImage(library.getLibraryManagerPicUrl(), myViewHolder.getCreatorPic());
             ImageLoader.getInstance().displayImage(library.getLibraryPic(), myViewHolder.getLibraryPic());
             myViewHolder.getLibraryName().setText(library.getLibraryName());
             myViewHolder.getLibraryBrief().setText(library.getLibraryBrief());

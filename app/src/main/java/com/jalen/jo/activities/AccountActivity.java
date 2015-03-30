@@ -1,25 +1,18 @@
 package com.jalen.jo.activities;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 
 import com.jalen.jo.R;
-import com.jalen.jo.fragments.AccountEditFragment;
+import com.jalen.jo.fragments.AccountCentralFragment;
 
 /**
  * 账户资料管理
  */
-public class AccountEditActivity extends BaseActivity {
+public class AccountActivity extends BaseActivity {
     public static final String EXTRA_FRAGMENT_ID = "com.jalen.jo.activities.fragmentintent.fragment_id";
 
     private Intent mIntent; // 启动Intent
@@ -28,7 +21,7 @@ public class AccountEditActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_account_edit);
+        setContentView(R.layout.activity_account_central);
         // 用Toolbar替换actionbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -38,7 +31,7 @@ public class AccountEditActivity extends BaseActivity {
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, AccountEditFragment.newInstance())
+                    .add(R.id.container, AccountCentralFragment.newInstance())
                     .commit();
         }
     }

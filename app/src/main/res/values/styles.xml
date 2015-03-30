@@ -19,6 +19,34 @@
     <style name="JoActionBarStyle" parent="Theme.AppCompat.Light.DarkActionBar">
 
     </style>
+    <!--书架界面的主题风格-->
+    <style name="BookshelfTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="windowActionBar">false</item>
+        <item name="actionBarStyle">@style/JoActionBarStyle</item>
+
+        <!-- colorPrimary is used for the default action bar background -->
+        <item name="colorPrimary">@color/blue_indigo</item>
+        <!-- colorPrimaryDark is used for the status bar -->
+        <item name="colorPrimaryDark">@color/blue_indigo</item>
+        <!-- colorAccent is used as the default value for colorControlActivated,
+         which is used to tint widgets -->
+        <item name="colorAccent">@color/jo_actionbar_accent</item>
+    </style>
+    <!--账户界面的主题风格-->
+    <style name="AccountTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="windowActionBar">false</item>
+        <item name="actionBarStyle">@style/JoActionBarStyle</item>
+
+        <!-- colorPrimary is used for the default action bar background -->
+        <item name="colorPrimary">@color/blue_indigo</item>
+        <!-- colorPrimaryDark is used for the status bar -->
+        <item name="colorPrimaryDark">@color/blue_indigo</item>
+        <!-- colorAccent is used as the default value for colorControlActivated,
+         which is used to tint widgets -->
+        <item name="colorAccent">@color/jo_actionbar_accent</item>
+    </style>
     <!--textview样式-->
     <style name="TextView">
         <item name="android:layout_height">@dimen/navigation_drawer_item_height</item>
@@ -36,6 +64,18 @@
     </style>
     <!--部件通用样式-->
     <style name="JoComponentStyle">
+        <!--宽高设置-->
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/jocomponent_layout_height</item>
+        <!--margin设置-->
+        <item name="android:layout_marginTop">@dimen/jocomponent_layout_marginTop</item>
+        <item name="android:layout_marginBottom">@dimen/jocomponent_layout_marginBottom</item>
+        <!--padding设置-->
+        <item name="android:paddingLeft">@dimen/jocomponent_paddingLeft</item>
+        <item name="android:paddingRight">@dimen/jocomponent_paddingRight</item>
+    </style>
+    <!--修改自动补充输入框的风格为EditText-->
+    <style name="AutoCompleteTextView2EditText" parent="Base.Widget.AppCompat.EditText">
         <!--宽高设置-->
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/jocomponent_layout_height</item>

@@ -1,7 +1,9 @@
 package com.jalen.jo.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -30,6 +32,7 @@ import com.jalen.jo.views.SlidingTabLayout;
 
 public class MainActivity extends BaseActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, ActionBar.TabListener {
+    public static final String KEY_SELECTED_POSITION = "preferences_selected_position";
 
     /**
      * Fragment：
@@ -43,6 +46,8 @@ public class MainActivity extends BaseActivity
     private CharSequence mTitle;
     private SlidingTabLayout mSlidingTabLayout;
     private ViewPager mViewPager;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,22 +75,13 @@ public class MainActivity extends BaseActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
     }
 
+
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
         switch (position){
             case 0:
-/*
-                ActionBar.Tab tab = getSupportActionBar().newTab().setText("第一项").setTabListener(this);
-                getSupportActionBar().addTab(tab);
-                tab = getSupportActionBar().newTab().setText("第二项").setTabListener(this);
-                getSupportActionBar().addTab(tab);
-                getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-*/
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, new AllLibraryFragment()).commit();
                 break;

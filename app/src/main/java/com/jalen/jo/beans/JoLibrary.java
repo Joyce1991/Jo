@@ -33,10 +33,6 @@ public class JoLibrary {
      */
     private String libraryManager;
     /**
-     * 管理者头像
-     */
-    private String libraryManagerPicUrl;
-    /**
      * 图书总量
      */
     private String counts;
@@ -90,14 +86,6 @@ public class JoLibrary {
 
     public void setLibraryManager(String libraryManager) {
         this.libraryManager = libraryManager;
-    }
-
-    public String getLibraryManagerPicUrl() {
-        return libraryManagerPicUrl;
-    }
-
-    public void setLibraryManagerPicUrl(String libraryManagerPicUrl) {
-        this.libraryManagerPicUrl = libraryManagerPicUrl;
     }
 
     public String getCounts() {

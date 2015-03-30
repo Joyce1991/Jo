@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
 import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -29,7 +28,7 @@ import android.widget.Toast;
 
 import com.avos.avoscloud.AVUser;
 import com.jalen.jo.R;
-import com.jalen.jo.activities.AccountEditActivity;
+import com.jalen.jo.activities.AccountActivity;
 import com.jalen.jo.activities.SigninActivity;
 import com.jalen.jo.activities.SignupActivity;
 import com.jalen.jo.adapters.SimpleListAdapter;
@@ -47,7 +46,7 @@ import java.util.List;
  * 4、图书馆（图书馆创建、图书馆查询、图书馆加入）
  *
  */
-public class NavigationDrawerFragment extends Fragment implements View.OnClickListener {
+public class NavigationDrawerFragment extends BaseFragment implements View.OnClickListener {
 
     /**
      * 记住选中的item的position
@@ -311,14 +310,6 @@ public class NavigationDrawerFragment extends Fragment implements View.OnClickLi
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-
-/*
-        if (item.getItemId() == R.id.action_example) {
-            Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT).show();
-            return true;
-        }
-*/
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -355,7 +346,7 @@ public class NavigationDrawerFragment extends Fragment implements View.OnClickLi
             case R.id.ll_drawer_signin:
 //                点击账户
                 Toast.makeText(getActivity(), "点击了账户", Toast.LENGTH_SHORT).show();
-                Intent accountIntent = new Intent(getActivity(), AccountEditActivity.class);
+                Intent accountIntent = new Intent(getActivity(), AccountActivity.class);
                 startActivity(accountIntent);
                 break;
         }

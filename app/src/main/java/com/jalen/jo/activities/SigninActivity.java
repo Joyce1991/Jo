@@ -1,5 +1,7 @@
 package com.jalen.jo.activities;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
@@ -7,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +29,7 @@ import com.jalen.jo.R;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class SigninActivity extends BaseActivity {
 
@@ -103,6 +107,7 @@ public class SigninActivity extends BaseActivity {
             ckbVisible = (CheckBox) rootView.findViewById(R.id.ckb_signin_pwdvisible);
             btnSignin = (Button) rootView.findViewById(R.id.btn_signin_sigin);
 
+            etUser.setOnClickListener(this);
             ckbVisible.setOnClickListener(this);
             btnSignin.setOnClickListener(this);
 
@@ -123,6 +128,10 @@ public class SigninActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             switch (v.getId()){
+                case R.id.et_signin_user:
+
+
+                    break;
                 case R.id.ckb_signin_pwdvisible:
                     isPwdVisible = ckbVisible.isChecked();
 //                    设置密码编辑框的可见性
