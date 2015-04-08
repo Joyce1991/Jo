@@ -13,12 +13,11 @@ import com.jalen.jo.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link NicknameFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
+ *
  * Use the {@link NicknameFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NicknameFragment extends Fragment implements View.OnClickListener {
+public class NicknameFragment extends BaseFragment implements View.OnClickListener {
     //        M
     private String mNickname;
     //        V
@@ -28,6 +27,12 @@ public class NicknameFragment extends Fragment implements View.OnClickListener {
     public NicknameFragment() {
         super();
     }
+
+    public static NicknameFragment newInstance(){
+        NicknameFragment fragment = new NicknameFragment();
+        return fragment;
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

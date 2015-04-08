@@ -40,6 +40,7 @@
     <string name="toast_signup_failed">注册失败</string>
     <string name="toast_signup_success">注册成功</string>
     <string name="toast_phone_input_error">手机号码输入错误</string>
+    <string name="toast_email_input_error">邮箱输入错误</string>
     <string name="toast_signin_success">登录成功</string>
     <string name="toast_signin_failed">登录失败</string>
 

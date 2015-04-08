@@ -8,6 +8,9 @@ import android.view.MenuItem;
 
 import com.jalen.jo.R;
 import com.jalen.jo.fragments.AccountCentralFragment;
+import com.jalen.jo.fragments.AccountEditFragment;
+import com.jalen.jo.fragments.BaseFragment;
+import com.jalen.jo.fragments.NicknameFragment;
 
 /**
  * 账户资料管理
@@ -26,16 +29,37 @@ public class AccountActivity extends BaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // 获取fragment id，根据fragment id创建fragment
         mIntent = getIntent();
         mFragmentID = mIntent.getIntExtra(EXTRA_FRAGMENT_ID, 0);
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, AccountCentralFragment.newInstance())
+                    .add(R.id.container, createFragmentById(mFragmentID))
                     .commit();
         }
     }
 
+    /**
+     *  根据id创建fragment
+     * @param mFragmentID
+     * @return
+     */
+    public BaseFragment createFragmentById(int mFragmentID){
+        BaseFragment fragment = null;
+        switch (mFragmentID){
+            case R.id.fragment_nickname:
+                fragment = NicknameFragment.newInstance();
+                break;
+            case R.id.fragment_accountedit:
+                fragment = AccountEditFragment.newInstance("param1", "param2");
+                break;
+            default:
+                fragment = AccountCentralFragment.newInstance();
+                break;
+        }
+        return fragment;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

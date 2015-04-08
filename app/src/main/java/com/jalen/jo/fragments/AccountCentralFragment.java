@@ -28,7 +28,7 @@ import java.util.List;
  * 账户资料编辑
  * Created by jh on 2015/3/3.
  */
-public class AccountCentralFragment extends Fragment implements View.OnClickListener {
+public class AccountCentralFragment extends BaseFragment implements View.OnClickListener {
     private int POSITION_INITIAL = 0x0001;
     //        M
     private String mNickname;
@@ -45,7 +45,6 @@ public class AccountCentralFragment extends Fragment implements View.OnClickList
     private TextView tvUsername;
     private TabPageIndicator indicator;
     private ViewPager pager;
-    private AlertDialog mDialog;
 
     // TODO: Rename and change types and number of parameters
     public static AccountCentralFragment newInstance() {
@@ -105,36 +104,6 @@ public class AccountCentralFragment extends Fragment implements View.OnClickList
 
                 break;
 
-        }
-    }
-
-    /**
-     * 关闭一个对话框
-     */
-    private void dismissDialog() {
-        if (mDialog != null && mDialog.isShowing()){
-            mDialog.dismiss();
-            mDialog = null;
-        }
-    }
-
-    /**
-     * 显示一个对话框
-     * @param msg   对话框内容
-     */
-    private void showDialog(CharSequence msg) {
-        if (mDialog != null){
-            mDialog.show();
-        }else{
-            AlertDialog.Builder mBuilder = new AlertDialog.Builder(getActivity());
-            // Get the layout inflater
-            LayoutInflater inflater = getActivity().getLayoutInflater();
-            RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.dialog_loading, null);
-            TextView tv_msg = (TextView) view.findViewById(R.id.tv_dialog_loading_text);
-            tv_msg.setText(msg);
-            mBuilder.setView(view);
-            mDialog = mBuilder.create();
-            mDialog.show();
         }
     }
 

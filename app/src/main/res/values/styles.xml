@@ -82,9 +82,6 @@
         <!--margin设置-->
         <item name="android:layout_marginTop">@dimen/jocomponent_layout_marginTop</item>
         <item name="android:layout_marginBottom">@dimen/jocomponent_layout_marginBottom</item>
-        <!--padding设置-->
-        <item name="android:paddingLeft">@dimen/jocomponent_paddingLeft</item>
-        <item name="android:paddingRight">@dimen/jocomponent_paddingRight</item>
     </style>
     <!--Button通用样式-->
     <style name="JoComponentStyle.Button" parent="JoComponentStyle">

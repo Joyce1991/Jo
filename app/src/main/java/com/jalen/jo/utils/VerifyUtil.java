@@ -21,7 +21,7 @@ public class VerifyUtil {
     private VerifyUtil(){
 //        对M进行初始化
         regExpPhone = "^1[3458]\\d{9}$";
-        regExpEmail = "";
+        regExpEmail = "^[a-zA-Z0-9_\\.]+@[a-zA-Z0-9-]+[\\.a-zA-Z]+$";
         regExpNickname = "";
         regExpUsername = "";
     }
@@ -43,6 +43,9 @@ public class VerifyUtil {
     }
     public boolean isNickname(String nicknameStr){
         return  verify(nicknameStr, regExpNickname);
+    }
+    public boolean isEmail(String emailStr){
+        return verify(emailStr, regExpEmail);
     }
 
     private boolean verify(String str, String regExpStr) {
