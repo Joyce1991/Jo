@@ -1,11 +1,16 @@
 package com.jalen.jo.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,17 +19,24 @@ import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 
 import com.avos.avoscloud.AVAnalytics;
+import com.jalen.jo.fragments.AboutFragment;
 import com.jalen.jo.fragments.NavigationDrawerFragment;
 import com.jalen.jo.R;
+import com.jalen.jo.fragments.UserAlarmFragment;
+import com.jalen.jo.fragments.UserFavoritesFragment;
+import com.jalen.jo.library.AllLibraryFragment;
+import com.jalen.jo.fragments.UserShelfFragment;
 import com.jalen.jo.scan.CaptureActivity;
+import com.jalen.jo.views.SlidingTabLayout;
 
 
 public class MainActivity extends BaseActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, ActionBar.TabListener {
+    public static final String KEY_SELECTED_POSITION = "preferences_selected_position";
 
     /**
      * Fragment：
-     * 管理navigation drawer的 行为、 交互 和 呈现.
+     * 管理navigation drawer的行为、 交互 和 呈现.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
 
@@ -32,11 +44,23 @@ public class MainActivity extends BaseActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+    private SlidingTabLayout mSlidingTabLayout;
+    private ViewPager mViewPager;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // 用Toolbar替换actionbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
+        setSupportActionBar(toolbar);
+/*
+        mViewPager = new ViewPager(this);
+        mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+        mSlidingTabLayout.setViewPager(mViewPager);
+*/
 
 //        跟踪统计应用的打开情况
         AVAnalytics.trackAppOpened(getIntent());
@@ -51,13 +75,33 @@ public class MainActivity extends BaseActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
     }
 
+
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
+        switch (position){
+            case 0:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, new AllLibraryFragment()).commit();
+                break;
+            case 1:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, UserShelfFragment.newInstance()).commit();
+                break;
+            case 2:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, UserFavoritesFragment.newInstance()).commit();
+                break;
+            case 3:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, UserAlarmFragment.newInstance()).commit();
+                break;
+            case 4:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, AboutFragment.newInstance()).commit();
+                break;
+        }
     }
 
     public void onSectionAttached(int number) {
@@ -71,12 +115,18 @@ public class MainActivity extends BaseActivity
             case 3:
                 mTitle = getString(R.string.title_section3);
                 break;
+            case 4:
+                mTitle = getString(R.string.title_section4);
+                break;
+            case 5:
+                mTitle = getString(R.string.title_section5);
+                break;
         }
     }
 
     public void restoreActionBar() {
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+//        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
     }
@@ -118,6 +168,21 @@ public class MainActivity extends BaseActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
+    }
+
+    @Override
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
+    }
+
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
     }
 
     /**

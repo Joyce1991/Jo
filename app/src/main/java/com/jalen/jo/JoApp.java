@@ -4,7 +4,10 @@ import android.app.Application;
 import android.content.Context;
 
 import com.avos.avoscloud.AVAnalytics;
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVInstallation;
 import com.avos.avoscloud.AVOSCloud;
+import com.avos.avoscloud.SaveCallback;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -12,6 +15,7 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 /**
  * Created by jh on 2015/2/28.
+ *
  */
 public class JoApp extends Application {
 
@@ -27,6 +31,18 @@ public class JoApp extends Application {
         AVAnalytics.enableCrashReport(this, true);
 
         initImageLoader(getApplicationContext());
+
+        AVInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
+            public void done(AVException e) {
+                if (e == null) {
+                    // 保存成功
+                    String installationId = AVInstallation.getCurrentInstallation().getInstallationId();
+                    // 关联  installationId 到用户表等操作……
+                } else {
+                    // 保存失败，输出错误信息
+                }
+            }
+        });
     }
 
     /**

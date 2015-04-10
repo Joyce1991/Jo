@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
 import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -18,19 +17,26 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.avos.avoscloud.AVUser;
 import com.jalen.jo.R;
-import com.jalen.jo.activities.AccountEditActivity;
+import com.jalen.jo.activities.AccountActivity;
 import com.jalen.jo.activities.SigninActivity;
 import com.jalen.jo.activities.SignupActivity;
+import com.jalen.jo.adapters.SimpleListAdapter;
+import com.jalen.jo.beans.DrawerOption;
 import com.jalen.jo.views.CircleImageView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 抽屉导航面板
@@ -40,7 +46,7 @@ import com.jalen.jo.views.CircleImageView;
  * 4、图书馆（图书馆创建、图书馆查询、图书馆加入）
  *
  */
-public class NavigationDrawerFragment extends Fragment implements View.OnClickListener {
+public class NavigationDrawerFragment extends BaseFragment implements View.OnClickListener {
 
     /**
      * 记住选中的item的position
@@ -56,6 +62,7 @@ public class NavigationDrawerFragment extends Fragment implements View.OnClickLi
      * A pointer to the current callbacks instance (the Activity).
      */
     private NavigationDrawerCallbacks mCallbacks;
+    private ArrayAdapter lvAdapter;
 
     /**
      * Helper component that ties the action bar to the navigation drawer.
@@ -63,22 +70,22 @@ public class NavigationDrawerFragment extends Fragment implements View.OnClickLi
     private ActionBarDrawerToggle mDrawerToggle;
 //    V
     private DrawerLayout mDrawerLayout;
-    private LinearLayout mDrawer;
+    private RelativeLayout mDrawer;
     private Spinner mSpinner;
     private View mFragmentContainerView;
     private TextView mDrawerSignup; // 注册id
     private TextView mDrawerSignin; // 登录id
-    private TextView mDrawerBorrowhistory;  // 借阅历史id
-    private LinearLayout llSignin;  // 已登录信息面板
+    private RelativeLayout llSignin;  // 已登录信息面板
     private LinearLayout llUnsignin;    // 未登录信息面板
     private CircleImageView civUsericon;   // 用户头像
     private TextView tvUsername;    // 用户名
+    private ListView mDrawerListView;
 
 //    M
     private int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
-    private static final String[] m={"思创（上海）科技有限公司","用友（南昌）科技有限公司","广州工业技术研究院","微软（南昌）"};
+    private List<DrawerOption> options;
 
     public NavigationDrawerFragment() {
 
@@ -98,6 +105,21 @@ public class NavigationDrawerFragment extends Fragment implements View.OnClickLi
             mFromSavedInstanceState = true;
         }
 
+        options = new ArrayList<DrawerOption>();
+        DrawerOption option = new DrawerOption("图书馆", 3);
+        options.add(option);
+        option = new DrawerOption("书架", 2);
+        options.add(option);
+        option = new DrawerOption("关注的图书", 8);
+        options.add(option);
+        option = new DrawerOption("提醒", 2);
+        options.add(option);
+        option = new DrawerOption("关于", 0);
+        options.add(option);
+
+        // 初始化mCurrentSelectedPosition
+        selectItem(mCurrentSelectedPosition);
+
     }
 
     @Override
@@ -111,16 +133,15 @@ public class NavigationDrawerFragment extends Fragment implements View.OnClickLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 //        加载XML布局
-        mDrawer = (LinearLayout) inflater.inflate(
+        mDrawer = (RelativeLayout) inflater.inflate(
                 R.layout.fragment_navigation_drawer, container, false);
 //        findviewbyid
-        mSpinner = (Spinner) mDrawer.findViewById(R.id.spinner_library_select);
         mDrawerSignup = (TextView) mDrawer.findViewById(R.id.tv_drawer_signup);
         mDrawerSignin = (TextView) mDrawer.findViewById(R.id.tv_drawer_signin);
-        mDrawerBorrowhistory = (TextView) mDrawer.findViewById(R.id.tv_drawer_borrowhistory);
         tvUsername = (TextView) mDrawer.findViewById(R.id.tv_drawer_username);
-        llSignin = (LinearLayout) mDrawer.findViewById(R.id.ll_drawer_signin);
+        llSignin = (RelativeLayout) mDrawer.findViewById(R.id.ll_drawer_signin);
         llUnsignin = (LinearLayout) mDrawer.findViewById(R.id.ll_drawer_unsignin);
+        mDrawerListView = (ListView) mDrawer.findViewById(R.id.lv_drawer_options);
 
 //        加载用户信息
         if (AVUser.getCurrentUser() != null){
@@ -136,17 +157,34 @@ public class NavigationDrawerFragment extends Fragment implements View.OnClickLi
             mDrawerSignup.setOnClickListener(this);
         }
 
+        lvAdapter = new SimpleListAdapter(getActivity(), R.layout.adapter_drawer_options, options);
+        mDrawerListView.setAdapter(lvAdapter);
+        mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selectItem(position);
+            }
+        });
+        mDrawerListView.setItemChecked(mCurrentSelectedPosition, true); // 设置当前选择项
 
-        mDrawerBorrowhistory.setOnClickListener(this);
-        //将可选内容与ArrayAdapter连接起来
-        SpinnerAdapter adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item,m);
-
-        //设置下拉列表的风格
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        //将adapter 添加到spinner中
-        mSpinner.setAdapter(adapter);
         return mDrawer;
+    }
+
+    /**
+     * 选择drawer菜单项目中的某个item
+     * @param position item位置
+     */
+    private void selectItem(int position) {
+        mCurrentSelectedPosition = position;
+        if (mDrawerListView != null) {
+            mDrawerListView.setItemChecked(position, true);
+        }
+        if (mDrawerLayout != null) {
+            mDrawerLayout.closeDrawer(mFragmentContainerView);
+        }
+        if (mCallbacks != null) {
+            mCallbacks.onNavigationDrawerItemSelected(position);
+        }
     }
 
     public boolean isDrawerOpen() {
@@ -272,14 +310,6 @@ public class NavigationDrawerFragment extends Fragment implements View.OnClickLi
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-
-/*
-        if (item.getItemId() == R.id.action_example) {
-            Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT).show();
-            return true;
-        }
-*/
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -316,7 +346,7 @@ public class NavigationDrawerFragment extends Fragment implements View.OnClickLi
             case R.id.ll_drawer_signin:
 //                点击账户
                 Toast.makeText(getActivity(), "点击了账户", Toast.LENGTH_SHORT).show();
-                Intent accountIntent = new Intent(getActivity(), AccountEditActivity.class);
+                Intent accountIntent = new Intent(getActivity(), AccountActivity.class);
                 startActivity(accountIntent);
                 break;
         }
@@ -324,6 +354,8 @@ public class NavigationDrawerFragment extends Fragment implements View.OnClickLi
 
     /**
      * Callbacks interface that all activities using this fragment must implement.
+     * <br/>
+     *
      */
     public static interface NavigationDrawerCallbacks {
         /**

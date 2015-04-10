@@ -221,6 +221,7 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
 //            显示扫描结果信息(DecodeFormat/Text)
             Toast.makeText(this, "DecodeFormat: " + rawResult.getBarcodeFormat() + "\n" + "Text: " + rawResult.getText(),
                     Toast.LENGTH_SHORT).show();
+            Log.d(tag, "DecodeFormat: " + rawResult.getBarcodeFormat() + "\n" + "Text: " + rawResult.getText());
             switch (rawResult.getBarcodeFormat()){
 //                EAN_13
                 case EAN_13:

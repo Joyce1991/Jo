@@ -21,11 +21,13 @@
         <EditText
             android:id="@+id/et_signin_user"
             style="@style/JoComponentStyle"
+            android:background="@drawable/edt_bg"
             android:hint="@string/et_sigin_user"/>
 
         <EditText
             android:id="@+id/et_signin_pwd"
             style="@style/JoComponentStyle"
+            android:background="@drawable/edt_bg"
             android:inputType="textPassword"
             android:hint="@string/et_signin_pwd"/>
 

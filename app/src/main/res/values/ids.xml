@@ -12,4 +12,9 @@
 
     <item type="id" name="book_not_found"/>
     <item type="id" name="book_found"/>
+
+    <item type="id" name="fragment_nickname"/>
+    <item type="id" name="fragment_accountedit"/>
+    <item type="id" name="fragment_accountcentra"/>
+
 </resources>

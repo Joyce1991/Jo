@@ -35,7 +35,7 @@
                     android:layout_height="@dimen/book_height"
                     android:background="@drawable/book_bg"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/book_pic" />
+                    android:src="@drawable/pic_book" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

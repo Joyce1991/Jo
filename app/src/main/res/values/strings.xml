@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">图书管</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="app_name">Jo爱读书</string>
+    <string name="title_section1">图书馆</string>
+    <string name="title_section2">书架</string>
+    <string name="title_section3">关注的图书</string>
+    <string name="title_section4">提醒</string>
+    <string name="title_section5">关于</string>
 
     <!--navigation 模块-->
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open">打开导航</string>
+    <string name="navigation_drawer_close">关闭导航</string>
 
     <!--注册模块-->
-    <string name="et_signup_inputphone">请输入手机号码</string>
+    <string name="et_signup_inputemail">请输入邮箱</string>
     <string name="btn_sigup_onekeyregistration">一键注册</string>
     <string name="tv_signup_signin">已有账号登录</string>
     <string name="tv_signup_byemail">使用Email注册</string>
     <string name="tv_signup_author">快捷登录</string>
     <string name="title_activity_signin">用户登录</string>
-    <string name="et_sigin_user">输入手机号码或者用户邮箱</string>
+    <string name="et_sigin_user">输入用户邮箱</string>
     <string name="et_signin_pwd">密码</string>
     <string name="rb_sigin_pwdvisible">显示密码</string>
     <string name="btn_sigin_sigin">登录</string>
@@ -38,6 +40,7 @@
     <string name="toast_signup_failed">注册失败</string>
     <string name="toast_signup_success">注册成功</string>
     <string name="toast_phone_input_error">手机号码输入错误</string>
+    <string name="toast_email_input_error">邮箱输入错误</string>
     <string name="toast_signin_success">登录成功</string>
     <string name="toast_signin_failed">登录失败</string>
 
@@ -61,6 +64,7 @@
     <string name="title_activity_account_edit">账户信息编辑</string>
     <string name="title_activity_signup">创建用户</string>
     <string name="title_activity_book_detail">图书信息</string>
+    <string name="title_activity_library_create">图书馆创建</string>
 
     <!--扫一扫设置-->
     <string name="preferences_actions_title">找到条码时</string>
@@ -116,6 +120,27 @@
     <string name="action_settings">设置</string>
     <string name="action_account_settings">账户设置</string>
     <string name="action_signout">退出登录</string>
+    <string name="action_new">新建</string>
+    <string name="action_style">样式</string>
+    <string name="tv_drawer_help_and_feedback">帮助与反馈</string>
+    <string name="tv_library_collection">藏书量：</string>
+    <string name="emptycardview_new_detail">创建或者删除你自己的图书馆，从此开启掌上管理图书。无论你是公司行政、还是个人</string>
+    <string name="emptycardview_new">创建我的图书馆</string>
+
+    <!--hint-->
+    <string name="hint_nickname">昵称</string>
+    <string name="dialog_title_pick">设置头像</string>
+
+
+    <string-array name="tabs_all_library">
+        <item>  私馆  </item>
+        <item>  公馆  </item>
+    </string-array>
+
+    <string-array name="pick_type">
+        <item>拍摄图片</item>
+        <item>从图库中选择图片</item>
+    </string-array>
 
 
 </resources>

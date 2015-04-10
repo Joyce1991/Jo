@@ -1,55 +1,50 @@
 package com.jalen.jo.fragments;
 
-import android.app.AlertDialog;
+import android.app.Activity;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.jalen.jo.R;
-import com.jalen.jo.views.CircleImageView;
-import com.viewpagerindicator.TabPageIndicator;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- * 账户资料编辑
- * Created by jh on 2015/3/3.
+ * A simple {@link Fragment} subclass.
+ * Activities that contain this fragment must implement the
+ * {@link AccountEditFragment.OnFragmentInteractionListener} interface
+ * to handle interaction events.
+ * Use the {@link AccountEditFragment#newInstance} factory method to
+ * create an instance of this fragment.
  */
-public class AccountEditFragment extends Fragment implements View.OnClickListener {
-    private int POSITION_INITIAL = 0x0001;
-    //        M
-    private String mNickname;
-    /**
-     * fragment
-     */
-    private List<Fragment> fragments;
-    /**
-     * tab标题名称
-     */
-    private static final String[] tabs = { "图书馆", "书架", "收藏的书" };
-    //        V
-    private CircleImageView civAccountPic;
-    private TextView tvUsername;
-    private TabPageIndicator indicator;
-    private ViewPager pager;
-    private AlertDialog mDialog;
+public class AccountEditFragment extends BaseFragment {
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
 
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
+
+    private OnFragmentInteractionListener mListener;
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment AccountEditFragment.
+     */
     // TODO: Rename and change types and number of parameters
-    public static AccountEditFragment newInstance() {
+    public static AccountEditFragment newInstance(String param1, String param2) {
         AccountEditFragment fragment = new AccountEditFragment();
-
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -60,100 +55,56 @@ public class AccountEditFragment extends Fragment implements View.OnClickListene
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fragments = new ArrayList<Fragment>();
-        fragments.add(UserLibraryFragment.newInstance());
-        fragments.add(UserShelfFragment.newInstance());
-        fragments.add(UserFavoritesFragment.newInstance());
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_account_edit, container, false);
-
-        civAccountPic = (CircleImageView) rootView.findViewById(R.id.civ_account_pic);
-        tvUsername = (TextView) rootView.findViewById(R.id.tv_account_username);
-        indicator = (TabPageIndicator) rootView.findViewById(R.id.indicator_account);
-        pager = (ViewPager) rootView.findViewById(R.id.pager_account);
-
-        // indicator、pager
-        indicator = (TabPageIndicator) rootView.findViewById(R.id.indicator_account);
-        pager = (ViewPager) rootView.findViewById(R.id.pager_account);
-        PagerAdapter pagerAdapter = new JoPagerAdapter(getFragmentManager());
-        pager.setAdapter(pagerAdapter);
-        pager.setOffscreenPageLimit(2);
-        indicator.setViewPager(pager, POSITION_INITIAL);
-
-        return rootView;
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_account_edit, container, false);
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_account_edit, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.btn_account_edit_save:
-
-                break;
-
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(uri);
         }
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mListener = (OnFragmentInteractionListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
 
     /**
-     * 关闭一个对话框
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p/>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
      */
-    private void dismissDialog() {
-        if (mDialog != null && mDialog.isShowing()){
-            mDialog.dismiss();
-            mDialog = null;
-        }
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        public void onFragmentInteraction(Uri uri);
     }
 
-    /**
-     * 显示一个对话框
-     * @param msg   对话框内容
-     */
-    private void showDialog(CharSequence msg) {
-        if (mDialog != null){
-            mDialog.show();
-        }else{
-            AlertDialog.Builder mBuilder = new AlertDialog.Builder(getActivity());
-            // Get the layout inflater
-            LayoutInflater inflater = getActivity().getLayoutInflater();
-            RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.dialog_loading, null);
-            TextView tv_msg = (TextView) view.findViewById(R.id.tv_dialog_loading_text);
-            tv_msg.setText(msg);
-            mBuilder.setView(view);
-            mDialog = mBuilder.create();
-            mDialog.show();
-        }
-    }
-
-    private class JoPagerAdapter extends FragmentPagerAdapter {
-        public JoPagerAdapter(FragmentManager fragmentManager) {
-            super(fragmentManager);
-        }
-        @Override
-        public Fragment getItem(int position) {
-            return fragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return tabs.length;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return tabs[position];
-        }
-    }
 }

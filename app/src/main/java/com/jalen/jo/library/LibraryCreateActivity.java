@@ -1,40 +1,30 @@
-package com.jalen.jo.activities;
+package com.jalen.jo.library;
 
-import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v4.app.Fragment;
+import android.net.Uri;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 
 import com.jalen.jo.R;
-import com.jalen.jo.fragments.AccountEditFragment;
+import com.jalen.jo.activities.BaseActivity;
 
 /**
- * 账户资料管理
+ * 图书馆创建模块
  */
-public class AccountEditActivity extends BaseActivity {
-    public static final String EXTRA_FRAGMENT_ID = "com.jalen.jo.activities.fragmentintent.fragment_id";
-
-    private Intent mIntent; // 启动Intent
-    private int mFragmentID;    // fragment_id
+public class LibraryCreateActivity extends BaseActivity implements LibraryCreateFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_account_edit);
-
-        mIntent = getIntent();
-        mFragmentID = mIntent.getIntExtra(EXTRA_FRAGMENT_ID, 0);
+        setContentView(R.layout.activity_library_create);
+        // 用Toolbar替换actionbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, AccountEditFragment.newInstance())
+                    .add(R.id.container, LibraryCreateFragment.newInstance("param1", "param2"))
                     .commit();
         }
     }
@@ -43,7 +33,7 @@ public class AccountEditActivity extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_account_edit, menu);
+        getMenuInflater().inflate(R.menu.menu_library_create, menu);
         return true;
     }
 
@@ -62,4 +52,8 @@ public class AccountEditActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 }

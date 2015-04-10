@@ -1,13 +1,21 @@
 package com.jalen.jo.fragments;
 
+import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.jalen.jo.R;
+import com.jalen.jo.library.TabItem;
+import com.jalen.jo.views.SlidingTabLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserShelfFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -18,6 +26,21 @@ public class UserShelfFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    /**
+     * 用于替代actionbar的tabs
+     */
+    private SlidingTabLayout mSlidingTabLayout;
+    private ViewPager mViewPager;
+
+    /**
+     * 选项卡数据对象
+     */
+    private List<TabItem> mTabs = new ArrayList<TabItem>();
+    /**
+     * Tab标题
+     */
+    private String[] mTabTitles;
 
 //    private OnFragmentInteractionListener mListener;
 
@@ -30,12 +53,7 @@ public class UserShelfFragment extends Fragment {
     // TODO: Rename and change types and number of parameters
     public static UserShelfFragment newInstance() {
         UserShelfFragment fragment = new UserShelfFragment();
-/*
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-*/
+
         return fragment;
     }
 
@@ -50,6 +68,12 @@ public class UserShelfFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        mTabTitles = getResources().getStringArray(R.array.tabs_all_library);
+        for (String mTabTitle : mTabTitles){
+            mTabs.add(new TabItem(mTabTitle, getResources().getColor(R.color.green_dark),
+                    getResources().getColor(R.color.green_dark)));
+        }
     }
 
     @Override
@@ -57,6 +81,27 @@ public class UserShelfFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_user_shelf, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mSlidingTabLayout = (SlidingTabLayout) view.findViewById(R.id.sliding_tabs);
+        mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
+
+        // SlidingTabLayout配置
+        mSlidingTabLayout = (SlidingTabLayout) view.findViewById(R.id.sliding_tabs);
+        mSlidingTabLayout.setViewPager(mViewPager);
+        mSlidingTabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+            @Override
+            public int getIndicatorColor(int position) {
+                return mTabs.get(position).getIndicatorColor();
+            }
+            @Override
+            public int getDividerColor(int position) {
+                return mTabs.get(position).getDividerColor();
+            }
+        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -68,26 +113,25 @@ public class UserShelfFragment extends Fragment {
 */
     }
 
-/*
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+/*
         try {
             mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
         }
-    }
 */
 
-/*
+    }
+
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+//        mListener = null;
     }
-*/
 
     /**
      * This interface must be implemented by activities that contain this

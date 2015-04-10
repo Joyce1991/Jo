@@ -3,6 +3,7 @@ package com.jalen.jo.activities;
 import android.content.UriMatcher;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -18,6 +19,10 @@ public class BookInfoActivity extends BaseActivity implements BookinfoFragment.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_info);
+        // 用Toolbar替换actionbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.my_book_info_toolbar);
+        setSupportActionBar(toolbar);
+
         mParamISBN = getIntent().getStringExtra(BookinfoFragment.EXTRA_BOOK_ISBN);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()

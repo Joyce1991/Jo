@@ -4,7 +4,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.jalen.jo.activities.AccountEditActivity$PlaceholderFragment">
+    tools:context="com.jalen.jo.activities.AccountActivity$PlaceholderFragment">
 
     <com.jalen.jo.views.CircleImageView
         android:id="@+id/civ_account_edit_usericon"
@@ -13,12 +13,14 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="48dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/tulips"/>
+        android:src="@drawable/pic_tulips"/>
 
     <EditText
         android:id="@+id/et_account_edit_nickname"
         style="@style/JoComponentStyle"
-        android:layout_below="@id/civ_account_edit_usericon"/>
+        android:layout_below="@id/civ_account_edit_usericon"
+        android:hint="@string/hint_nickname"/>
+
     <Button
         android:id="@+id/btn_account_edit_save"
         style="@style/JoComponentStyle.Button"
