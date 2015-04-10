@@ -1,6 +1,5 @@
-package com.jalen.jo.activities;
+package com.jalen.jo.library;
 
-import android.content.UriMatcher;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -8,25 +7,24 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.jalen.jo.R;
-import com.jalen.jo.fragments.BookNotfoundFragment;
-import com.jalen.jo.fragments.BookinfoFragment;
+import com.jalen.jo.activities.BaseActivity;
 
-public class BookInfoActivity extends BaseActivity implements BookinfoFragment.OnFragmentInteractionListener {
-    private String mParamISBN;
-
+/**
+ * 图书馆创建模块
+ */
+public class LibraryCreateActivity extends BaseActivity implements LibraryCreateFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_book_info);
+        setContentView(R.layout.activity_library_create);
         // 用Toolbar替换actionbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.my_book_info_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mParamISBN = getIntent().getStringExtra(BookinfoFragment.EXTRA_BOOK_ISBN);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, BookinfoFragment.newInstance(mParamISBN))
+                    .add(R.id.container, LibraryCreateFragment.newInstance("param1", "param2"))
                     .commit();
         }
     }
@@ -35,7 +33,7 @@ public class BookInfoActivity extends BaseActivity implements BookinfoFragment.O
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_book_info, menu);
+        getMenuInflater().inflate(R.menu.menu_library_create, menu);
         return true;
     }
 
@@ -55,18 +53,7 @@ public class BookInfoActivity extends BaseActivity implements BookinfoFragment.O
     }
 
     @Override
-    public void onFragmentInteraction(int id) {
-        switch (id){
-            case R.id.book_not_found:
-//                替换fragment（booknotfoundfragment）
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, BookNotfoundFragment.newInstance(mParamISBN))
-                        .commit();
-                break;
+    public void onFragmentInteraction(Uri uri) {
 
-            case R.id.book_found:
-
-                break;
-        }
     }
 }

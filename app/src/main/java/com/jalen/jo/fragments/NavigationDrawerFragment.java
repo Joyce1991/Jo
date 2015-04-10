@@ -75,7 +75,7 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
     private View mFragmentContainerView;
     private TextView mDrawerSignup; // 注册id
     private TextView mDrawerSignin; // 登录id
-    private LinearLayout llSignin;  // 已登录信息面板
+    private RelativeLayout llSignin;  // 已登录信息面板
     private LinearLayout llUnsignin;    // 未登录信息面板
     private CircleImageView civUsericon;   // 用户头像
     private TextView tvUsername;    // 用户名
@@ -139,7 +139,7 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
         mDrawerSignup = (TextView) mDrawer.findViewById(R.id.tv_drawer_signup);
         mDrawerSignin = (TextView) mDrawer.findViewById(R.id.tv_drawer_signin);
         tvUsername = (TextView) mDrawer.findViewById(R.id.tv_drawer_username);
-        llSignin = (LinearLayout) mDrawer.findViewById(R.id.ll_drawer_signin);
+        llSignin = (RelativeLayout) mDrawer.findViewById(R.id.ll_drawer_signin);
         llUnsignin = (LinearLayout) mDrawer.findViewById(R.id.ll_drawer_unsignin);
         mDrawerListView = (ListView) mDrawer.findViewById(R.id.lv_drawer_options);
 

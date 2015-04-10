@@ -9,8 +9,8 @@
     <string name="title_section5">关于</string>
 
     <!--navigation 模块-->
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open">打开导航</string>
+    <string name="navigation_drawer_close">关闭导航</string>
 
     <!--注册模块-->
     <string name="et_signup_inputemail">请输入邮箱</string>
@@ -64,6 +64,7 @@
     <string name="title_activity_account_edit">账户信息编辑</string>
     <string name="title_activity_signup">创建用户</string>
     <string name="title_activity_book_detail">图书信息</string>
+    <string name="title_activity_library_create">图书馆创建</string>
 
     <!--扫一扫设置-->
     <string name="preferences_actions_title">找到条码时</string>
@@ -126,9 +127,20 @@
     <string name="emptycardview_new_detail">创建或者删除你自己的图书馆，从此开启掌上管理图书。无论你是公司行政、还是个人</string>
     <string name="emptycardview_new">创建我的图书馆</string>
 
+    <!--hint-->
+    <string name="hint_nickname">昵称</string>
+    <string name="dialog_title_pick">设置头像</string>
+
 
     <string-array name="tabs_all_library">
         <item>  私馆  </item>
         <item>  公馆  </item>
     </string-array>
+
+    <string-array name="pick_type">
+        <item>拍摄图片</item>
+        <item>从图库中选择图片</item>
+    </string-array>
+
+
 </resources>

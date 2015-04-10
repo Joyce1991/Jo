@@ -1,5 +1,6 @@
 package com.jalen.jo.library;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -75,6 +76,8 @@ public class LibraryListFragment extends BaseFragment {
             public void onClick(View v) {
                 // 启动创建图书馆页面
                 Log.i(tag, "点击创建图书馆");
+                Intent intentLibraryCreate = new Intent(getActivity(), LibraryCreateActivity.class);
+                startActivity(intentLibraryCreate);
             }
         });
 

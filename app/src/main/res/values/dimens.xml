@@ -22,7 +22,7 @@
     <dimen name="jocomponent_radius">2dp</dimen>
     <dimen name="jocomponent_textsize">16sp</dimen>
     <dimen name="jocomponent_layout_margin">0dp</dimen>
-    <dimen name="text_size_logo">24sp</dimen>
+
 
     <!--书本图片的宽高-->
     <dimen name="book_height">120dp</dimen>
@@ -35,4 +35,8 @@
     <dimen name="cardview_creator_pic">24dp</dimen>
     <dimen name="emptycardview_height">360dp</dimen>
     <dimen name="emptycardview_new">72dp</dimen>
+
+    <dimen name="text_size_slight">14sp</dimen>
+    <dimen name="text_size_logo">24sp</dimen>
+    <dimen name="text_size_normal">16sp</dimen>
 </resources>

@@ -18,7 +18,9 @@
     <EditText
         android:id="@+id/et_account_edit_nickname"
         style="@style/JoComponentStyle"
-        android:layout_below="@id/civ_account_edit_usericon"/>
+        android:layout_below="@id/civ_account_edit_usericon"
+        android:hint="@string/hint_nickname"/>
+
     <Button
         android:id="@+id/btn_account_edit_save"
         style="@style/JoComponentStyle.Button"
