@@ -11,7 +11,10 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import com.jalen.jo.R;
@@ -77,8 +80,12 @@ public class LibraryCreateFragment extends BaseFragment implements View.OnClickL
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ImageButton btnPicPick = (ImageButton) view.findViewById(R.id.btn_pic_pick);
+        Spinner mSpinner = (Spinner) view.findViewById(R.id.library_type_pick);
 
         btnPicPick.setOnClickListener(this);
+        SpinnerAdapter mSpinnerAdapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.spinner_items_library_stype));
+        mSpinner.setAdapter(mSpinnerAdapter);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -159,7 +166,7 @@ public class LibraryCreateFragment extends BaseFragment implements View.OnClickL
     /**
      * 从图库选择图片
      */
-    private void getImageFromCamera() {
+    private void getImageFromAlbum() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");//相片类型
         startActivityForResult(intent, REQUEST_CODE_PICK_IMAGE);
@@ -168,7 +175,7 @@ public class LibraryCreateFragment extends BaseFragment implements View.OnClickL
     /**
      * 拍摄图片
      */
-    private void getImageFromAlbum() {
+    private void getImageFromCamera() {
         String state = Environment.getExternalStorageState();
         if (state.equals(Environment.MEDIA_MOUNTED)) {
             Intent getImageByCamera = new Intent("android.media.action.IMAGE_CAPTURE");
@@ -178,5 +185,4 @@ public class LibraryCreateFragment extends BaseFragment implements View.OnClickL
             Toast.makeText(getActivity(), R.string.toast_sdcard_unmount, Toast.LENGTH_LONG).show();
         }
     }
-
 }

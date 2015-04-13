@@ -147,7 +147,9 @@
     <string name="hint_library_brief">在这里输入该图书馆的简介，让成员了解这个图书馆的相关信息</string>
     <string name="prompt_library_base">填写基本信息</string>
 
-
+    <!--spinner-->
+    <string name="spinner_item_public">企业图书馆</string>
+    <string name="spinner_item_private">个人图书馆</string>
 
     <string-array name="tabs_all_library">
         <item>  私馆  </item>

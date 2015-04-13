@@ -50,4 +50,9 @@
         <item>@string/dialog_select_from_camera</item>
     </string-array>
 
+  <string-array name="spinner_items_library_stype">
+    <item>@string/spinner_item_public</item>
+    <item>@string/spinner_item_private</item>
+  </string-array>
+
 </resources>
