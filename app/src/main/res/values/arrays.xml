@@ -44,4 +44,10 @@
     <item>@string/preferences_front_light_auto</item>
     <item>@string/preferences_front_light_off</item>
   </string-array>
+
+    <string-array name="dialog_items_library_pic">
+        <item>@string/dialog_select_from_gallery</item>
+        <item>@string/dialog_select_from_camera</item>
+    </string-array>
+
 </resources>

@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">Jo爱读书</string>
+
     <string name="title_section1">图书馆</string>
     <string name="title_section2">书架</string>
     <string name="title_section3">关注的图书</string>
@@ -35,6 +36,10 @@
     <string name="dialog_loading_signin_text">正在登录……</string>
     <string name="dialog_loading_signup_text">正在注册……</string>
     <string name="dialog_loading_query">正在为为您努力查询……</string>
+    <string name="dialog_title_pick">设置头像</string>
+    <string name="dialog_title_library_pic">设置图书馆图片</string>
+    <string name="dialog_select_from_gallery">从图库选择</string>
+    <string name="dialog_select_from_camera">拍摄图片</string>
 
     <!--toast text-->
     <string name="toast_signup_failed">注册失败</string>
@@ -43,6 +48,7 @@
     <string name="toast_email_input_error">邮箱输入错误</string>
     <string name="toast_signin_success">登录成功</string>
     <string name="toast_signin_failed">登录失败</string>
+    <string name="toast_sdcard_unmount">请确认已经插入SD卡</string>
 
     <!--图书信息模块-->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -122,14 +128,25 @@
     <string name="action_signout">退出登录</string>
     <string name="action_new">新建</string>
     <string name="action_style">样式</string>
+    <string name="action_save">保存</string>
+
     <string name="tv_drawer_help_and_feedback">帮助与反馈</string>
     <string name="tv_library_collection">藏书量：</string>
+    <string name="tv_library_create_type">类型：</string>
+    <string name="tv_library_create_name">名称：</string>
+
     <string name="emptycardview_new_detail">创建或者删除你自己的图书馆，从此开启掌上管理图书。无论你是公司行政、还是个人</string>
     <string name="emptycardview_new">创建我的图书馆</string>
 
+    <!--prompt-->
+    <string name="prompt_upload_pic">上传图书馆照片</string>
+
     <!--hint-->
     <string name="hint_nickname">昵称</string>
-    <string name="dialog_title_pick">设置头像</string>
+    <string name="tv_library_create_brief">简介：</string>
+    <string name="hint_library_brief">在这里输入该图书馆的简介，让成员了解这个图书馆的相关信息</string>
+    <string name="prompt_library_base">填写基本信息</string>
+
 
 
     <string-array name="tabs_all_library">
