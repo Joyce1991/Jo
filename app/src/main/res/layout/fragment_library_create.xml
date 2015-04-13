@@ -1,43 +1,113 @@
-<com.jalen.jo.views.OverScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.jalen.jo.library.LibraryCreateFragment">
 
-    <RelativeLayout
+    <FrameLayout
+        android:id="@+id/fl_library_pic"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="240dp">
+        <ImageView
+            android:id="@+id/library_pic"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/gray_dark"/>
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:padding="16dp"
-            android:layout_alignParentTop="true">
-
-            <ImageView
-                android:id="@+id/library_pic"
-                android:layout_width="240dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentLeft="true" />
-
+            android:layout_height="match_parent">
             <ImageButton
-                android:id="@+id/btn_from_gallery"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/ic_action_picture"
-                android:background="@color/transparente"/>
+                android:id="@+id/btn_pic_pick"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:background="@drawable/pic_new"
+                android:layout_centerInParent="true"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_pic_pick"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:text="@string/prompt_upload_pic"
+                android:textColor="@color/white"/>
+            </RelativeLayout>
+        </FrameLayout>
 
-            <ImageButton
-                android:id="@+id/btn_by_camara"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_toLeftOf="@id/btn_from_gallery"
-                android:src="@drawable/ic_action_camera"
-                android:background="@color/transparente"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fl_library_pic"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical">
+        <!--提示信息-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/prompt_library_base"
+            android:textSize="@dimen/text_size_slight"/>
+        <!--类型-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="72dp"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_library_create_type"
+                android:textSize="@dimen/text_size_title"/>
+            <Spinner
+                android:id="@+id/library_type_pick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            </LinearLayout>
+        <!--名称-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="72dp"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_library_create_name"
+                android:textSize="@dimen/text_size_title"/>
+            <EditText
+                android:id="@+id/edt_library_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            </LinearLayout>
+        <!--简介-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="72dp"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_library_create_brief"
+                android:textSize="@dimen/text_size_title"/>
+            <EditText
+                android:id="@+id/edt_library_brief"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minLines="3"
+                android:hint="@string/hint_library_brief"
+                android:textSize="@dimen/text_size_normal"/>
+            </LinearLayout>
+        </LinearLayout>
 
-        </RelativeLayout>
-
-
-    </RelativeLayout>
-</com.jalen.jo.views.OverScrollView>
+</RelativeLayout>
