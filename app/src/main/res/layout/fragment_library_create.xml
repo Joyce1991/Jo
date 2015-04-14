@@ -38,10 +38,10 @@
             <ProgressBar
                 android:id="@+id/progress_pic"
                 android:layout_width="match_parent"
-                android:layout_height="1px"
+                android:layout_height="10dp"
                 style="@android:style/Widget.ProgressBar.Horizontal"
                 android:layout_alignParentBottom="true"
-                android:visibility="gone"/>
+                android:max="100"/>
             </RelativeLayout>
 
         </FrameLayout>

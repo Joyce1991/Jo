@@ -293,7 +293,6 @@ public class LibraryCreateFragment extends BaseFragment implements View.OnClickL
             super.onStart();
 //            显示进度条
             pbProgress.setVisibility(View.VISIBLE);
-            pbProgress.setMax(100);
             pbProgress.setProgress(0);
         }
 
