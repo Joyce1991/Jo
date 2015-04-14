@@ -4,21 +4,37 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import com.jalen.jo.R;
 import com.jalen.jo.fragments.BaseFragment;
+import com.jalen.jo.http.JoRestClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.FileAsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
+import org.apache.http.Header;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 
 /**
  * 图书馆创建界面
@@ -35,6 +51,9 @@ public class LibraryCreateFragment extends BaseFragment implements View.OnClickL
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    ImageView ivLibraryPic; // 图书馆图片
+    ProgressBar pbProgress; // 上传进度
 
     private OnFragmentInteractionListener mListener;
 
@@ -81,10 +100,13 @@ public class LibraryCreateFragment extends BaseFragment implements View.OnClickL
         super.onViewCreated(view, savedInstanceState);
         ImageButton btnPicPick = (ImageButton) view.findViewById(R.id.btn_pic_pick);
         Spinner mSpinner = (Spinner) view.findViewById(R.id.library_type_pick);
+        ivLibraryPic = (ImageView) view.findViewById(R.id.library_pic);
+        pbProgress = (ProgressBar) view.findViewById(R.id.progress_pic);
 
         btnPicPick.setOnClickListener(this);
         SpinnerAdapter mSpinnerAdapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.spinner_items_library_stype));
+                android.R.layout.simple_spinner_dropdown_item,
+                getResources().getStringArray(R.array.spinner_items_library_stype));
         mSpinner.setAdapter(mSpinnerAdapter);
     }
 
@@ -137,6 +159,72 @@ public class LibraryCreateFragment extends BaseFragment implements View.OnClickL
         public void onFragmentInteraction(Uri uri);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case REQUEST_CODE_PICK_IMAGE:
+                if (resultCode == Activity.RESULT_OK){
+                    //   判断data是否为空，data中的是否有数据
+                    if (data != null && data.getData() != null){
+                        Uri uri = data.getData();
+
+                        Cursor cursor = getActivity().getContentResolver().query(uri,
+                                new String[]{MediaStore.Images.ImageColumns.DATA}, null, null, null);
+                        cursor.moveToFirst();
+
+                        final String imageFilePath = cursor.getString(0);
+                        cursor.close();
+//                    ImageLoader.getInstance().displayImage(imageFilePath, ivLibraryPic);
+//                        上传这张图片到服务器
+                        uploadImage(uri, JoRestClient.FILE_URL);
+                        ivLibraryPic.setImageURI(uri);
+                    }
+                }
+
+                break;
+            case REQUEST_CODE_CAPTURE_CAMERA:
+                if (resultCode == Activity.RESULT_OK){
+                    //  判断data是否为空，data中的是否有数据
+                    if (data != null && data.getData() != null){
+                        Uri uri = data.getData();
+                        ivLibraryPic.setImageURI(uri);
+                    }
+                }
+
+                break;
+            default:
+
+                break;
+        }
+    }
+
+    /**
+     * 上传指定图片到服务器
+     * @param uri 图片路径
+     * @param url 请求的相对路径
+     * @return 该图片在服务器端的路径
+     */
+    private String uploadImage(Uri uri, String url) {
+        // 根据文件的uri的到文件路径
+        Cursor cursor = getActivity().getContentResolver().query(uri,
+                new String[]{MediaStore.Images.ImageColumns.DATA}, null, null, null);
+        cursor.moveToFirst();
+        String imageFilePath = cursor.getString(0);
+        // 把这个文件作为参数放到请求参数中
+        File myFile = new File(imageFilePath);
+        RequestParams params = new RequestParams();
+        try {
+            params.put("library_picture", myFile);
+        } catch(FileNotFoundException e) {
+            Log.i(tag, "has no find this file");
+        }
+        AsyncHttpResponseHandler mHandler = new FileUploadHttpResponseHandler();
+
+        JoRestClient.post(url+myFile.getName(), params, mHandler);
+        return null;
+    }
+
     /**
      * 显示一个对话框
      * @param titleId 对话框标题资源id
@@ -167,8 +255,20 @@ public class LibraryCreateFragment extends BaseFragment implements View.OnClickL
      * 从图库选择图片
      */
     private void getImageFromAlbum() {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");//相片类型
+//        Intent intent = new Intent(Intent.ACTION_PICK);
+        Intent intent = new Intent();
+//        判断运行系统的版本号是否达到4.4级别
+        if(Build.VERSION.SDK_INT >= 4.4){
+            // 通过SAF框架进行访问
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("image/jpeg");//相片类型
+        }else{
+//            防止进入了一些如es文件管理器等第三方应用
+            intent.setAction(Intent.ACTION_PICK);
+            intent.setType("image/jpeg");
+        }
+
         startActivityForResult(intent, REQUEST_CODE_PICK_IMAGE);
     }
 
@@ -183,6 +283,41 @@ public class LibraryCreateFragment extends BaseFragment implements View.OnClickL
         }
         else {
             Toast.makeText(getActivity(), R.string.toast_sdcard_unmount, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private class FileUploadHttpResponseHandler extends AsyncHttpResponseHandler {
+
+        @Override
+        public void onStart() {
+            super.onStart();
+//            显示进度条
+            pbProgress.setVisibility(View.VISIBLE);
+            pbProgress.setMax(100);
+            pbProgress.setProgress(0);
+        }
+
+        @Override
+        public void onFinish() {
+            super.onFinish();
+//            关闭对进度条
+            pbProgress.setVisibility(View.GONE);
+        }
+
+        @Override
+        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+            Log.i(tag, "success, status code is : " + statusCode);
+        }
+
+        @Override
+        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+            Log.i(tag, "failure, status code is : " + statusCode);
+        }
+
+        @Override
+        public void onProgress(int bytesWritten, int totalSize) {
+            super.onProgress(bytesWritten, totalSize);
+            pbProgress.setProgress(bytesWritten*100/totalSize);
         }
     }
 }

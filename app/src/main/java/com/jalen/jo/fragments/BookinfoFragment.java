@@ -88,7 +88,7 @@ public class BookinfoFragment extends Fragment {
         // 获取图书信息
         showDialog(getText(R.string.dialog_loading_query));
         JsonHttpResponseHandler responseHandler = new BookinfoJsonHttpResponseHandler();
-        JoRestClient.get(mParamISBN, null, responseHandler);
+        JoRestClient.getFromDouban(mParamISBN, null, responseHandler);
     }
 
     @Override

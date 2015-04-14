@@ -151,6 +151,7 @@
     <string name="spinner_item_public">企业图书馆</string>
     <string name="spinner_item_private">个人图书馆</string>
 
+
     <string-array name="tabs_all_library">
         <item>  私馆  </item>
         <item>  公馆  </item>

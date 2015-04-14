@@ -31,6 +31,19 @@
                 android:text="@string/prompt_upload_pic"
                 android:textColor="@color/white"/>
             </RelativeLayout>
+        <!--进度条-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ProgressBar
+                android:id="@+id/progress_pic"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_alignParentBottom="true"
+                android:visibility="gone"/>
+            </RelativeLayout>
+
         </FrameLayout>
 
     <LinearLayout

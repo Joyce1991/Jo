@@ -1,5 +1,6 @@
 package com.jalen.jo.library;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -55,5 +56,10 @@ public class LibraryCreateActivity extends BaseActivity implements LibraryCreate
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
