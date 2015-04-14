@@ -29,9 +29,11 @@ import com.jalen.jo.http.JoRestClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.FileAsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.apache.http.Header;
+import org.apache.http.client.utils.URIUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -51,21 +53,17 @@ public class LibraryCreateFragment extends BaseFragment implements View.OnClickL
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private DisplayImageOptions mDisplayImageOptions;
 
     ImageView ivLibraryPic; // 图书馆图片
     ProgressBar pbProgress; // 上传进度
 
     private OnFragmentInteractionListener mListener;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment LibraryCreateFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+    public LibraryCreateFragment() {
+        // Required empty public constructor
+    }
+
     public static LibraryCreateFragment newInstance(String param1, String param2) {
         LibraryCreateFragment fragment = new LibraryCreateFragment();
         Bundle args = new Bundle();
@@ -75,10 +73,6 @@ public class LibraryCreateFragment extends BaseFragment implements View.OnClickL
         return fragment;
     }
 
-    public LibraryCreateFragment() {
-        // Required empty public constructor
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +80,10 @@ public class LibraryCreateFragment extends BaseFragment implements View.OnClickL
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+//        imageloader显示配置
+        DisplayImageOptions.Builder mBuilder = new  DisplayImageOptions.Builder();
+        mBuilder.cacheInMemory(true);
+        mDisplayImageOptions = mBuilder.build();
     }
 
     @Override
@@ -161,24 +159,19 @@ public class LibraryCreateFragment extends BaseFragment implements View.OnClickL
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+
         switch (requestCode){
             case REQUEST_CODE_PICK_IMAGE:
                 if (resultCode == Activity.RESULT_OK){
                     //   判断data是否为空，data中的是否有数据
                     if (data != null && data.getData() != null){
                         Uri uri = data.getData();
-
-                        Cursor cursor = getActivity().getContentResolver().query(uri,
-                                new String[]{MediaStore.Images.ImageColumns.DATA}, null, null, null);
-                        cursor.moveToFirst();
-
-                        final String imageFilePath = cursor.getString(0);
-                        cursor.close();
 //                    ImageLoader.getInstance().displayImage(imageFilePath, ivLibraryPic);
 //                        上传这张图片到服务器
                         uploadImage(uri, JoRestClient.FILE_URL);
-                        ivLibraryPic.setImageURI(uri);
+                        // 图片太大显示不了
+//                        ivLibraryPic.setImageURI(uri);
+                        ImageLoader.getInstance().displayImage(uri.toString(), ivLibraryPic);
                     }
                 }
 
@@ -188,7 +181,7 @@ public class LibraryCreateFragment extends BaseFragment implements View.OnClickL
                     //  判断data是否为空，data中的是否有数据
                     if (data != null && data.getData() != null){
                         Uri uri = data.getData();
-                        ivLibraryPic.setImageURI(uri);
+                        ImageLoader.getInstance().displayImage(uri.toString(), ivLibraryPic);
                     }
                 }
 
@@ -197,6 +190,7 @@ public class LibraryCreateFragment extends BaseFragment implements View.OnClickL
 
                 break;
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     /**
@@ -206,11 +200,7 @@ public class LibraryCreateFragment extends BaseFragment implements View.OnClickL
      * @return 该图片在服务器端的路径
      */
     private String uploadImage(Uri uri, String url) {
-        // 根据文件的uri的到文件路径
-        Cursor cursor = getActivity().getContentResolver().query(uri,
-                new String[]{MediaStore.Images.ImageColumns.DATA}, null, null, null);
-        cursor.moveToFirst();
-        String imageFilePath = cursor.getString(0);
+        String imageFilePath = uri2FilePath(uri);
         // 把这个文件作为参数放到请求参数中
         File myFile = new File(imageFilePath);
         RequestParams params = new RequestParams();
@@ -221,8 +211,21 @@ public class LibraryCreateFragment extends BaseFragment implements View.OnClickL
         }
         AsyncHttpResponseHandler mHandler = new FileUploadHttpResponseHandler();
 
-        JoRestClient.post(url+myFile.getName(), params, mHandler);
+        JoRestClient.post(url + myFile.getName(), params, mHandler);
         return null;
+    }
+
+    /**
+     * Uri解析为文件路径url
+     * @param uri
+     * @return url
+     */
+    private String uri2FilePath(Uri uri){
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = getActivity().getContentResolver().query(uri, projection, null, null, null);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
     }
 
     /**
@@ -260,13 +263,13 @@ public class LibraryCreateFragment extends BaseFragment implements View.OnClickL
 //        判断运行系统的版本号是否达到4.4级别
         if(Build.VERSION.SDK_INT >= 4.4){
             // 通过SAF框架进行访问
-            intent.setAction(Intent.ACTION_GET_CONTENT);
+            intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
             intent.addCategory(Intent.CATEGORY_OPENABLE);
-            intent.setType("image/jpeg");//相片类型
+            intent.setType("image/*");//相片类型
         }else{
 //            防止进入了一些如es文件管理器等第三方应用
             intent.setAction(Intent.ACTION_PICK);
-            intent.setType("image/jpeg");
+            intent.setType("image/*");
         }
 
         startActivityForResult(intent, REQUEST_CODE_PICK_IMAGE);
