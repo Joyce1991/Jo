@@ -26,14 +26,13 @@ import android.widget.Toast;
 import com.jalen.jo.R;
 import com.jalen.jo.fragments.BaseFragment;
 import com.jalen.jo.http.JoRestClient;
+import com.jalen.jo.utils.Uriutil;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.FileAsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.apache.http.Header;
-import org.apache.http.client.utils.URIUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -200,9 +199,9 @@ public class LibraryCreateFragment extends BaseFragment implements View.OnClickL
      * @return 该图片在服务器端的路径
      */
     private String uploadImage(Uri uri, String url) {
-        String imageFilePath = uri2FilePath(uri);
         // 把这个文件作为参数放到请求参数中
-        File myFile = new File(imageFilePath);
+        String filePath = Uriutil.getPath(getActivity(), uri);
+        File myFile = new File(filePath);
         RequestParams params = new RequestParams();
         try {
             params.put("library_picture", myFile);
@@ -223,7 +222,7 @@ public class LibraryCreateFragment extends BaseFragment implements View.OnClickL
     private String uri2FilePath(Uri uri){
         String[] projection = { MediaStore.Images.Media.DATA };
         Cursor cursor = getActivity().getContentResolver().query(uri, projection, null, null, null);
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        int column_index = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();
         return cursor.getString(column_index);
     }
@@ -241,7 +240,7 @@ public class LibraryCreateFragment extends BaseFragment implements View.OnClickL
                 switch (which){
                     case 0:
 //                        从图库选择图片
-                        getImageFromAlbum();
+                        getImageFromGallery();
 
                         break;
                     case 1:
@@ -257,11 +256,11 @@ public class LibraryCreateFragment extends BaseFragment implements View.OnClickL
     /**
      * 从图库选择图片
      */
-    private void getImageFromAlbum() {
+    private void getImageFromGallery() {
 //        Intent intent = new Intent(Intent.ACTION_PICK);
         Intent intent = new Intent();
 //        判断运行系统的版本号是否达到4.4级别
-        if(Build.VERSION.SDK_INT >= 4.4){
+        if(Build.VERSION.SDK_INT >= 19){
             // 通过SAF框架进行访问
             intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
             intent.addCategory(Intent.CATEGORY_OPENABLE);
