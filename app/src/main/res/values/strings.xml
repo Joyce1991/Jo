@@ -29,7 +29,11 @@
     <string name="et_signup_inputpwd">输入密码</string>
 
     <string name="btn_account_edit_save">保存</string>
+    <string name="crop_save_text">保存</string>
+    <string name="crop_discard_text">取消保存</string>
     <string name="tv_dialog_loading_text">正在加载信息……</string>
+
+
 
 
     <!--dialog text-->
@@ -40,6 +44,7 @@
     <string name="dialog_title_library_pic">设置图书馆图片</string>
     <string name="dialog_select_from_gallery">从图库选择</string>
     <string name="dialog_select_from_camera">拍摄图片</string>
+    <string name="dialog_image_chooser">选择图片</string>
 
     <!--toast text-->
     <string name="toast_signup_failed">注册失败</string>
@@ -49,6 +54,9 @@
     <string name="toast_signin_success">登录成功</string>
     <string name="toast_signin_failed">登录失败</string>
     <string name="toast_sdcard_unmount">请确认已经插入SD卡</string>
+    <string name="toast_runningFaceDetection">Please wait\u2026</string>
+    <string name="toast_wallpaper">Setting wallpaper\u2026</string>
+    <string name="toast_savingImage">Saving picture\u2026</string>
 
     <!--图书信息模块-->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -71,6 +79,7 @@
     <string name="title_activity_signup">创建用户</string>
     <string name="title_activity_book_detail">图书信息</string>
     <string name="title_activity_library_create">图书馆创建</string>
+    <string name="title_activity_crop_image">剪裁</string>
 
     <!--扫一扫设置-->
     <string name="preferences_actions_title">找到条码时</string>
@@ -146,10 +155,12 @@
     <string name="tv_library_create_brief">简介：</string>
     <string name="hint_library_brief">在这里输入该图书馆的简介，让成员了解这个图书馆的相关信息</string>
     <string name="prompt_library_base">填写基本信息</string>
+    <string name="hint_multiface_crop_help">Touch a face to begin.</string>
 
     <!--spinner-->
     <string name="spinner_item_public">企业图书馆</string>
     <string name="spinner_item_private">个人图书馆</string>
+
 
 
     <string-array name="tabs_all_library">
@@ -161,6 +172,7 @@
         <item>拍摄图片</item>
         <item>从图库中选择图片</item>
     </string-array>
+
 
 
 </resources>
