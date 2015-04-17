@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -24,6 +23,7 @@ import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import com.jalen.jo.R;
+import com.jalen.jo.cropimage.CropImageIntentBuilder;
 import com.jalen.jo.fragments.BaseFragment;
 import com.jalen.jo.http.JoRestClient;
 import com.jalen.jo.utils.Uriutil;
@@ -48,6 +48,7 @@ public class LibraryCreateFragment extends BaseFragment implements View.OnClickL
     // 请求码
     private static final int REQUEST_CODE_PICK_IMAGE = 0x0001;
     private static final int REQUEST_CODE_CAPTURE_CAMERA = 0x0002;
+    private static final int REQUEST_CROP_PICTURE = 0x0003;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -158,27 +159,49 @@ public class LibraryCreateFragment extends BaseFragment implements View.OnClickL
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+        File outFile = new File(getActivity().getFilesDir(), "library.jpg");
         switch (requestCode){
             case REQUEST_CODE_PICK_IMAGE:
+                //
                 if (resultCode == Activity.RESULT_OK){
                     //   判断data是否为空，data中的是否有数据
                     if (data != null && data.getData() != null){
-                        Uri uri = data.getData();
-//                    ImageLoader.getInstance().displayImage(imageFilePath, ivLibraryPic);
+
+                        Uri outputUri = Uri.fromFile(outFile);
+                        // 构建图片裁剪Intent
+                        Uri inputUri = data.getData();
+                        CropImageIntentBuilder mIntentBuilder = new CropImageIntentBuilder(3, 2, 360, 240, outputUri);
+                        mIntentBuilder.setOutlineColor(getResources().getColor(R.color.white)); // 设置边框颜色
+                        mIntentBuilder.setSourceImage(inputUri);    // 设置待裁剪的图片源
+                        // 去到裁剪页面
+                        startActivityForResult(mIntentBuilder.getIntent(getActivity()), REQUEST_CROP_PICTURE);
+
+/*//                    ImageLoader.getInstance().displayImage(imageFilePath, ivLibraryPic);
 //                        上传这张图片到服务器
                         uploadImage(uri, JoRestClient.FILE_URL);
                         // 图片太大显示不了
 //                        ivLibraryPic.setImageURI(uri);
-                        ImageLoader.getInstance().displayImage(uri.toString(), ivLibraryPic);
+                        ImageLoader.getInstance().displayImage(uri.toString(), ivLibraryPic);*/
                     }
                 }
 
                 break;
+            case REQUEST_CROP_PICTURE:
+                if (resultCode == Activity.RESULT_OK){
+                    if (data != null && data.getData() != null){
+                        Uri uri = data.getData();
+                        // 上传这张图片
+//                        String cropedFilePath = uri.getPath();
+                        uploadImage(uri, JoRestClient.FILE_URL);
+                        ImageLoader.getInstance().displayImage(uri.toString(), ivLibraryPic);
+
+                    }
+                }
+                break;
             case REQUEST_CODE_CAPTURE_CAMERA:
                 if (resultCode == Activity.RESULT_OK){
                     //  判断data是否为空，data中的是否有数据
-                    if (data != null && data.getData() != null){
+                    if (data != null){
                         Uri uri = data.getData();
                         ImageLoader.getInstance().displayImage(uri.toString(), ivLibraryPic);
                     }
@@ -240,12 +263,12 @@ public class LibraryCreateFragment extends BaseFragment implements View.OnClickL
                 switch (which){
                     case 0:
 //                        从图库选择图片
-                        getImageFromGallery();
+                        selectImageFromGallery();
 
                         break;
                     case 1:
 //                        拍摄图片
-                        getImageFromCamera();
+                        captureImageFromCamera();
                         break;
                 }
             }
@@ -256,28 +279,18 @@ public class LibraryCreateFragment extends BaseFragment implements View.OnClickL
     /**
      * 从图库选择图片
      */
-    private void getImageFromGallery() {
-//        Intent intent = new Intent(Intent.ACTION_PICK);
-        Intent intent = new Intent();
-//        判断运行系统的版本号是否达到4.4级别
-        if(Build.VERSION.SDK_INT >= 19){
-            // 通过SAF框架进行访问
-            intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
-            intent.addCategory(Intent.CATEGORY_OPENABLE);
-            intent.setType("image/*");//相片类型
-        }else{
-//            防止进入了一些如es文件管理器等第三方应用
-            intent.setAction(Intent.ACTION_PICK);
-            intent.setType("image/*");
-        }
+    private void selectImageFromGallery() {
+        final Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
 
-        startActivityForResult(intent, REQUEST_CODE_PICK_IMAGE);
+        startActivityForResult(Intent.createChooser(intent, getString(R.string.dialog_image_chooser)), REQUEST_CODE_PICK_IMAGE);
     }
 
     /**
      * 拍摄图片
      */
-    private void getImageFromCamera() {
+    private void captureImageFromCamera() {
         String state = Environment.getExternalStorageState();
         if (state.equals(Environment.MEDIA_MOUNTED)) {
             Intent getImageByCamera = new Intent("android.media.action.IMAGE_CAPTURE");

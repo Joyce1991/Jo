@@ -7,12 +7,20 @@
         <item name="actionBarStyle">@style/JoActionBarStyle</item>
 
         <!-- colorPrimary is used for the default action bar background -->
-        <item name="colorPrimary">@color/jo_actionbar_color</item>
+        <item name="colorPrimary">@color/color_primary</item>
         <!-- colorPrimaryDark is used for the status bar -->
-        <item name="colorPrimaryDark">@color/jo_actionbar_dark_color</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
         <!-- colorAccent is used as the default value for colorControlActivated,
          which is used to tint widgets -->
-        <item name="colorAccent">@color/jo_actionbar_accent</item>
+        <item name="colorAccent">@color/color_accent</item>
+<!--
+        &lt;!&ndash;window背景色&ndash;&gt;
+        <item name="windowBackground">@color/window_background</item>
+        &lt;!&ndash;ActionBar上文本颜色&ndash;&gt;
+        <item name="textColorPrimary">@color/textcolor_primary</item>
+        &lt;!&ndash;导航栏背景色&ndash;&gt;
+        <item name="navigationBarColor">@color/navigationbar_color</item>
+-->
 
     </style>
     <!--自定义actionbar样式-->
@@ -31,7 +39,7 @@
         <item name="colorPrimaryDark">@color/blue_indigo</item>
         <!-- colorAccent is used as the default value for colorControlActivated,
          which is used to tint widgets -->
-        <item name="colorAccent">@color/jo_actionbar_accent</item>
+        <item name="colorAccent">@color/color_accent</item>
     </style>
     <!--账户界面的主题风格-->
     <style name="AccountTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -45,7 +53,7 @@
         <item name="colorPrimaryDark">@color/blue_indigo</item>
         <!-- colorAccent is used as the default value for colorControlActivated,
          which is used to tint widgets -->
-        <item name="colorAccent">@color/jo_actionbar_accent</item>
+        <item name="colorAccent">@color/color_accent</item>
     </style>
     <!--textview样式-->
     <style name="TextView">

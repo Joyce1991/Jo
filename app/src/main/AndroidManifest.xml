@@ -88,6 +88,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jalen.jo.activities.MainActivity" />
         </activity>
+        <activity
+            android:name=".cropimage.CropImageActivity"
+            android:label="@string/title_activity_crop_image"
+            android:launchMode="singleTop"/>
     </application>
 
 </manifest>

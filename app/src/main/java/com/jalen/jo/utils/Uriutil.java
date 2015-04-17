@@ -11,7 +11,7 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 
 /**
- * uri¹¤¾ßÀà
+ * uriè½¬æ¢æˆurl
  * Created by jalenzhang on 2015/4/16.
  * <br/>
  * Url: http://stackoverflow.com/questions/20067508/get-real-path-from-uri-android-kitkat-new-storage-access-framework/20402190?noredirect=1#comment30507493_20402190
@@ -21,7 +21,7 @@ public class Uriutil {
      * Get a file path from a Uri. This will get the the path for Storage Access
      * Framework Documents, as well as the _data field for the MediaStore and
      * other file-based ContentProviders.<br/>
-     * ¸ù¾İuri»ñÈ¡ÎÄ¼şÂ·¾¶¡£SAFÖĞ»ñÈ¡ÎÄ¼şÂ·¾¶¡¢MediaStoreÖĞµÄ_dataÖµ¡¢ÆäËû»ù´¡ÄÚÈİÌá¹©Õß
+     * æŠŠuriè·¯å¾„è½¬æ¢æˆurlè·¯å¾„ã€‚
      * @param context The context.
      * @param uri The Uri to query.
      * @author paulburke

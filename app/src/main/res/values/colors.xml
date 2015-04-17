@@ -4,6 +4,7 @@
     <color name="blue_light">#33B5E5</color>
     <color name="blue_dark">#0099CC</color>
     <color name="green_light">#22ac38</color>
+    <color name="green_light_2">#22bc38</color>
     <color name="blue_light_transparent_33">#33009944</color>
     <color name="green_dark">#009944</color>
     <color name="gray_light">#aaaaaa</color>
@@ -12,10 +13,16 @@
     <color name="red_dark">#CC0000</color>
     <color name="transparente">#00000000</color>
     <color name="gray_dark">#333333</color>
+    <color name="dark">#ff000000</color>
     <color name="blue_indigo">#274760</color>
-    <color name="jo_actionbar_color">#22ac38</color>
-    <color name="jo_actionbar_dark_color">#009944</color>
-    <color name="jo_actionbar_accent">#33009944</color>
+
+    <!--ActionBar、systembar、windowbackground、UI控件、导航菜单等的默认颜色配置-->
+    <color name="color_primary">#22ac38</color> <!-- ActionBar背景颜色 -->
+    <color name="color_primary_dark">#009944</color>  <!-- 系统状态栏颜色 -->
+    <color name="color_accent">#33009944</color>    <!-- UI控件的默认颜色 -->
+    <color name="textcolor_primary">@color/white</color>  <!-- ActionBar文本颜色 -->
+    <color name="window_background">@color/gray_light</color> <!-- Window背景色 -->
+    <color name="navigationbar_color">@color/dark</color>   <!-- 导航菜单栏的背景色 -->
 
     <!--zXing-->
     <color name="viewfinder_mask">#60000000</color>
