@@ -1,5 +1,6 @@
 package com.jalen.jo.activities;
 
+import android.content.UriMatcher;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -15,6 +16,8 @@ import com.jalen.jo.R;
  * @see <a href="http://my.oschina.net/kymjs/blog/206178">android应用框架搭建------BaseActivity</a>
  */
 public class BaseActivity extends ActionBarActivity {
+
+
     public String tag;
 
     public BaseActivity(){

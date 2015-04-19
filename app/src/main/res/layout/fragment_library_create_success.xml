@@ -1,0 +1,38 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingTop="16dp"
+    tools:context="com.jalen.jo.library.LibraryCreateSuccessFragment">
+
+    <RelativeLayout
+        android:id="@+id/rl_library_qrcode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+        <ImageView
+            android:id="@+id/library_qrcode"
+            android:layout_width="240dp"
+            android:layout_height="240dp"
+            android:padding="@dimen/jocomponent_paddin"
+            android:scaleType="centerInside"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/jocomponent_layout_marginTop"
+            android:padding="@dimen/jocomponent_paddin"
+            android:layout_below="@id/library_qrcode"
+            android:layout_centerHorizontal="true"
+            android:text="@string/prompt_library_qrcode"/>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_complete"
+        style="@style/JoComponentStyle.Button"
+        android:layout_alignParentBottom="true"
+        android:text="@string/btn_complete"/>
+
+</RelativeLayout>

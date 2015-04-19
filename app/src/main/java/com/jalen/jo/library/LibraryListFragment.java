@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jalen.jo.R;
-import com.jalen.jo.beans.JoLibrary;
 import com.jalen.jo.fragments.BaseFragment;
 import com.nostra13.universalimageloader.core.ImageLoader;
 

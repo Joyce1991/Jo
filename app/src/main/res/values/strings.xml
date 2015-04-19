@@ -31,15 +31,17 @@
     <string name="btn_account_edit_save">保存</string>
     <string name="crop_save_text">保存</string>
     <string name="crop_discard_text">取消保存</string>
-    <string name="tv_dialog_loading_text">正在加载信息……</string>
+
 
 
 
 
     <!--dialog text-->
+    <string name="dialog_loading_text">正在加载信息……</string>
     <string name="dialog_loading_signin_text">正在登录……</string>
     <string name="dialog_loading_signup_text">正在注册……</string>
     <string name="dialog_loading_query">正在为为您努力查询……</string>
+    <string name="dialog_loading_create">正在为为您努力创建一个图书馆……</string>
     <string name="dialog_title_pick">设置头像</string>
     <string name="dialog_title_library_pic">设置图书馆图片</string>
     <string name="dialog_select_from_gallery">从图库选择</string>
@@ -57,6 +59,10 @@
     <string name="toast_runningFaceDetection">Please wait\u2026</string>
     <string name="toast_wallpaper">Setting wallpaper\u2026</string>
     <string name="toast_savingImage">Saving picture\u2026</string>
+    <string name="toast_library_name_empty">请为图书馆输入一个名称</string>
+    <string name="toast_library_create_failed">创建失败</string>
+    <string name="toast_library_create_successed">创建成功</string>
+    <string name="toast_no_sign_in">没有登录，请先登录</string>
 
     <!--图书信息模块-->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -138,6 +144,7 @@
     <string name="action_new">新建</string>
     <string name="action_style">样式</string>
     <string name="action_save">保存</string>
+    <string name="action_print">打印</string>
 
     <string name="tv_drawer_help_and_feedback">帮助与反馈</string>
     <string name="tv_library_collection">藏书量：</string>
@@ -149,6 +156,7 @@
 
     <!--prompt-->
     <string name="prompt_upload_pic">上传图书馆照片</string>
+    <string name="prompt_library_qrcode">图书馆二维码标识</string>
 
     <!--hint-->
     <string name="hint_nickname">昵称</string>
@@ -160,6 +168,7 @@
     <!--spinner-->
     <string name="spinner_item_public">企业图书馆</string>
     <string name="spinner_item_private">个人图书馆</string>
+    <string name="btn_complete">完成</string>
 
 
 

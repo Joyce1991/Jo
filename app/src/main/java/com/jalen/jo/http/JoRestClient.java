@@ -14,7 +14,7 @@ import com.loopj.android.http.RequestParams;
 public class JoRestClient {
     private static final String DOUBAN_BASE_URL = "https://api.douban.com/v2/book/isbn/";
     private static final String BASE_URL = "https://leancloud.cn";
-    public static final String FILE_URL = "/1.1/files/";
+    public static final String FILE_URL = "/1.1/files";
 
     private static final String HEADER_APPLICATION_ID = "X-AVOSCloud-Application-Id";
     private static final String HEADER_APPLICATION_KEY = "X-AVOSCloud-Application-Key";

@@ -1,4 +1,4 @@
-package com.jalen.jo.beans;
+package com.jalen.jo.library;
 
 import java.util.List;
 
