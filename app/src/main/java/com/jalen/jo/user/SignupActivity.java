@@ -1,4 +1,4 @@
-package com.jalen.jo.activities;
+package com.jalen.jo.user;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -31,6 +31,8 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.SignUpCallback;
 import com.jalen.jo.R;
+import com.jalen.jo.activities.AccountActivity;
+import com.jalen.jo.activities.BaseActivity;
 import com.jalen.jo.adapters.SimpleListAdapter;
 import com.jalen.jo.fragments.BaseFragment;
 import com.jalen.jo.utils.VerifyUtil;
@@ -110,20 +112,10 @@ public class SignupActivity extends BaseActivity {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
 
-
-            emails = new HashSet<String>();
-            Pattern emailPattern = Patterns.EMAIL_ADDRESS; // API level 8+
-            Account[] accounts = AccountManager.get(getActivity()).getAccounts();
-            for (Account account : accounts) {
-                if (emailPattern.matcher(account.name).matches()) {
-                    String accountName = account.name;
-                    String accountType = account.type;
-                    System.out.println("name:" + accountName + "\n" + "type:" + accountType);
-                    emails.add(accountName);
-                }
-            }
-            // 现在邮箱集合中的记录是不重复的邮箱地址了
+            emails = readEmailFromAccountManager();
         }
+
+
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,

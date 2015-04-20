@@ -4,8 +4,52 @@
     android:layout_height="match_parent"
     tools:context="com.jalen.jo.library.LibraryListFragment">
 
+    <!--空view-->
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/emptycardview_height"
+        card_view:cardBackgroundColor="@color/green_light_2">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/emptycardview_new"
+                android:layout_width="@dimen/emptycardview_new"
+                android:layout_height="@dimen/emptycardview_new"
+                android:layout_centerInParent="true"
+                android:src="@drawable/pic_new" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@id/emptycardview_new"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/emptycardview_new"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/emptycardview_new_detail"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
     <!--alibaba下拉刷新控件-->
-    <in.srain.cube.views.ptr.PtrClassicFrameLayout xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
+    <in.srain.cube.views.ptr.PtrClassicFrameLayout
+        xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
         android:id="@+id/library_user_pullrefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,52 +65,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_library_join"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scrollbars="vertical" />
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
 
-            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/empty_view"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/emptycardview_height"
-                card_view:cardBackgroundColor="@color/green_light_2">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:id="@+id/emptycardview_new"
-                        android:layout_width="@dimen/emptycardview_new"
-                        android:layout_height="@dimen/emptycardview_new"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/pic_new" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentBottom="true"
-                        android:layout_below="@id/emptycardview_new"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/emptycardview_new"
-                            android:textColor="@color/white"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/emptycardview_new_detail"
-                            android:textColor="@color/white" />
-                    </LinearLayout>
-                </RelativeLayout>
-
-            </android.support.v7.widget.CardView>
 
         </FrameLayout>
 

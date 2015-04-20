@@ -1,8 +1,7 @@
-package com.jalen.jo.activities;
+package com.jalen.jo.user;
 
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
@@ -12,20 +11,23 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.LogInCallback;
 import com.jalen.jo.R;
+import com.jalen.jo.activities.BaseActivity;
+import com.jalen.jo.fragments.BaseFragment;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class SigninActivity extends BaseActivity {
 
@@ -73,21 +75,29 @@ public class SigninActivity extends BaseActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment implements View.OnClickListener {
+    public static class PlaceholderFragment extends BaseFragment implements View.OnClickListener {
         private String TAG = "SigninActivity.PlaceholderFragment";
         //    M
         private String mUsername = "";
         private String mPwd = "";
         private Boolean isPwdVisible = false;
+        private Set<String> emails;
 
         //    V
-        private EditText etUser;
+        private AutoCompleteTextView etEmail;
         private EditText etPwd;
         private Button btnSignin;
         private CheckBox ckbVisible;
-        private AlertDialog mDialog;
 
         public PlaceholderFragment() {
+        }
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+
+            // 初始化邮箱列表
+            emails = readEmailFromAccountManager();
         }
 
         @Override
@@ -95,12 +105,13 @@ public class SigninActivity extends BaseActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_signin, container, false);
 
-            etUser = (EditText) rootView.findViewById(R.id.et_signin_user);
+            etEmail = (AutoCompleteTextView) rootView.findViewById(R.id.et_signin_user);
             etPwd = (EditText) rootView.findViewById(R.id.et_signin_pwd);
             ckbVisible = (CheckBox) rootView.findViewById(R.id.ckb_signin_pwdvisible);
             btnSignin = (Button) rootView.findViewById(R.id.btn_signin_sigin);
 
-            etUser.setOnClickListener(this);
+            String[] emailStrs =  emails.toArray(new String[emails.size()]);
+            etEmail.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.simple_text, emailStrs));
             ckbVisible.setOnClickListener(this);
             btnSignin.setOnClickListener(this);
 
@@ -110,7 +121,7 @@ public class SigninActivity extends BaseActivity {
                 mUsername = (String) data.get("username");
                 mPwd = (String) data.get("password");
                 isPwdVisible = (Boolean) data.get("isPwdVisible");
-                etUser.setText(mUsername);
+                etEmail.setText(mUsername);
                 etPwd.setText(mPwd);
                 setPwdVisibility(isPwdVisible);
             }
@@ -133,7 +144,7 @@ public class SigninActivity extends BaseActivity {
 
                 case R.id.btn_signin_sigin:
 //                    登录
-                    mUsername = etUser.getText().toString().trim();
+                    mUsername = etEmail.getText().toString().trim();
                     mPwd = etPwd.getText().toString().trim();
 //                    显示“加载”对话框
                     showDialog(getText(R.string.dialog_loading_signin_text));
@@ -146,6 +157,7 @@ public class SigninActivity extends BaseActivity {
                                 showMessage(getText(R.string.toast_signin_success), e, true);
 //                                隐藏“加载”对话框
                                 dismissDialog();
+                                getActivity().finish();
                             } else {
                                 // 登录失败
                                 showMessage(getText(R.string.toast_signin_failed), e, true);
@@ -210,51 +222,8 @@ public class SigninActivity extends BaseActivity {
             SharedPreferences sp = getActivity().getPreferences(MODE_PRIVATE);
             return sp.getAll();
         }
-        /**
-         * 关闭一个对话框
-         */
-        private void dismissDialog() {
-            if (mDialog != null && mDialog.isShowing()){
-                mDialog.dismiss();
-                mDialog = null;
-            }
-        }
 
-        /**
-         * 显示一个对话框
-         * @param msg   对话框内容
-         */
-        private void showDialog(CharSequence msg) {
-            if (mDialog != null){
-                mDialog.show();
-            }else{
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(getActivity());
-                // Get the layout inflater
-                LayoutInflater inflater = getActivity().getLayoutInflater();
-                RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.dialog_loading, null);
-                TextView tv_msg = (TextView) view.findViewById(R.id.tv_dialog_loading_text);
-                tv_msg.setText(msg);
-                mBuilder.setView(view);
-                mDialog = mBuilder.create();
-                mDialog.show();
-            }
-        }
 
-        /**
-         * 显示一条toast信息
-         * @param msg   toast内容
-         * @param e     异常
-         * @param b     是否要显示这条信息
-         */
-        private void showMessage(CharSequence msg, AVException e, boolean b) {
-            Log.i(TAG, msg.toString());
-            if(b){
-                Toast.makeText(
-                        getActivity(),
-                        msg,
-                        Toast.LENGTH_SHORT
-                ).show();
-            }
-        }
+
     }
 }

@@ -56,11 +56,6 @@ public class MainActivity extends BaseActivity
         // 用Toolbar替换actionbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
         setSupportActionBar(toolbar);
-/*
-        mViewPager = new ViewPager(this);
-        mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
-        mSlidingTabLayout.setViewPager(mViewPager);
-*/
 
 //        跟踪统计应用的打开情况
         AVAnalytics.trackAppOpened(getIntent());

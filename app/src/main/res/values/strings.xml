@@ -63,6 +63,8 @@
     <string name="toast_library_create_failed">创建失败</string>
     <string name="toast_library_create_successed">创建成功</string>
     <string name="toast_no_sign_in">没有登录，请先登录</string>
+    <string name="toast_update_success">更新数据成功</string>
+    <string name="toast_update_failed">更新数据失败</string>
 
     <!--图书信息模块-->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -170,6 +172,9 @@
     <string name="spinner_item_private">个人图书馆</string>
     <string name="btn_complete">完成</string>
 
+    <!--onclick提示-->
+    <string name="onclick_library_create">点击了创建图书馆</string>
+    <string name="onclick_overflow">点击了更多选项</string>
 
 
     <string-array name="tabs_all_library">

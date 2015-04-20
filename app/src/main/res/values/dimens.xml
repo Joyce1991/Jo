@@ -29,7 +29,7 @@
     <dimen name="book_width">96dp</dimen>
 
     <dimen name="drawer_user_height">144dp</dimen>
-    <dimen name="cardview_library_height">96dp</dimen>
+    <dimen name="cardview_library_height">120dp</dimen>
     <dimen name="cardview_overflow_width">24dp</dimen>
     <dimen name="cardview_overflow_height">24dp</dimen>
     <dimen name="cardview_creator_pic">24dp</dimen>

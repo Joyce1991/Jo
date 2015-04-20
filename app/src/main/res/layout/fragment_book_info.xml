@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.jalen.jo.activities.BookInfoActivity$PlaceholderFragment">
+    tools:context="com.jalen.jo.book.BookInfoActivity$PlaceholderFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"

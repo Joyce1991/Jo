@@ -1,14 +1,21 @@
 package com.jalen.jo.activities;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.UriMatcher;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.Window;
 
 import com.jalen.jo.R;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * Created by jh on 2015/2/27.  <br/>

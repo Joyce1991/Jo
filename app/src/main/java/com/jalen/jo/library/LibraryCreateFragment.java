@@ -4,12 +4,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Message;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,20 +32,15 @@ import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.ProgressCallback;
 import com.avos.avoscloud.SaveCallback;
 import com.jalen.jo.R;
-import com.jalen.jo.activities.SigninActivity;
+import com.jalen.jo.user.SigninActivity;
 import com.jalen.jo.cropimage.CropImageIntentBuilder;
 import com.jalen.jo.fragments.BaseFragment;
 import com.jalen.jo.http.JoRestClient;
 import com.jalen.jo.utils.Uriutil;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import org.apache.http.Header;
-
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**

@@ -29,8 +29,8 @@ import android.widget.Toast;
 import com.avos.avoscloud.AVUser;
 import com.jalen.jo.R;
 import com.jalen.jo.activities.AccountActivity;
-import com.jalen.jo.activities.SigninActivity;
-import com.jalen.jo.activities.SignupActivity;
+import com.jalen.jo.user.SigninActivity;
+import com.jalen.jo.user.SignupActivity;
 import com.jalen.jo.adapters.SimpleListAdapter;
 import com.jalen.jo.beans.DrawerOption;
 import com.jalen.jo.views.CircleImageView;
@@ -130,6 +130,14 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        // 重新加载user UI
+        updateUserUI();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 //        加载XML布局
@@ -143,19 +151,7 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
         llUnsignin = (LinearLayout) mDrawer.findViewById(R.id.ll_drawer_unsignin);
         mDrawerListView = (ListView) mDrawer.findViewById(R.id.lv_drawer_options);
 
-//        加载用户信息
-        if (AVUser.getCurrentUser() != null){
-//            已登录
-            llSignin.setVisibility(View.VISIBLE);
-            llUnsignin.setVisibility(View.INVISIBLE);
-            tvUsername.setText(AVUser.getCurrentUser().getUsername());
-            llSignin.setOnClickListener(this);
-        }else {
-            llSignin.setVisibility(View.INVISIBLE);
-            llUnsignin.setVisibility(View.VISIBLE);
-            mDrawerSignin.setOnClickListener(this);
-            mDrawerSignup.setOnClickListener(this);
-        }
+        updateUserUI();
 
         lvAdapter = new SimpleListAdapter(getActivity(), R.layout.adapter_drawer_options, options);
         mDrawerListView.setAdapter(lvAdapter);
@@ -168,6 +164,22 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true); // 设置当前选择项
 
         return mDrawer;
+    }
+
+    private void updateUserUI() {
+        //        加载用户信息
+        if (AVUser.getCurrentUser() != null){
+//            已登录
+            llSignin.setVisibility(View.VISIBLE);
+            llUnsignin.setVisibility(View.INVISIBLE);
+            tvUsername.setText(AVUser.getCurrentUser().getUsername());
+            llSignin.setOnClickListener(this);
+        }else {
+            llSignin.setVisibility(View.INVISIBLE);
+            llUnsignin.setVisibility(View.VISIBLE);
+            mDrawerSignin.setOnClickListener(this);
+            mDrawerSignup.setOnClickListener(this);
+        }
     }
 
     /**

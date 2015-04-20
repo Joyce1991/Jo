@@ -35,7 +35,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.SignupActivity"
+            android:name=".user.SignupActivity"
             android:label="@string/title_activity_signup"
             android:parentActivityName=".activities.MainActivity" >
             <meta-data
@@ -43,7 +43,7 @@
                 android:value="com.jalen.jo.activities.MainActivity" />
         </activity>
         <activity
-            android:name=".activities.SigninActivity"
+            android:name=".user.SigninActivity"
             android:label="@string/title_activity_signin"
             android:parentActivityName=".activities.MainActivity" >
             <meta-data
@@ -73,7 +73,7 @@
                 android:value="com.jalen.jo.scan.CaptureActivity" />
         </activity>
         <activity
-            android:name=".activities.BookInfoActivity"
+            android:name=".book.BookInfoActivity"
             android:label="@string/title_activity_book_info"
             android:parentActivityName=".activities.MainActivity" >
             <meta-data

@@ -8,10 +8,12 @@ import java.util.List;
  * 图书馆的JavaBean
  */
 public class JoLibrary {
+
+
     /**
      * 图书馆id
      */
-    private String libraryId;
+    private String objectId;
     /**
      * 图书馆类型
      */
@@ -41,12 +43,12 @@ public class JoLibrary {
      */
     private List<String> books;
 
-    public String getLibraryId() {
-        return libraryId;
+    public String getObjectId() {
+        return objectId;
     }
 
-    public void setLibraryId(String libraryId) {
-        this.libraryId = libraryId;
+    public void setObjectId(String objectId) {
+        this.objectId = objectId;
     }
 
     public String getLibraryType() {

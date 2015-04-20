@@ -12,8 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.FindCallback;
 import com.jalen.jo.R;
 import com.jalen.jo.fragments.BaseFragment;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -42,7 +48,7 @@ public class LibraryListFragment extends BaseFragment {
     private CardView mEmptyView;
     private RecyclerView mRecyclerView;
     private PtrClassicFrameLayout mPtrFrame;
-    private MyAdapter mAdapter;
+    private LibraryAdapter mAdapter;
 
 //    private OnFragmentInteractionListener mListener;
 
@@ -60,7 +66,10 @@ public class LibraryListFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // 初始化图书馆列表
         libraries = new ArrayList<JoLibrary>();
+        // 查询图书馆列表
+        query();
     }
 
     @Override
@@ -74,7 +83,7 @@ public class LibraryListFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 // 启动创建图书馆页面
-                Log.i(tag, "点击创建图书馆");
+                showMessage(getText(R.string.onclick_library_create), null, true);
                 Intent intentLibraryCreate = new Intent(getActivity(), LibraryCreateActivity.class);
                 startActivity(intentLibraryCreate);
             }
@@ -82,14 +91,19 @@ public class LibraryListFragment extends BaseFragment {
 
         // RecyclerView
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_library_join);
-        mAdapter = new MyAdapter(libraries, R.layout.adapter_library_item);
-        mRecyclerView.setAdapter(mAdapter);
+        // 给RecyclerView设置一个垂直的线性布局管理器
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mLayoutManager);
+        mAdapter = new LibraryAdapter(libraries, R.layout.adapter_library_item_style_1);
+        mRecyclerView.setAdapter(mAdapter);
+
 
         // PtrFrameLayout
         mPtrFrame = (PtrClassicFrameLayout) rootView.findViewById(R.id.library_user_pullrefresh);
         mPtrFrame.setLastUpdateTimeRelateObject(this);
+        mPtrFrame.setVisibility(View.INVISIBLE);
+        mRecyclerView.setVisibility(View.VISIBLE);
         mPtrFrame.setPtrHandler(new PtrHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
@@ -113,82 +127,64 @@ public class LibraryListFragment extends BaseFragment {
      * 联网获取最新数据
      */
     protected void updateData() {
-
-        // 联网获取最新数据
-        JoLibrary library = new JoLibrary();
-        library.setCounts("245");
-        library.setLibraryBrief("fakisodhgfiashndifdklfhnjkasd");
-        library.setLibraryId("0215");
-        library.setLibraryManager("joyce");
-        library.setLibraryName("东软北京图书馆");
-        library.setLibraryPic("https://raw.githubusercontent.com/aosp-exchange-group/about/master/weixin-qrcode.jpg");
-        libraries.add(library);
         displayData(libraries);
-/*
-        DemoRequestData.getImageList(new RequestFinishHandler<JsonData>() {
-            @Override
-            public void onRequestFinish(final JsonData data) {
-                displayData(data);
-            }
-        });
-*/
     }
 
+    /**
+     * 查询图书馆列表
+     */
+    private void query(){
+        if (AVUser.getCurrentUser() != null){
+            showDialog(getText(R.string.dialog_loading_query));
+            AVQuery<AVObject> query = new AVQuery<AVObject>("Library");
+            query.whereEqualTo("libraryManager", AVUser.getCurrentUser().getUsername());
+            query.findInBackground(new FindCallback<AVObject>() {
+                public void done(List<AVObject> avObjects, AVException e) {
+                    if (e == null) {
+                        // 先清空一下原来的数据
+                        libraries.clear();
+                        for (AVObject avObject : avObjects){
+                            JoLibrary mLibrary = new JoLibrary();
+                            mLibrary.setObjectId(avObject.getObjectId());
+                            mLibrary.setCounts(avObject.getString("counts"));
+                            mLibrary.setLibraryName(avObject.getString("libraryName"));
+                            mLibrary.setLibraryBrief(avObject.getString("libraryBrief"));
+                            mLibrary.setLibraryManager(avObject.getString("libraryManager"));
+                            mLibrary.setLibraryPic(avObject.getString("libraryPic"));
+                            mLibrary.setLibraryType(avObject.getString("libraryType"));
+
+                            libraries.add(mLibrary);
+                        }
+                        showMessage(getText(R.string.toast_update_success), null, true);
+                        updateData();
+                    } else {
+                        showMessage(getText(R.string.toast_update_failed), e, true);
+                    }
+                    // 关闭对话框
+                    dismissDialog();
+                }
+            });
+        }
+    }
     /**
      * 显示数据
      * @param data
      */
     private void displayData(List<JoLibrary> data) {
-
-        mEmptyView.setVisibility(View.GONE);
-        mRecyclerView.setVisibility(View.VISIBLE);
-
-        mAdapter.getDataList().clear();
-//        mAdapter.getDataList().addAll(data.optJson("data").optJson("list").toArrayList());
-        mAdapter.getDataList().addAll(data);
-        mPtrFrame.refreshComplete();
-        mAdapter.notifyDataSetChanged();
-    }
-/*
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+        if(data.size() == 0){
+            mEmptyView.setVisibility(View.VISIBLE);
+            mPtrFrame.setVisibility(View.INVISIBLE);
+        }else {
+            mEmptyView.setVisibility(View.GONE);
+            mPtrFrame.setVisibility(View.VISIBLE);
+            mAdapter.getDataList().clear();
+            mAdapter.getDataList().addAll(data);
+            mPtrFrame.refreshComplete();
+            mAdapter.notifyDataSetChanged();
         }
-    }
-*/
 
-/*
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
     }
-*/
 
-/*
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-*/
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
@@ -197,67 +193,73 @@ public class LibraryListFragment extends BaseFragment {
     /**
      * {@link android.support.v7.widget.RecyclerView}的Adapter
      */
-    private class MyAdapter extends RecyclerView.Adapter {
-        private List<JoLibrary> libraries;
+    private class LibraryAdapter extends RecyclerView.Adapter {
+        private List<JoLibrary> data;
         private int resourceId;
 
-        public MyAdapter(List<JoLibrary> libraries, int resourceId){
-            this.libraries = libraries;
+        public LibraryAdapter(List<JoLibrary> libraries, int resourceId){
+            this.data = new ArrayList<JoLibrary>();
+            this.data.addAll(libraries);
             this.resourceId = resourceId;
         }
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             // Create a new view.
-            View v = LayoutInflater.from(parent.getContext())
+            View itemView = LayoutInflater.from(parent.getContext())
                     .inflate(resourceId, parent, false);
 
-            MyViewHolder viewholder = new MyViewHolder(v, new MyViewHolder.IMyViewHolderClicks(){
+            LibraryViewHolder viewholder = new LibraryViewHolder(itemView, new LibraryViewHolder.IMyViewHolderClicks(){
                 @Override
                 public void onItemClicked(View caller, int position) {
                     Log.i(tag, "点击了Item, 位置position为：" + position);
+                    showMessage("点击了Item, 位置position为：" + position, null, true);
                 }
                 @Override
                 public void onOverflowClicked(ImageView callerImage, int position) {
                     Log.i(tag, "点击了Item的overflow, 位置position为：" + position);
+                    showMessage("点击了Item的overflow, 位置position为：" + position, null, true);
                 }
             });
+
             return viewholder;
         }
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             Log.d(tag, "Element " + position + " set.");
-            JoLibrary library = libraries.get(position);
-            MyViewHolder myViewHolder = (MyViewHolder) holder;
+            // 获取position位置的JoLibrary对象
+            JoLibrary library = this.data.get(position);
+            LibraryViewHolder myViewHolder = (LibraryViewHolder) holder;
 
             myViewHolder.getCreatorName().setText(library.getLibraryManager());
             ImageLoader.getInstance().displayImage(library.getLibraryPic(), myViewHolder.getLibraryPic());
             myViewHolder.getLibraryName().setText(library.getLibraryName());
             myViewHolder.getLibraryBrief().setText(library.getLibraryBrief());
             myViewHolder.getLibraryCount().setText(library.getCounts());
-            myViewHolder.getOverflow().setOnClickListener(new View.OnClickListener() {
+/*            myViewHolder.getOverflow().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // 点击overflow
+                    showMessage(getText(R.string.onclick_overflow), null, true);
                 }
-            });
+            });*/
 
         }
 
         @Override
         public int getItemCount() {
-            return libraries.size();
+            return this.data == null ? 0 : data.size();
         }
 
         public List<JoLibrary> getDataList(){
-            return libraries;
+            return data;
         }
     }
 
     /**
      * 继承于{@link android.support.v7.widget.RecyclerView}
      */
-    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class LibraryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView libraryPic;
         ImageView creatorPic;
         ImageView overflow;
@@ -273,7 +275,7 @@ public class LibraryListFragment extends BaseFragment {
             public void onOverflowClicked(ImageView callerImage, int position);
         }
 
-        public MyViewHolder(View itemView, IMyViewHolderClicks listener) {
+        public LibraryViewHolder(View itemView, IMyViewHolderClicks listener) {
             super(itemView);
             this.mListener = listener;
             libraryBrief = (TextView) itemView.findViewById(R.id.library_brief);
@@ -286,6 +288,7 @@ public class LibraryListFragment extends BaseFragment {
 
             itemView.setOnClickListener(this);
             overflow.setOnClickListener(this);
+            libraryPic.setOnClickListener(this);
 
         }
 
