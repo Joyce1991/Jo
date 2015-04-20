@@ -25,15 +25,16 @@
                 android:layout_width="@dimen/cardview_overflow_width"
                 android:layout_height="@dimen/cardview_overflow_height"
                 android:src="@drawable/ic_action_overflow"
+                android:padding="8dp"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"/>
+                android:layout_alignParentTop="true"/>
             <LinearLayout
                 android:id="@+id/ll_library_collection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_toLeftOf="@id/iv_overflow"
-                android:layout_alignBottom="@id/iv_overflow">
+                android:layout_alignParentBottom="true">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -69,12 +70,7 @@
                     android:ellipsize="end"
                     android:text="扫码兽团队"/>
             </LinearLayout>
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/creator"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true">
+
                 <TextView
                     android:id="@+id/library_name"
                     android:layout_width="match_parent"
@@ -82,16 +78,17 @@
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
                     android:singleLine="true"
+                    android:ellipsize="end"
                     android:text="打造高质量Android应用"
+                    android:layout_toLeftOf="@id/iv_overflow"
                     android:textStyle="bold"/>
                 <TextView
                     android:id="@+id/library_brief"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
+                    android:layout_below="@id/iv_overflow"
                     android:lines="2"
                     android:text="   广州图书馆是广州市政府主办的公益性文化设施……"/>
-            </RelativeLayout>
 
             </RelativeLayout>
         </LinearLayout>
