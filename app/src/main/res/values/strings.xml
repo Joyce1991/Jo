@@ -88,6 +88,8 @@
     <string name="title_activity_book_detail">图书信息</string>
     <string name="title_activity_library_create">图书馆创建</string>
     <string name="title_activity_crop_image">剪裁</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_library">图书馆名称</string>
 
     <!--扫一扫设置-->
     <string name="preferences_actions_title">找到条码时</string>
@@ -186,6 +188,9 @@
         <item>拍摄图片</item>
         <item>从图库中选择图片</item>
     </string-array>
+
+    <string name="hello_world">Hello world!</string>
+
 
 
 

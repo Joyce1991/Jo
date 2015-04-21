@@ -8,12 +8,33 @@ import java.util.List;
  * 图书馆的JavaBean
  */
 public class JoLibrary {
-
+/*
+    {
+            "updatedAt": "2015-04-19T13:28:32.033Z",
+            "createdAt": "2015-04-19T13:28:32.033Z",
+            "objectId": "5533ad80e4b07b48cfb9ee6e",
+            "libraryName": "JavaScript",
+            "libraryType": "企业图书馆",
+            "libraryBrief": "师父大哥低功耗",
+            "counts": "0",
+            "libraryManager": "joyceit1991@gmail.com",
+            "libraryPic": "http://ac-lgt86x4n.clouddn.com/MVC2WoDrQJ5tMMlWWIw6bMz6WcwG6ixxvC5Dbhwu.jpg"
+    }
+*/
 
     /**
      * 图书馆id
      */
     private String objectId;
+    /**
+     * 最近一次更新时间
+     */
+    private String updatedAt;
+    /**
+
+     * 图书馆创建时间
+     */
+    private String createdAt;
     /**
      * 图书馆类型
      */
@@ -104,5 +125,20 @@ public class JoLibrary {
 
     public void setBooks(List<String> books) {
         this.books = books;
+    }
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

@@ -19,5 +19,6 @@
     <item type="id" name="fragment_accountcentra"/>
     <item type="id" name="fragment_library_create"/>
     <item type="id" name="fragment_library_create_success"/>
+    <item type="id" name="fragment_library_bookdisplay"/>
 
 </resources>

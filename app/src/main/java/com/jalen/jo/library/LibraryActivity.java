@@ -1,51 +1,44 @@
-package com.jalen.jo.activities;
+package com.jalen.jo.library;
 
-import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.jalen.jo.R;
-import com.jalen.jo.fragments.AccountCentralFragment;
-import com.jalen.jo.fragments.AccountEditFragment;
-import com.jalen.jo.fragments.BaseFragment;
-import com.jalen.jo.fragments.NicknameFragment;
+import com.jalen.jo.activities.BaseActivity;
 
-/**
- * 账户资料管理
- */
-public class AccountActivity extends BaseActivity {
-    public static final String EXTRA_FRAGMENT_ID = "com.jalen.jo.activities.fragmentintent.fragment_id";
-
-    private Intent mIntent; // 启动Intent
-    private int mFragmentID;    // fragment_id
+public class LibraryActivity extends BaseActivity implements LibraryBookDisplayFragment.OnFragmentInteractionListener{
+    public static final String EXTRA_LIBRARY_ID = "com.jalen.jo.library.LibraryActivity.libraryObjectId";
+    public static final String EXTRA_FRAGMENT_ID = "com.jalen.jo.library.LibraryActivity.fragmentId";
+    // 数据模型层
+    private JoLibrary mJoLibrary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_account_central);
+        setContentView(R.layout.activity_library);
         // 用Toolbar替换actionbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // 获取fragment id，根据fragment id创建fragment
-        mIntent = getIntent();
-        mFragmentID = mIntent.getIntExtra(EXTRA_FRAGMENT_ID, 0);
+        // 获取intent中的数据
+        String extraLibraryObjectId = getIntent().getStringExtra(EXTRA_LIBRARY_ID);
+        int mFragmentId = getIntent().getIntExtra(EXTRA_FRAGMENT_ID, R.id.fragment_library_bookdisplay);
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, createFragmentById(mFragmentID))
+                    .add(R.id.container, createFragmentById(mFragmentId, extraLibraryObjectId))
                     .commit();
         }
     }
 
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_account_edit, menu);
+        getMenuInflater().inflate(R.menu.menu_library, menu);
         return true;
     }
 
@@ -64,4 +57,8 @@ public class AccountActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 }

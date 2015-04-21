@@ -9,6 +9,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -21,6 +24,7 @@ import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.FindCallback;
 import com.jalen.jo.R;
 import com.jalen.jo.fragments.BaseFragment;
+import com.jalen.jo.scan.CaptureActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -64,7 +68,7 @@ public class LibraryListFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setHasOptionsMenu(true);
         // 初始化图书馆列表
         libraries = new ArrayList<JoLibrary>();
         // 查询图书馆列表
@@ -76,33 +80,33 @@ public class LibraryListFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_library_list, container, false);
+
+        /**Empty View 设置**/
         mEmptyView = (CardView) rootView.findViewById(R.id.empty_view);
         ImageView mCardNew = (ImageView) rootView.findViewById(R.id.emptycardview_new);
         mCardNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 启动创建图书馆页面
-                showMessage(getText(R.string.onclick_library_create), null, true);
-                Intent intentLibraryCreate = new Intent(getActivity(), LibraryCreateActivity.class);
-                startActivity(intentLibraryCreate);
+                startLibraryCreate();
             }
         });
 
-        // RecyclerView
+        /**RecyclerView 设置**/
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_library_join);
-        // 给RecyclerView设置一个垂直的线性布局管理器
+        // RecyclerView设置LayoutManager
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mLayoutManager);
+        // RecyclerView设置ItemDecoration
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getResources().getDrawable(R.drawable.divider_recyclerview)));
+        // RecyclerView设置Adapter
         mAdapter = new LibraryAdapter(libraries, R.layout.adapter_library_item_style_1);
         mRecyclerView.setAdapter(mAdapter);
 
 
-        // PtrFrameLayout
+        /**PtrFrameLayout设置**/
         mPtrFrame = (PtrClassicFrameLayout) rootView.findViewById(R.id.library_user_pullrefresh);
         mPtrFrame.setLastUpdateTimeRelateObject(this);
-        mPtrFrame.setVisibility(View.INVISIBLE);
-        mRecyclerView.setVisibility(View.VISIBLE);
         mPtrFrame.setPtrHandler(new PtrHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
@@ -117,7 +121,50 @@ public class LibraryListFragment extends BaseFragment {
             }
         });
 
+        /**初始化视图可见性**/
+        mPtrFrame.setVisibility(View.INVISIBLE);
+        mRecyclerView.setVisibility(View.VISIBLE);
+
         return rootView;
+    }
+
+    /**
+     * 启动图书馆创建流程
+     */
+    private void startLibraryCreate() {
+        // 启动创建图书馆页面
+        showMessage(getText(R.string.onclick_library_create), null, true);
+        Intent intentLibraryCreate = new Intent(getActivity(), LibraryCreateActivity.class);
+        startActivity(intentLibraryCreate);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_library_list, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_new:
+                startLibraryCreate();
+                return true;
+            case R.id.action_scan:
+                Intent captureIntent = new Intent(getActivity(), CaptureActivity.class);
+                startActivity(captureIntent);
+                return true;
+            case R.id.action_search:
+                showMessage("点击了搜索页", null, true);
+                return true;
+            case R.id.action_settings:
+                showMessage("点击了设置", null, true);
+                return true;
+            case R.id.action_style:
+                showMessage("点击了样式", null, true);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -212,6 +259,9 @@ public class LibraryListFragment extends BaseFragment {
                 public void onItemClicked(View caller, int position) {
                     Log.i(tag, "点击了Item, 位置position为：" + position);
                     showMessage("点击了Item, 位置position为：" + position, null, true);
+                    // 获取position位置data
+                    JoLibrary itemData = getDataList().get(position);
+                    startLibraryActivity(itemData, R.id.fragment_library_bookdisplay);
                 }
                 @Override
                 public void onOverflowClicked(ImageView callerImage, int position) {
@@ -235,14 +285,6 @@ public class LibraryListFragment extends BaseFragment {
             myViewHolder.getLibraryName().setText(library.getLibraryName());
             myViewHolder.getLibraryBrief().setText(library.getLibraryBrief());
             myViewHolder.getLibraryCount().setText(library.getCounts());
-/*            myViewHolder.getOverflow().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // 点击overflow
-                    showMessage(getText(R.string.onclick_overflow), null, true);
-                }
-            });*/
-
         }
 
         @Override
@@ -253,6 +295,18 @@ public class LibraryListFragment extends BaseFragment {
         public List<JoLibrary> getDataList(){
             return data;
         }
+    }
+
+    /**
+     * 启动LibraryActivity
+     * @param itemData  图书馆ID
+     * @param fragmentId    用来处理该事件的fragment
+     */
+    private void startLibraryActivity(JoLibrary itemData, int fragmentId) {
+        Intent intentLibrary = new Intent(getActivity(), LibraryActivity.class);
+        intentLibrary.putExtra(LibraryActivity.EXTRA_FRAGMENT_ID, fragmentId);
+        intentLibrary.putExtra(LibraryActivity.EXTRA_LIBRARY_ID, itemData.getObjectId());
+        startActivity(intentLibrary);
     }
 
     /**

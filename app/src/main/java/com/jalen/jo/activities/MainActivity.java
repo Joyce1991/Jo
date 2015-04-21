@@ -133,34 +133,13 @@ public class MainActivity extends BaseActivity
             // Only show items in the action bar relevant to this screen
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
-            getMenuInflater().inflate(R.menu.main, menu);
             restoreActionBar();
-            return true;
         }
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()){
-            case R.id.action_scan:
-/*
-                IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
-                integrator.addExtra("SCAN_WIDTH", 640);
-                integrator.addExtra("SCAN_HEIGHT", 480);
-                integrator.addExtra("SCAN_MODE", "QR_CODE_MODE,PRODUCT_MODE");
-                //customize the prompt message before scanning
-                integrator.addExtra("PROMPT_MESSAGE", "Scanner Start!");
-                integrator.initiateScan(IntentIntegrator.PRODUCT_CODE_TYPES);
-*/
-                Intent captureIntent = new Intent(this, CaptureActivity.class);
-                startActivity(captureIntent);
-                break;
-            case R.id.action_settings:
-
-                return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }

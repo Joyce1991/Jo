@@ -1,21 +1,15 @@
 package com.jalen.jo.activities;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
-import android.content.UriMatcher;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.util.Patterns;
-import android.view.Window;
 
 import com.jalen.jo.R;
-
-import java.util.HashSet;
-import java.util.Set;
-import java.util.regex.Pattern;
+import com.jalen.jo.fragments.AccountEditFragment;
+import com.jalen.jo.fragments.BaseFragment;
+import com.jalen.jo.fragments.NicknameFragment;
+import com.jalen.jo.library.LibraryBookDisplayFragment;
 
 /**
  * Created by jh on 2015/2/27.  <br/>
@@ -32,17 +26,29 @@ public class BaseActivity extends ActionBarActivity {
         tag = this.getClass().getSimpleName();
     }
 
-    // 是否允许全屏
-    private boolean mAllowFullScreen = true;
-
-    public void setAllowFullScreen(boolean allowFullScreen) {
-        this.mAllowFullScreen = allowFullScreen;
+    /**************************************************************************
+     *  根据id创建fragment
+     * @param mFragmentID 标识要启动的fragment的id号
+     * @param params    需要传递给fragment的{@link java.lang.String}类型的参数
+     * @return
+     **************************************************************************/
+    public BaseFragment createFragmentById(int mFragmentID, String... params){
+        BaseFragment fragment = null;
+        switch (mFragmentID){
+            case R.id.fragment_nickname:
+                fragment = NicknameFragment.newInstance();
+                break;
+            case R.id.fragment_accountedit:
+                fragment = AccountEditFragment.newInstance(params[0], params[1]);
+                break;
+            case R.id.fragment_library_bookdisplay:
+                fragment = LibraryBookDisplayFragment.newInstance(params[0]);
+                break;
+        }
+        return fragment;
     }
-
     /***************************************************************************
-     *
      * 打印Activity生命周期
-     *
      ***************************************************************************/
 
     @Override
@@ -51,14 +57,6 @@ public class BaseActivity extends ActionBarActivity {
         Log.i(tag, "---------onCreat ");
         // 竖屏锁定
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-//        getSupportActionBar().setElevation(0);
-/*
-        if (mAllowFullScreen) {
-            requestWindowFeature(Window.FEATURE_NO_TITLE); // 取消标题
-        }
-*/
-//        JoActivityManager.getAppManager().addActivity(this);
     }
 
     @Override
