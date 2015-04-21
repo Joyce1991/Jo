@@ -160,9 +160,11 @@ public class LibraryListFragment extends BaseFragment {
             case R.id.action_settings:
                 showMessage("点击了设置", null, true);
                 return true;
-            case R.id.action_style:
+            case R.id.action_display_style:
                 showMessage("点击了样式", null, true);
                 return true;
+            case R.id.action_order_style:
+                showMessage("排序样式", null, true);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -183,6 +185,10 @@ public class LibraryListFragment extends BaseFragment {
         if (AVUser.getCurrentUser() != null){
             showDialog(getText(R.string.dialog_loading_query));
             AVQuery<AVObject> query = new AVQuery<AVObject>("Library");
+            // 根据score字段升序显示数据
+            query.orderByAscending("updateAt");
+            // 根据score字段降序显示数据
+//            query.orderByDescending("updateAt");
             query.whereEqualTo("libraryManager", AVUser.getCurrentUser().getUsername());
             query.findInBackground(new FindCallback<AVObject>() {
                 public void done(List<AVObject> avObjects, AVException e) {

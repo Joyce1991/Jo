@@ -146,7 +146,8 @@
     <string name="action_account_settings">账户设置</string>
     <string name="action_signout">退出登录</string>
     <string name="action_new">新建</string>
-    <string name="action_style">样式</string>
+    <string name="action_display_style">显示样式</string>
+    <string name="action_order_style">排序方式</string>
     <string name="action_save">保存</string>
     <string name="action_print">打印</string>
 
@@ -190,7 +191,6 @@
     </string-array>
 
     <string name="hello_world">Hello world!</string>
-
 
 
 

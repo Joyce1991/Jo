@@ -27,8 +27,13 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/action_style"
+        android:id="@+id/action_display_style"
         android:orderInCategory="100"
-        android:title="@string/action_style"
+        android:title="@string/action_display_style"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_order_style"
+        android:orderInCategory="100"
+        android:title="@string/action_order_style"
         app:showAsAction="never" />
 </menu>

@@ -12,10 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSON;
+import com.avos.avoscloud.AVCloudQueryResult;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.CloudQueryCallback;
 import com.avos.avoscloud.FindCallback;
 import com.jalen.jo.R;
 import com.jalen.jo.beans.Book;
@@ -95,19 +97,37 @@ public class LibraryBookDisplayFragment extends BaseFragment {
                 }
             });
             // 2.根据图书馆ObjectId获取与该图书馆收藏的图书
+            // select * from Book where objectId = (select bookObjectId from LibraryCollectionTable libraryObjectId = ?)
+            AVQuery.doCloudQueryInBackground("select bookObjectId from LibraryCollectionTable libraryObjectId = ?",
+                    new CloudQueryCallback<AVCloudQueryResult>() {
+
+                        @Override
+                        public void done(AVCloudQueryResult result, AVException parseException) {
+                            counter++;
+                            if (parseException == null) {
+                                List avObjects = result.getResults();
+                            }else {
+                                showMessage(getText(R.string.toast_update_failed), parseException, true);
+                            }
+                        }
+
+                    }, mLibraryObjectId);
+/*
             AVQuery<AVObject> innerQuery = new AVQuery<AVObject>("LibraryCollectionTable");
             innerQuery.whereEqualTo("libraryObjectId", mLibraryObjectId);
-            innerQuery.whereExists("bookObjectId");
             AVQuery<AVObject> bookQuery = new AVQuery<AVObject>("Book");
             bookQuery.whereMatchesQuery("objectId", innerQuery);
             bookQuery.findInBackground(new FindCallback<AVObject>() {
                 public void done(List<AVObject> avObjects, AVException e) {
                     counter++;
                     if (e == null) {
-                        // 解析出图书对象集合
-                        AVObject avObject = avObjects.get(0);
-                        String jsonString = avObject.toJSONObject().toString();
-                        mLibrary = JSON.parseObject(jsonString, JoLibrary.class);
+                        if (avObjects.size() > 0){
+                            // 解析出图书对象集合
+                            AVObject avObject = avObjects.get(0);
+                            String jsonString = avObject.toJSONObject().toString();
+                            Book mBook = JSON.parseObject(jsonString, Book.class);
+                        }
+
                         // 根据图书馆书架显示UI
 
                     } else {
@@ -116,6 +136,7 @@ public class LibraryBookDisplayFragment extends BaseFragment {
                     updateUI();
                 }
             });
+*/
         }
 
 
@@ -195,7 +216,7 @@ public class LibraryBookDisplayFragment extends BaseFragment {
                 // 设置
 
                 break;
-            case R.id.action_style:
+            case R.id.action_display_style:
                 // 显示风格样式选择
 
                 break;

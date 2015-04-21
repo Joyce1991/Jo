@@ -95,6 +95,9 @@ public class BaseFragment extends Fragment {
                     Toast.LENGTH_SHORT
             ).show();
         }
+        if (e != null){
+            e.printStackTrace();
+        }
     }
 }
 

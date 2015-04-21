@@ -23,7 +23,6 @@ import com.google.zxing.common.BitMatrix;
 import com.jalen.jo.R;
 import com.jalen.jo.fragments.BaseFragment;
 import com.jalen.jo.utils.MatrixWriter;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.HashMap;
 import java.util.Map;
