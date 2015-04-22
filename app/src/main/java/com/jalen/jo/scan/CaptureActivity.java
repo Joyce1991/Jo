@@ -19,7 +19,7 @@ import com.google.zxing.Result;
 import com.jalen.jo.R;
 import com.jalen.jo.activities.BaseActivity;
 import com.jalen.jo.book.BookInfoActivity;
-import com.jalen.jo.fragments.BookinfoFragment;
+import com.jalen.jo.book.BookinfoFragment;
 import com.jalen.jo.scan.camera.CameraManager;
 import com.jalen.jo.utils.InactivityTimer;
 

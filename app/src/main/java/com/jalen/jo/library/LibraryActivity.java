@@ -2,9 +2,11 @@ package com.jalen.jo.library;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.jalen.jo.R;
 import com.jalen.jo.activities.BaseActivity;
@@ -22,6 +24,7 @@ public class LibraryActivity extends BaseActivity implements LibraryBookDisplayF
         // 用Toolbar替换actionbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // 获取intent中的数据
         String extraLibraryObjectId = getIntent().getStringExtra(EXTRA_LIBRARY_ID);
@@ -47,6 +50,15 @@ public class LibraryActivity extends BaseActivity implements LibraryBookDisplayF
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+        switch (item.getItemId()){
+            case R.id.home:
+                Toast.makeText(getApplicationContext(),"点击了 UP", Toast.LENGTH_SHORT).show();
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+            case R.id.action_settings:
+
+                return true;
+        }
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jalen.jo.R;
+import com.jalen.jo.activities.BaseActivity;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -98,6 +99,25 @@ public class BaseFragment extends Fragment {
         if (e != null){
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 设置actionbar中的标题
+     * @param title 标题内容
+     */
+    public void setActionBarTitle(CharSequence title){
+        if (title != null) {
+            ((BaseActivity) getActivity()).getSupportActionBar().setTitle(title);
+        }else {
+            throw new NullPointerException("this title is null, please verify");
+        }
+    }
+    /**
+     * 设置actionbar中的标题
+     * @param titleId 标题内容资源Id
+     */
+    public void setActionBarTitle(int titleId){
+        ((BaseActivity) getActivity()).getSupportActionBar().setTitle(titleId);
     }
 }
 

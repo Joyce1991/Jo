@@ -4,6 +4,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.jalen.jo.R;
 import com.jalen.jo.fragments.AccountEditFragment;
@@ -26,6 +27,25 @@ public class BaseActivity extends ActionBarActivity {
         tag = this.getClass().getSimpleName();
     }
 
+    /**************************************************************************
+     * 显示一条toast信息
+     * @param msg   toast内容
+     * @param e     异常
+     * @param b     是否要显示这条信息
+     **************************************************************************/
+    public void showMessage(CharSequence msg, Exception e, boolean b) {
+        Log.i(tag, msg.toString());
+        if(b){
+            Toast.makeText(
+                    this,
+                    msg,
+                    Toast.LENGTH_SHORT
+            ).show();
+        }
+        if (e != null){
+            e.printStackTrace();
+        }
+    }
     /**************************************************************************
      *  根据id创建fragment
      * @param mFragmentID 标识要启动的fragment的id号

@@ -1,6 +1,6 @@
 package com.jalen.jo.managers;
 
-import com.jalen.jo.beans.Book;
+import com.jalen.jo.book.Book;
 
 /**
  * Created by jh on 2015/3/23.

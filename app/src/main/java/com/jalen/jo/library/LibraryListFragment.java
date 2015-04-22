@@ -1,5 +1,6 @@
 package com.jalen.jo.library;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -69,6 +70,8 @@ public class LibraryListFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        // 设置actionbar标题
+        setActionBarTitle(R.string.title_fragment_library_list);
         // 初始化图书馆列表
         libraries = new ArrayList<JoLibrary>();
         // 查询图书馆列表
@@ -187,6 +190,7 @@ public class LibraryListFragment extends BaseFragment {
             AVQuery<AVObject> query = new AVQuery<AVObject>("Library");
             // 根据score字段升序显示数据
             query.orderByAscending("updateAt");
+            query.addAscendingOrder("updateAt");
             // 根据score字段降序显示数据
 //            query.orderByDescending("updateAt");
             query.whereEqualTo("libraryManager", AVUser.getCurrentUser().getUsername());
@@ -389,7 +393,6 @@ public class LibraryListFragment extends BaseFragment {
                 mListener.onItemClicked(v, getPosition());
             }
         }
-
     }
 
 }

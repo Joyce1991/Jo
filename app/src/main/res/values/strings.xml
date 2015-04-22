@@ -90,6 +90,7 @@
     <string name="title_activity_crop_image">剪裁</string>
     <string name="title_activity_splash">SplashActivity</string>
     <string name="title_activity_library">图书馆名称</string>
+    <string name="title_fragment_library_list">我的图书馆</string>
 
     <!--扫一扫设置-->
     <string name="preferences_actions_title">找到条码时</string>
@@ -191,7 +192,5 @@
     </string-array>
 
     <string name="hello_world">Hello world!</string>
-
-
 
 </resources>

@@ -1,4 +1,4 @@
-package com.jalen.jo.fragments;
+package com.jalen.jo.book;
 
 import android.app.Activity;
 import android.net.Uri;

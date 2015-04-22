@@ -4,26 +4,40 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NavUtils;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.avos.avoscloud.AVCloudQueryResult;
+import com.alibaba.fastjson.JSONObject;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
-import com.avos.avoscloud.CloudQueryCallback;
 import com.avos.avoscloud.FindCallback;
 import com.jalen.jo.R;
-import com.jalen.jo.beans.Book;
+import com.jalen.jo.book.Book;
+import com.jalen.jo.book.BookEntry;
 import com.jalen.jo.fragments.BaseFragment;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 图书馆信息界面（包含书的信息）
@@ -37,6 +51,11 @@ public class LibraryBookDisplayFragment extends BaseFragment {
     // 数据模型
     private JoLibrary mLibrary;
     private List<Book> mBooks;
+
+    // 视图层控件
+    private RecyclerView mRecyclerView;
+
+    private BookListAdapter mAdapter;
 
     private OnFragmentInteractionListener mListener;
 
@@ -56,9 +75,12 @@ public class LibraryBookDisplayFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         if (getArguments() != null) {
             mLibraryObjectId = getArguments().getString(ARG_PARAM1);
         }
+
+        mBooks = new ArrayList<Book>();
     }
 
     @Override
@@ -71,10 +93,14 @@ public class LibraryBookDisplayFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // 初始化视图
+        /** RecyclerView设置 **/
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.book_list);
+        GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 3, LinearLayoutManager.VERTICAL, false);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mAdapter = new BookListAdapter(mBooks);
+        mRecyclerView.setAdapter(mAdapter);
 
-
-        if (AVUser.getCurrentUser() != null){
+        if (AVUser.getCurrentUser() != null) {
             showDialog(getText(R.string.dialog_loading_query));
             counter = 0;
             // 1.根据图书馆ObjectId获取图书馆信息
@@ -88,71 +114,109 @@ public class LibraryBookDisplayFragment extends BaseFragment {
                         AVObject avObject = avObjects.get(0);
                         String jsonString = avObject.toJSONObject().toString();
                         mLibrary = JSON.parseObject(jsonString, JoLibrary.class);
-                        // 根据图书馆书架显示UI
-
                     } else {
                         showMessage(getText(R.string.toast_update_failed), e, true);
                     }
+                    // 根据图书馆书架显示UI
                     updateUI();
                 }
             });
             // 2.根据图书馆ObjectId获取与该图书馆收藏的图书
-            // select * from Book where objectId = (select bookObjectId from LibraryCollectionTable libraryObjectId = ?)
-            AVQuery.doCloudQueryInBackground("select bookObjectId from LibraryCollectionTable libraryObjectId = ?",
-                    new CloudQueryCallback<AVCloudQueryResult>() {
-
-                        @Override
-                        public void done(AVCloudQueryResult result, AVException parseException) {
-                            counter++;
-                            if (parseException == null) {
-                                List avObjects = result.getResults();
-                            }else {
-                                showMessage(getText(R.string.toast_update_failed), parseException, true);
-                            }
-                        }
-
-                    }, mLibraryObjectId);
-/*
             AVQuery<AVObject> innerQuery = new AVQuery<AVObject>("LibraryCollectionTable");
             innerQuery.whereEqualTo("libraryObjectId", mLibraryObjectId);
-            AVQuery<AVObject> bookQuery = new AVQuery<AVObject>("Book");
-            bookQuery.whereMatchesQuery("objectId", innerQuery);
-            bookQuery.findInBackground(new FindCallback<AVObject>() {
+            Set<String> selectKeys = new HashSet<String>();
+            selectKeys.add("bookObjectId");
+            innerQuery.selectKeys(selectKeys);
+            innerQuery.findInBackground(new FindCallback<AVObject>() {
+                @Override
                 public void done(List<AVObject> avObjects, AVException e) {
-                    counter++;
-                    if (e == null) {
-                        if (avObjects.size() > 0){
-                            // 解析出图书对象集合
-                            AVObject avObject = avObjects.get(0);
-                            String jsonString = avObject.toJSONObject().toString();
-                            Book mBook = JSON.parseObject(jsonString, Book.class);
-                        }
-
-                        // 根据图书馆书架显示UI
-
-                    } else {
-                        showMessage(getText(R.string.toast_update_failed), e, true);
+                    // 整理出一个图书对象objectId集合
+                    Set<String> bookObjectIds = new HashSet<String>();
+                    for (AVObject avObject : avObjects) {
+                        bookObjectIds.add(avObject.getString("bookObjectId"));
                     }
-                    updateUI();
+                    // 根据图书对象objectId集合查询图书对象集合
+                    AVQuery<AVObject> bookQuery = new AVQuery<AVObject>("Book");
+                    bookQuery.whereContainedIn("objectId", bookObjectIds);
+                    bookQuery.findInBackground(new FindCallback<AVObject>() {
+                        public void done(List<AVObject> avObjects, AVException e) {
+                            counter++;
+                            if (e == null) {
+                                if (avObjects.size() > 0) {
+                                    // 解析出图书对象集合
+                                    for (AVObject avObject : avObjects) {
+                                        Book mBook = new Book();
+                                        String authorJson = avObject.getString(BookEntry.AUTHOR);
+                                        if (avObject.getString(BookEntry.AUTHOR) != null) {
+                                            mBook.setAuthor(JSON.parseArray(avObject.getString(BookEntry.AUTHOR), String.class));
+                                        }
+                                        mBook.setAuthor_intro(avObject.getString(BookEntry.AUTHOR_INTRO));
+                                        mBook.setCatalog(avObject.getString(BookEntry.CATALOG));
+                                        mBook.setCreatedAt(avObject.getString(BookEntry.CREATE_AT));
+                                        mBook.setImage(avObject.getString(BookEntry.IMAGE));
+                                        Map<String, String> images = new HashMap<String, String>();
+                                        org.json.JSONObject jsonObject = avObject.getJSONObject(BookEntry.IMAGES);
+
+                                        JSONObject jsonObject1 = JSON.parseObject(jsonObject.toString());
+                                        for (Map.Entry<String, Object> entry : jsonObject1.entrySet()) {
+                                            images.put(entry.getKey(), (String) entry.getValue());
+                                        }
+                                        mBook.setImages(images);
+                                        mBook.setIsbn13(avObject.getString(BookEntry.ISBN_13));
+                                        mBook.setObjectId(avObject.getObjectId());
+                                        mBook.setPages(avObject.getString(BookEntry.PAGES));
+                                        mBook.setPubdate(avObject.getString(BookEntry.PUBLISH_DATE));
+                                        mBook.setPublisher(avObject.getString(BookEntry.PUBLISHER));
+                                        mBook.setTitle(avObject.getString(BookEntry.TITLE));
+                                        if (avObject.getString(BookEntry.TRANSLATOR) != null) {
+                                            mBook.setTranslator(JSON.parseArray(avObject.getString(BookEntry.TRANSLATOR), String.class));
+                                        }
+                                        mBook.setSubtitle(avObject.getString(BookEntry.SUBTITLE));
+
+                                        mBooks.add(mBook);
+                                    }
+                                }
+
+                                // 根据图书馆书架显示UI
+                                showMessage(getText(R.string.toast_update_success), e, true);
+                            } else {
+                                showMessage(getText(R.string.toast_update_failed), e, true);
+                            }
+                            updateUI();
+                        }
+                    });
                 }
             });
-*/
+
         }
-
-
     }
 
     /**
      * 更新UI
      */
     private void updateUI() {
-        if (counter == 2){
+        if (counter == 2) {
             // 关闭对话框
             dismissDialog();
+            // 设置actionbar title
+            if (mLibrary != null) {
+                setActionBarTitle(mLibrary.getLibraryName());
+                // 加载图书集合
+                updateBookUI();
+            }
         }
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
+    /**
+     * 加载图书
+     */
+    private void updateBookUI() {
+        if (mAdapter == null){
+            mAdapter = new BookListAdapter(mBooks);
+        }
+        mAdapter.notifyDataSetChanged();
+    }
+
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -176,16 +240,6 @@ public class LibraryBookDisplayFragment extends BaseFragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
@@ -194,34 +248,133 @@ public class LibraryBookDisplayFragment extends BaseFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_library_list, menu);
+        inflater.inflate(R.menu.menu_book_list, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.action_new:
-                // 创建新的图书馆
+        switch (item.getItemId()) {
 
-                break;
             case R.id.action_search:
                 // 搜索有哪些图书馆
 
-                break;
+                return true;
             case R.id.action_scan:
                 // 扫一扫
 
-                break;
-            case R.id.action_settings:
-                // 设置
-
-                break;
+                return true;
             case R.id.action_display_style:
                 // 显示风格样式选择
 
-                break;
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    private class BookListAdapter extends RecyclerView.Adapter {
+        private List<Book> data;
+
+        public BookListAdapter(List<Book> mbooks) {
+            this.data = mbooks;
+        }
+
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View itemView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.adapter_book_item_style_1, parent, false);
+
+            BookViewHolder viewholder = new BookViewHolder(itemView, new BookViewHolder.IMyViewHolderClicks() {
+                @Override
+                public void onItemClicked(View caller, int position) {
+                    Log.i(tag, "点击了Item, 位置position为：" + position);
+                    showMessage("点击了Item, 位置position为：" + position, null, true);
+                    // 获取position位置data
+                    Book itemData = getData().get(position);
+                    startBookActivity(itemData, R.id.fragment_library_bookdisplay);
+                }
+
+                @Override
+                public void onOverflowClicked(ImageView callerImage, int position) {
+                    Log.i(tag, "点击了Item的overflow, 位置position为：" + position);
+                    showMessage("点击了Item的overflow, 位置position为：" + position, null, true);
+                }
+            });
+
+            return viewholder;
+        }
+
+        @Override
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            // 获取position位置的JoLibrary对象
+            Book mBook = this.data.get(position);
+            BookViewHolder viewHolder = (BookViewHolder) holder;
+
+            viewHolder.getBookName().setText(mBook.getTitle());
+            ImageLoader.getInstance().displayImage(mBook.getImage(), viewHolder.getBookPic());
+        }
+
+        @Override
+        public int getItemCount() {
+            return data.size();
+        }
+
+        public List<Book> getData() {
+            return data;
+        }
+
+    }
+
+    private void startBookActivity(Book itemData, int fragment_library_bookdisplay) {
+
+    }
+
+    /**
+     * 继承于{@link android.support.v7.widget.RecyclerView}
+     */
+    public static class BookViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        ImageView overflow;
+        TextView bookName;
+        ImageView bookPic;
+
+
+        public IMyViewHolderClicks mListener;
+
+        public static interface IMyViewHolderClicks {
+            public void onItemClicked(View caller, int position);
+
+            public void onOverflowClicked(ImageView callerImage, int position);
+        }
+
+        public BookViewHolder(View itemView, IMyViewHolderClicks listener) {
+            super(itemView);
+            this.mListener = listener;
+            bookName = (TextView) itemView.findViewById(R.id.book_title);
+            bookPic = (ImageView) itemView.findViewById(R.id.book_pic);
+            overflow = (ImageView) itemView.findViewById(R.id.btn_overflow);
+
+            itemView.setOnClickListener(this);
+            overflow.setOnClickListener(this);
+        }
+
+        public ImageView getOverflow() {
+            return overflow;
+        }
+
+        public TextView getBookName() {
+            return bookName;
+        }
+
+        public ImageView getBookPic() {
+            return bookPic;
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (v instanceof ImageButton) {
+                mListener.onOverflowClicked((ImageView) v, getPosition());
+            } else {
+                mListener.onItemClicked(v, getPosition());
+            }
+        }
+    }
 }

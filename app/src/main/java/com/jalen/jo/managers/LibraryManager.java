@@ -1,7 +1,7 @@
 package com.jalen.jo.managers;
 
 import com.avos.avoscloud.AVUser;
-import com.jalen.jo.beans.Book;
+import com.jalen.jo.book.Book;
 import com.jalen.jo.library.JoLibrary;
 
 /**

@@ -1,28 +1,33 @@
-package com.jalen.jo.fragments;
+package com.jalen.jo.book;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.FindCallback;
+import com.avos.avoscloud.SaveCallback;
 import com.jalen.jo.R;
-import com.jalen.jo.beans.Book;
 import com.jalen.jo.beans.ErrorDouban;
+import com.jalen.jo.fragments.BaseFragment;
 import com.jalen.jo.http.JoRestClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.apache.http.Header;
 import org.json.JSONObject;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,11 +37,10 @@ import org.json.JSONObject;
  * Use the {@link BookinfoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BookinfoFragment extends Fragment {
+public class BookinfoFragment extends BaseFragment {
 
-    public static final String EXTRA_BOOK_ISBN = "com.jalen.jo.fragments.BookinfoFragment.BookISBN";
+    public static final String EXTRA_BOOK_ISBN = "com.jalen.jo.book.BookinfoFragment.BookISBN";
 
-    private AlertDialog mDialog;
     private ImageView ivBookPic;    // 图书图片
     private TextView tvBookTitle;   // 图书标题
     private TextView tvBookSubtitle;// 图书子标题
@@ -147,36 +151,6 @@ public class BookinfoFragment extends Fragment {
     }
 
     /**
-     * 关闭一个对话框
-     */
-    private void dismissDialog() {
-        if (mDialog != null && mDialog.isShowing()){
-            mDialog.dismiss();
-            mDialog = null;
-        }
-    }
-
-    /**
-     * 显示一个对话框
-     * @param msg   对话框内容
-     */
-    private void showDialog(CharSequence msg) {
-        if (mDialog != null){
-            mDialog.show();
-        }else{
-            AlertDialog.Builder mBuilder = new AlertDialog.Builder(getActivity());
-            // Get the layout inflater
-            LayoutInflater inflater = getActivity().getLayoutInflater();
-            RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.dialog_loading, null);
-            TextView tv_msg = (TextView) view.findViewById(R.id.tv_dialog_loading_text);
-            tv_msg.setText(msg);
-            mBuilder.setView(view);
-            mDialog = mBuilder.create();
-            mDialog.show();
-        }
-    }
-
-    /**
      * 获取图书信息响应结果处理
      */
     private class BookinfoJsonHttpResponseHandler extends JsonHttpResponseHandler {
@@ -198,6 +172,45 @@ public class BookinfoFragment extends Fragment {
                     tvBookBrief.setText(mBook.getSummary());
                     tvBookCatalog.setText(mBook.getCatalog());
                     tvBookAuthorinfo.setText(mBook.getAuthor_intro());
+
+                    // 查询自己的服务器上是否有这本书
+                    final AVQuery<AVObject> bookQuery = new AVQuery<AVObject>("Book");
+                    bookQuery.whereEqualTo("isbn13", mBook.getIsbn13());
+                    bookQuery.findInBackground(new FindCallback<AVObject>() {
+                        public void done(List<AVObject> avObjects, AVException e) {
+                            if (e == null) {
+                                Log.d(tag, "查询到" + avObjects.size() + " 条符合条件的数据");
+                                if (avObjects.size() == 0){
+                                    // 没有查询到，则我们把这份数据传递一份到服务器上
+                                    AVObject bookSave = new AVObject("Book");
+                                    bookSave.put(BookEntry.AUTHOR, mBook.getAuthor());
+                                    bookSave.put(BookEntry.AUTHOR_INTRO, mBook.getAuthor_intro());
+                                    bookSave.put(BookEntry.CATALOG, mBook.getCatalog());
+                                    bookSave.put(BookEntry.IMAGE, mBook.getImage());
+                                    bookSave.put(BookEntry.IMAGES, mBook.getImages());
+                                    bookSave.put(BookEntry.ISBN_13, mBook.getIsbn13());
+                                    bookSave.put(BookEntry.PAGES, mBook.getPages());
+                                    bookSave.put(BookEntry.PUBLISH_DATE, mBook.getPubdate());
+                                    bookSave.put(BookEntry.PUBLISHER, mBook.getPublisher());
+                                    bookSave.put(BookEntry.SUBTITLE, mBook.getSubtitle());
+                                    bookSave.put(BookEntry.SUMMARY, mBook.getSummary());
+                                    bookSave.put(BookEntry.TITLE, mBook.getTitle());
+                                    bookSave.saveInBackground(new SaveCallback() {
+                                        @Override
+                                        public void done(AVException e) {
+                                            if (e == null){
+                                                Log.i(tag, "上传书籍信息成功");
+                                            }else {
+                                                Log.i(tag, "上传书籍信息s失败");
+                                            }
+                                        }
+                                    });
+                                }
+                            } else {
+                                Log.d(tag, "查询错误: " + e.getMessage());
+                            }
+                        }
+                    });
                     break;
             }
 

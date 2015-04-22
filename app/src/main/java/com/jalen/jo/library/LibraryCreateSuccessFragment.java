@@ -27,13 +27,6 @@ import com.jalen.jo.utils.MatrixWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * to handle interaction events.
- * Use the {@link LibraryCreateSuccessFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class LibraryCreateSuccessFragment extends BaseFragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,14 +37,6 @@ public class LibraryCreateSuccessFragment extends BaseFragment implements View.O
     private String mLibraryObjectId;
     private String mLibraryQRCodeContents;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param libraryObjectId Parameter 1.
-     * @return A new instance of fragment LibraryCreateSuccessFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static LibraryCreateSuccessFragment newInstance(String libraryObjectId) {
         LibraryCreateSuccessFragment fragment = new LibraryCreateSuccessFragment();
         Bundle args = new Bundle();
@@ -72,7 +57,7 @@ public class LibraryCreateSuccessFragment extends BaseFragment implements View.O
             mLibraryObjectId = getArguments().getString(ARG_PARAM_LIBRARY);
         }
 
-        // ¸ù¾ÝmLibraryObjectId+¡°library¡±Éú³É¶þÎ¬Âë
+        // ï¿½ï¿½ï¿½mLibraryObjectId+ï¿½ï¿½libraryï¿½ï¿½ï¿½ï¿½É¶ï¿½Î¬ï¿½ï¿½
         mLibraryQRCodeContents = PREFIX_LIBRARY_QRCODE + mLibraryObjectId;
 
     }
@@ -134,8 +119,8 @@ public class LibraryCreateSuccessFragment extends BaseFragment implements View.O
     }
 
     /**
-     * Éú³ÉQR_CODE¶þÎ¬Âë
-     * @param contents  ¶þÎ¬ÂëÄÚÈÝ
+     * ï¿½ï¿½ï¿½QR_CODEï¿½ï¿½Î¬ï¿½ï¿½
+     * @param contents  ï¿½ï¿½Î¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      * @return  {@link Bitmap}
      */
     private Bitmap generateQRCodeBitmap(String contents){

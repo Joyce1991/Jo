@@ -1,7 +1,5 @@
 package com.jalen.jo.book;
 
-import android.content.UriMatcher;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -9,8 +7,6 @@ import android.view.MenuItem;
 
 import com.jalen.jo.R;
 import com.jalen.jo.activities.BaseActivity;
-import com.jalen.jo.fragments.BookNotfoundFragment;
-import com.jalen.jo.fragments.BookinfoFragment;
 
 public class BookInfoActivity extends BaseActivity implements BookinfoFragment.OnFragmentInteractionListener {
     private String mParamISBN;
