@@ -51,9 +51,9 @@ public class LibraryActivity extends BaseActivity implements LibraryBookDisplayF
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()){
-            case R.id.home:
+            case android.R.id.home:
                 Toast.makeText(getApplicationContext(),"点击了 UP", Toast.LENGTH_SHORT).show();
-                NavUtils.navigateUpFromSameTask(this);
+                onBackPressed();
                 return true;
             case R.id.action_settings:
 

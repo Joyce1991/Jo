@@ -130,6 +130,9 @@ public class LibraryBookDisplayFragment extends BaseFragment {
             innerQuery.findInBackground(new FindCallback<AVObject>() {
                 @Override
                 public void done(List<AVObject> avObjects, AVException e) {
+                    if (avObjects == null || avObjects.size() == 0){
+                        return;
+                    }
                     // 整理出一个图书对象objectId集合
                     Set<String> bookObjectIds = new HashSet<String>();
                     for (AVObject avObject : avObjects) {
@@ -234,10 +237,16 @@ public class LibraryBookDisplayFragment extends BaseFragment {
         }
     }
 
+
+
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    } @Override
+      public void onStop() {
+        ImageLoader.getInstance().stop();
+        super.onStop();
     }
 
     public interface OnFragmentInteractionListener {

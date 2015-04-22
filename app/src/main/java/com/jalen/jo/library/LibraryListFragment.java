@@ -172,6 +172,13 @@ public class LibraryListFragment extends BaseFragment {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onStop() {
+        ImageLoader.getInstance().stop();
+        super.onStop();
+    }
+
+
     /**
      * 更新数据
      * <br/>
