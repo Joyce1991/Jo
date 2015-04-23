@@ -8,8 +8,8 @@ import com.google.zxing.common.BitMatrix;
  * Created by jalenzhang on 2015/4/19.
  */
 public class MatrixWriter {
-    private static final int RGB_BLACK = 0xFF000000;    // RGB值为黑色
-    private static final int RGB_WHITE = 0xFFFFFFFF;    // RGB值为白色
+    private static final int RGB_BLACK = 0xFF000000;    // RGB black
+    private static final int RGB_WHITE = 0xFFFFFFFF;    // RGB值为white
 
     private MatrixWriter() {}
 
@@ -18,15 +18,15 @@ public class MatrixWriter {
         int width = matrix.getWidth();
         int height = matrix.getHeight();
 
-        // 像素点集合
+        // 锟斤拷锟截点集锟斤拷
         int[] pixels = new int[width * height];
         for (int y=0; y<width; y++){
             for (int x=0; x<height; x++){
                 if (matrix.get(x,y)){
-                    // 为1，说明是黑点
+                    // 为1锟斤拷说锟斤拷锟角黑碉拷
                     pixels[y*width+x] = RGB_BLACK;
                 }else {
-                    // 为0，说明是白点
+                    // 为0锟斤拷说锟斤拷锟角白碉拷
                     pixels[y*width+x] = RGB_WHITE;
                 }
             }
