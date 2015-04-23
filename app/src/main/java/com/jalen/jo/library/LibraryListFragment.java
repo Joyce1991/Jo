@@ -155,6 +155,7 @@ public class LibraryListFragment extends BaseFragment implements IViewHolderClic
      */
     private void onRefresh() {
         page = 0;
+        hasMore = true;
         if (AVUser.getCurrentUser() != null){
             showDialog(getText(R.string.dialog_loading_query));
             AVQuery<AVObject> query = new AVQuery<AVObject>("Library");

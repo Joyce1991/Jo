@@ -6,7 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jalen.jo.R;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import java.util.List;
 
@@ -41,7 +44,14 @@ public class LibraryAdapter extends RecyclerView.Adapter {
         LibraryViewHolder viewHolder = (LibraryViewHolder) holder;
 
         viewHolder.getCreatorName().setText(library.getLibraryManager());
-        ImageLoader.getInstance().displayImage(library.getLibraryPic(), viewHolder.getLibraryPic());
+        DisplayImageOptions.Builder builder = new DisplayImageOptions.Builder();
+        builder.cacheInMemory(true);    // 内存缓存
+        builder.cacheOnDisk(true);      // 硬盘缓存
+        builder.imageScaleType(ImageScaleType.IN_SAMPLE_POWER_OF_2);
+        builder.showImageForEmptyUri(R.drawable.pic_empty_uri);  // 暂无图片
+        builder.showImageOnFail(R.drawable.pic_fail_uri);   // 图片下载失败
+//        builder.showImageOnLoading(R.drawable.pic_loading_uri);  // 图片下载中
+        ImageLoader.getInstance().displayImage(library.getLibraryPic(), viewHolder.getLibraryPic(), builder.build());
         viewHolder.getLibraryName().setText(library.getLibraryName());
         viewHolder.getLibraryBrief().setText(library.getLibraryBrief());
         viewHolder.getLibraryCount().setText(library.getCounts());
