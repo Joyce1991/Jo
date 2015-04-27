@@ -55,6 +55,7 @@ public class JoApp extends Application {
         config.threadPriority(Thread.NORM_PRIORITY - 2);    // NORM_PRIORITY = 5,所以这里的线程优先级别为3
         config.denyCacheImageMultipleSizesInMemory();
         config.diskCacheFileNameGenerator(new Md5FileNameGenerator());  // 图片缓存到硬盘时的文件名称生成方式
+        config.memoryCacheSize(2*1024*1024);    // 2MiB (内存最大缓存2MB的图片)
         config.diskCacheSize(50 * 1024 * 1024); // 50 MiB（硬盘缓存空间大小）
         config.tasksProcessingOrder(QueueProcessingType.LIFO);  // 加载和显示图片队列的处理方式（Last In First Out）
         config.writeDebugLogs(); // Remove for release app（打印图片加载过程中的log）

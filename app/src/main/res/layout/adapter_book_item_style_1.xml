@@ -10,7 +10,7 @@
         <ImageView
             android:id="@+id/book_pic"
             android:layout_width="match_parent"
-            android:layout_height="130dp"
+            android:layout_height="wrap_content"
             android:scaleType="fitXY"/>
         <ImageButton
             android:id="@+id/btn_overflow"

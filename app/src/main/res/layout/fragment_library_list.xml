@@ -12,7 +12,9 @@
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/empty_view"
         android:layout_width="match_parent"
+        android:layout_marginTop="8dp"
         android:layout_height="@dimen/emptycardview_height"
+        android:visibility="invisible"
         card_view:cardBackgroundColor="@color/green_light_2">
 
         <RelativeLayout

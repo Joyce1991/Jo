@@ -19,21 +19,37 @@ package com.jalen.jo.cropimage;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 
+/**
+ * Bitmap图片旋转工具类
+ */
 public class RotateBitmap {
     public static final String TAG = "RotateBitmap";
     private Bitmap mBitmap;
     private int mRotation;
 
+    /**
+     * 构造方法
+     * @param bitmap 要进行旋转的图片Bitmap对象
+     */
     public RotateBitmap(Bitmap bitmap) {
         mBitmap = bitmap;
         mRotation = 0;
     }
 
+    /**
+     * 构造方法
+     * @param bitmap 要进行旋转的图片Bitmap对象
+     * @param rotation  旋转度数参数
+     */
     public RotateBitmap(Bitmap bitmap, int rotation) {
         mBitmap = bitmap;
         mRotation = rotation % 360;
     }
 
+    /**
+     * 设置旋转度数
+     * @param rotation 旋转度数
+     */
     public void setRotation(int rotation) {
         mRotation = rotation;
     }

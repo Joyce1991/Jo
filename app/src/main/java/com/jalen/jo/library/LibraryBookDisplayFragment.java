@@ -1,14 +1,16 @@
 package com.jalen.jo.library;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NavUtils;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,7 +32,12 @@ import com.jalen.jo.R;
 import com.jalen.jo.book.Book;
 import com.jalen.jo.book.BookEntry;
 import com.jalen.jo.fragments.BaseFragment;
+import com.jalen.jo.utils.DisplayUtil;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.nostra13.universalimageloader.core.process.BitmapProcessor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,9 +52,14 @@ import java.util.Set;
 public class LibraryBookDisplayFragment extends BaseFragment {
     private static final String ARG_PARAM1 = "param1";
     private static final int COUNTER_MAX = 2;
+    private static final double BOOK_RATIO = 1.3;  // 书本的宽高比
 
     private String mLibraryObjectId;
     private int counter = 0;   // 计数器->记录已经加载好了几个数据
+    private int bookWidth = 0;
+    private int bookHeight = 0;
+    private DisplayImageOptions options;
+
     // 数据模型
     private JoLibrary mLibrary;
     private List<Book> mBooks;
@@ -81,6 +93,36 @@ public class LibraryBookDisplayFragment extends BaseFragment {
         }
 
         mBooks = new ArrayList<Book>();
+
+        DisplayImageOptions.Builder builder = new DisplayImageOptions.Builder();
+        builder.cacheInMemory(true);    // 内存缓存
+        builder.cacheOnDisk(true);      // 硬盘缓存
+        builder.imageScaleType(ImageScaleType.IN_SAMPLE_POWER_OF_2);    // 图片与原图相比缩小2倍
+        builder.showImageForEmptyUri(R.drawable.pic_empty_uri);  // 暂无图片
+        builder.showImageOnFail(R.drawable.pic_fail_uri);   // 图片下载失败
+        builder.displayer(new FadeInBitmapDisplayer(100));
+        builder.postProcessor(new BitmapProcessor() {
+            @Override
+            public Bitmap process(Bitmap bitmap) {
+                /** 1.图片剪切 -> 获取中间正方形区域 **/
+                int width = bitmap.getWidth();
+                int height = bitmap.getHeight();
+                int targetWidth = width*6/8;
+                int targetHeight = height*6/8;
+                bitmap = Bitmap.createBitmap(bitmap, width/8, height/8, targetWidth, targetHeight);
+                /** 2.图片缩放 **/
+                return bitmap;
+            }
+        }); // 加载到内存后，显示到内存前
+        options = builder.build();
+
+        //
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        Point outSize = new Point();
+        display.getSize(outSize);
+        int width = outSize.x;
+        bookWidth = (width - DisplayUtil.Dp2Px(getActivity(), 8)*4)/3;
+        bookHeight = (int) ((double)bookWidth * BOOK_RATIO);
     }
 
     @Override
@@ -97,6 +139,7 @@ public class LibraryBookDisplayFragment extends BaseFragment {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.book_list);
         GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 3, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.addItemDecoration(new BookItemDecoration(getActivity()));
         mAdapter = new BookListAdapter(mBooks);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -308,6 +351,10 @@ public class LibraryBookDisplayFragment extends BaseFragment {
                     showMessage("点击了Item的overflow, 位置position为：" + position, null, true);
                 }
             });
+            ViewGroup.LayoutParams params = viewholder.getBookPic().getLayoutParams();
+            params.width = bookWidth;
+            params.height = bookHeight;
+            viewholder.getBookPic().setLayoutParams(params);
 
             return viewholder;
         }
@@ -319,7 +366,7 @@ public class LibraryBookDisplayFragment extends BaseFragment {
             BookViewHolder viewHolder = (BookViewHolder) holder;
 
             viewHolder.getBookName().setText(mBook.getTitle());
-            ImageLoader.getInstance().displayImage(mBook.getImage(), viewHolder.getBookPic());
+            ImageLoader.getInstance().displayImage(mBook.getImage(), viewHolder.getBookPic(), options);
         }
 
         @Override

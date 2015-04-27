@@ -1,5 +1,6 @@
 package com.jalen.jo.library;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -57,14 +57,16 @@ public class LibraryListFragment extends BaseFragment implements IViewHolderClic
 
     public static LibraryListFragment newInstance(CharSequence mTitle, int mIndicatorColor, int mDividerColor) {
         LibraryListFragment fragment = new LibraryListFragment();
-
         return fragment;
     }
 
     public LibraryListFragment() {
         // Required empty public constructor
     }
-
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,7 +101,7 @@ public class LibraryListFragment extends BaseFragment implements IViewHolderClic
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mLayoutManager);
         // RecyclerView设置ItemDecoration
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getResources().getDrawable(R.drawable.divider_recyclerview)));
+        mRecyclerView.addItemDecoration(new LibraryItemDecoration(getResources().getDrawable(R.drawable.divider_recyclerview)));
         // RecyclerView设置Adapter
         mAdapter = new LibraryAdapter(R.layout.adapter_library_item_style_1, mLibraries);
         mAdapter.setItenClickListener(this);
@@ -113,12 +115,6 @@ public class LibraryListFragment extends BaseFragment implements IViewHolderClic
                 //lastVisibleItem >= totalItemCount - 1 表示剩下4个item自动加载，各位自由选择s
                 // dy>0 表示向下滑动
                 if (lastVisibleItem >= totalItemCount - 1 && dy > 0) {
-                    /*if(isLoadingMore){
-                        Log.d(TAG,"ignore manually update!");
-                    } else{
-                        loadPage();//这里多线程也要手动控制isLoadingMore
-                        isLoadingMore = false;
-                    }*/
                     if (hasMore){
                         onLoadMore();
                     }
@@ -188,6 +184,7 @@ public class LibraryListFragment extends BaseFragment implements IViewHolderClic
                         showMessage(getText(R.string.toast_update_success), null, true);
                         // 3.绑定最新的数据源
                         mAdapter = new LibraryAdapter(R.layout.adapter_library_item_style_1, mLibraries);
+                        mAdapter.setItenClickListener(LibraryListFragment.this);
                         mRecyclerView.setAdapter(mAdapter);
                         onLoad();
                     } else {

@@ -15,21 +15,21 @@ import android.view.View;
  * <br/>
  * Created by jh on 2015/4/21.
  */
-public class DividerItemDecoration extends RecyclerView.ItemDecoration {
+public class LibraryItemDecoration extends RecyclerView.ItemDecoration {
     private Drawable mDivider;
     private boolean mShowFirstDivider = false;
     private boolean mShowLastDivider = false;
 
-    public DividerItemDecoration(Drawable divider) {
+    public LibraryItemDecoration(Drawable divider) {
         mDivider = divider;
     }
-    public DividerItemDecoration(Context context, AttributeSet attrs) {
+    public LibraryItemDecoration(Context context, AttributeSet attrs) {
         final TypedArray a = context
                 .obtainStyledAttributes(attrs, new int[]{android.R.attr.listDivider});
         mDivider = a.getDrawable(0);
         a.recycle();
     }
-    public DividerItemDecoration(Drawable divider, boolean showFirstDivider,
+    public LibraryItemDecoration(Drawable divider, boolean showFirstDivider,
                                  boolean showLastDivider) {
         this(divider);
         mShowFirstDivider = showFirstDivider;
@@ -42,7 +42,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
      * @param showFirstDivider  是否显示第一项的Divider
      * @param showLastDivider   是否显示最后一项的Divider
      */
-    public DividerItemDecoration(Context context, AttributeSet attrs, boolean showFirstDivider,
+    public LibraryItemDecoration(Context context, AttributeSet attrs, boolean showFirstDivider,
                                  boolean showLastDivider) {
         this(context, attrs);
         mShowFirstDivider = showFirstDivider;
@@ -65,6 +65,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
         } else {
             outRect.left = mDivider.getIntrinsicWidth();
         }
+
     }
 
     @Override
@@ -126,7 +127,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
             return layoutManager.getOrientation();
         } else {
             throw new IllegalStateException(
-                    "DividerItemDecoration can only be used with a LinearLayoutManager.");
+                    "ItemDecoration can only be used with a LinearLayoutManager.");
         }
     }
 }

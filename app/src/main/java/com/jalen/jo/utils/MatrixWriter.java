@@ -9,7 +9,7 @@ import com.google.zxing.common.BitMatrix;
  */
 public class MatrixWriter {
     private static final int RGB_BLACK = 0xFF000000;    // RGB black
-    private static final int RGB_WHITE = 0xFFFFFFFF;    // RGBֵΪwhite
+    private static final int RGB_WHITE = 0xFFFFFFFF;    // RGB white
 
     private MatrixWriter() {}
 
@@ -18,15 +18,13 @@ public class MatrixWriter {
         int width = matrix.getWidth();
         int height = matrix.getHeight();
 
-        // ���ص㼯��
+
         int[] pixels = new int[width * height];
         for (int y=0; y<width; y++){
             for (int x=0; x<height; x++){
                 if (matrix.get(x,y)){
-                    // Ϊ1��˵���Ǻڵ�
                     pixels[y*width+x] = RGB_BLACK;
                 }else {
-                    // Ϊ0��˵���ǰ׵�
                     pixels[y*width+x] = RGB_WHITE;
                 }
             }
