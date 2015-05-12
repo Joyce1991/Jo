@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.jalen.jo.R;
+import com.jalen.jo.fragments.AccountCentralFragment;
 import com.jalen.jo.fragments.AccountEditFragment;
 import com.jalen.jo.fragments.BaseFragment;
 import com.jalen.jo.fragments.NicknameFragment;
@@ -46,6 +47,21 @@ public class BaseActivity extends ActionBarActivity {
             e.printStackTrace();
         }
     }
+    /*************************************************************************
+     * 设置actionbar标题
+     * @param title 标题内容
+     *************************************************************************/
+    public void setActionBarTitle(CharSequence title) {
+        getSupportActionBar().setTitle(title);
+    }
+
+    /**
+     * 设置actionbar标题
+     * @param resId 设置标题资源Id
+     */
+    public void setActionBarTitle(int resId){
+        setActionBarTitle(getText(resId));
+    }
     /**************************************************************************
      *  根据id创建fragment
      * @param mFragmentID 标识要启动的fragment的id号
@@ -63,6 +79,9 @@ public class BaseActivity extends ActionBarActivity {
                 break;
             case R.id.fragment_library_bookdisplay:
                 fragment = LibraryBookDisplayFragment.newInstance(params[0]);
+                break;
+            case R.id.fragment_accountcentra:
+                fragment = AccountCentralFragment.newInstance();
                 break;
         }
         return fragment;

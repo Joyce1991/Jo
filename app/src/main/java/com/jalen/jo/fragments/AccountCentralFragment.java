@@ -1,6 +1,6 @@
 package com.jalen.jo.fragments;
 
-import android.app.AlertDialog;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,7 +13,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jalen.jo.R;
@@ -25,21 +24,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 账户资料编辑
+ * 账户中心
  * Created by jh on 2015/3/3.
  */
 public class AccountCentralFragment extends BaseFragment implements View.OnClickListener {
-    private int POSITION_INITIAL = 0x0001;
+    private int POSITION_INITIAL = 0x0000;
     //        M
     private String mNickname;
     /**
      * fragment
      */
     private List<Fragment> fragments;
+    private IFragmentReplaceListener mFragmentReplaceListener;
     /**
      * tab标题名称
      */
-    private static final String[] tabs = { "图书馆", "书架", "收藏的书" };
+    private static final String[] tabs = { "书友", "消息"};
     //        V
     private CircleImageView civAccountPic;
     private TextView tvUsername;
@@ -58,11 +58,17 @@ public class AccountCentralFragment extends BaseFragment implements View.OnClick
     }
 
     @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mFragmentReplaceListener = (IFragmentReplaceListener)activity;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         fragments = new ArrayList<Fragment>();
         fragments.add(new AllLibraryFragment());
-        fragments.add(UserShelfFragment.newInstance());
         fragments.add(UserFavoritesFragment.newInstance());
     }
 
@@ -70,9 +76,14 @@ public class AccountCentralFragment extends BaseFragment implements View.OnClick
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_account_central, container, false);
+        findViewAndSet(rootView);
+        return rootView;
+    }
 
+    private void findViewAndSet(View rootView) {
         civAccountPic = (CircleImageView) rootView.findViewById(R.id.civ_account_pic);
         tvUsername = (TextView) rootView.findViewById(R.id.tv_account_username);
+/*
         indicator = (TabPageIndicator) rootView.findViewById(R.id.indicator_account);
         pager = (ViewPager) rootView.findViewById(R.id.pager_account);
 
@@ -81,19 +92,28 @@ public class AccountCentralFragment extends BaseFragment implements View.OnClick
         pager = (ViewPager) rootView.findViewById(R.id.pager_account);
         PagerAdapter pagerAdapter = new JoPagerAdapter(getFragmentManager());
         pager.setAdapter(pagerAdapter);
-        pager.setOffscreenPageLimit(2);
+        pager.setOffscreenPageLimit(1);
         indicator.setViewPager(pager, POSITION_INITIAL);
-
-        return rootView;
+*/
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_account_edit, menu);
+        inflater.inflate(R.menu.menu_account_central, menu);
+        // 设置页面标题
+        setActionBarTitle(R.string.title_fragment_account_central);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_account_edit:
+                mFragmentReplaceListener.requestReplaceFromFragment(R.id.fragment_accountedit);
+                return true;
+            case R.id.action_account_qrcode:
+
+                return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 

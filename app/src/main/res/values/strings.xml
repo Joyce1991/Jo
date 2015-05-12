@@ -193,5 +193,20 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_refresh">刷新</string>
+    <string name="title_fragment_account_central">账户中心</string>
+    <string name="title_fragment_account_edit">账户资料</string>
+    <string name="action_account_edit">账户资料编辑</string>
+    <string name="action_account_qrcode">用户二维码</string>
+    <string name="app_intro">这个app的最初启发点是来源于公司行政的抱怨：（公司为了提高员工的职业能力规定
+        每个月根据员工需求采购书籍以提供员工借阅）1、每次新购入书籍都需要对每本书进行编号记录；2、每个礼拜对所
+        有书籍进行整理时都会发现少了几本书，核对借阅记录时还是发现少了好几本；3、原来员工老是会忘记登记借阅、
+        归还书籍登记、归还期限、转借等原因导致管理公司书籍是个比较麻烦的事情</string>
+    <string name="link_text_auto">如果你对帮忙解决行政的这个痛点有兴趣，愿意和我一起通过完成app来提高自己
+        的Android熟悉程度，或者对我的这个idea感兴趣（当能解决公司图书管理只是完整idea中的很小一部分，
+        我还有更加完善的想法，可以扩散到对每个人都很有用）；那么你可以联系我（电话号码：15625008626；Email：
+        joyceit1991@gmail.com）,这个项目的代码将是以开源的形式完整公布，你也可以Fork项目代码
+        https://github.com/Joyce1991/Jo.git。    </string>
+    <string name="link_text_manual"><![CDATA[<b>还有，我最近正在寻求一份工作，如果你有好的工作机会也可以
+        联系我</b><a href="tel:15625008626">电话号码</a>或者<a href="mailto:joyceit1991@gmail.com>发邮件</a>]]></string>
 
 </resources>

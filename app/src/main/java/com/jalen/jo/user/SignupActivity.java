@@ -1,17 +1,11 @@
 package com.jalen.jo.user;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.internal.view.menu.MenuBuilder;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
-import android.util.Patterns;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,25 +15,26 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListPopupWindow;
-import android.widget.RelativeLayout;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.LogInCallback;
 import com.avos.avoscloud.SignUpCallback;
 import com.jalen.jo.R;
 import com.jalen.jo.activities.AccountActivity;
 import com.jalen.jo.activities.BaseActivity;
-import com.jalen.jo.adapters.SimpleListAdapter;
 import com.jalen.jo.fragments.BaseFragment;
 import com.jalen.jo.utils.VerifyUtil;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.controller.listener.SocializeListeners;
+import com.umeng.socialize.exception.SocializeException;
+import com.umeng.socialize.sso.UMQQSsoHandler;
 
-import java.util.HashSet;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 public class SignupActivity extends BaseActivity {
 
@@ -94,6 +89,10 @@ public class SignupActivity extends BaseActivity {
      * A placeholder fragment containing a simple view.
      */
     public static class PlaceholderFragment extends BaseFragment implements View.OnClickListener {
+        // 整个平台的Controller, 负责管理整个SDK的配置、操作等处理
+        private UMSocialService mController = UMServiceFactory
+                .getUMSocialService(Constants.DESCRIPTOR);
+
         // M
         private String mEmail;
         private String mUsername;
@@ -103,6 +102,7 @@ public class SignupActivity extends BaseActivity {
         private AutoCompleteTextView etEmail;
         private EditText etPwd;
         private Button btnSigup;
+        private ImageButton btnSiginByQQ;
 
 
         public PlaceholderFragment() {
@@ -121,17 +121,35 @@ public class SignupActivity extends BaseActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_signup, container, false);
+            return rootView;
+        }
 
-            etEmail = (AutoCompleteTextView) rootView.findViewById(R.id.et_signup_inputemail);
-            etPwd = (EditText) rootView.findViewById(R.id.et_signup_inputpwd);
-            btnSigup = (Button) rootView.findViewById(R.id.btn_signup_onekeyregistration);
+        @Override
+        public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+            super.onViewCreated(view, savedInstanceState);
+            etEmail = (AutoCompleteTextView) view.findViewById(R.id.et_signup_inputemail);
+            etPwd = (EditText) view.findViewById(R.id.et_signup_inputpwd);
+            btnSiginByQQ = (ImageButton) view.findViewById(R.id.signin_qq);
+            btnSigup = (Button) view.findViewById(R.id.btn_signup_onekeyregistration);
             btnSigup.setOnClickListener(this);
+            btnSiginByQQ.setOnClickListener(this);
 
             String[] emailStrs =  emails.toArray(new String[emails.size()]);
             etEmail.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.simple_text, emailStrs));
             EditText editText = new EditText(getActivity());
 
-            return rootView;
+            addQZoneQQPlatform();
+        }
+
+        private void addQZoneQQPlatform() {
+            String appId = "1104552505";
+            String appKey = "6ddc08752c41845c199cd8ca1ee9bed9";
+//            String appKey = "wJS5uEuDxKFja95b";
+            // 添加QQ支持, 并且设置QQ分享内容的target url
+            UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(getActivity(),
+                    appId, appKey);
+            qqSsoHandler.setTargetUrl("http://www.umeng.com");
+            qqSsoHandler.addToSocialSDK();
         }
 
         @Override
@@ -152,9 +170,57 @@ public class SignupActivity extends BaseActivity {
 //                    提交用户注册信息进行注册
                     sigupUser(mUsername, mPwd, null, mEmail);
                     break;
+                case R.id.signin_qq:
+                    login(SHARE_MEDIA.QQ);
+                    break;
 
             }
         }
+
+        /**
+         * 授权。如果授权成功，则获取用户信息</br>
+         */
+        private void login(final SHARE_MEDIA platform) {
+            mController.doOauthVerify(getActivity(), platform, new SocializeListeners.UMAuthListener() {
+
+                @Override
+                public void onStart(SHARE_MEDIA platform) {
+                }
+
+                @Override
+                public void onError(SocializeException e, SHARE_MEDIA platform) {
+                }
+
+                @Override
+                public void onComplete(Bundle value, SHARE_MEDIA platform) {
+                    String uid = value.getString("uid");
+                    AVUser.AVThirdPartyUserAuth userAuth = new AVUser.AVThirdPartyUserAuth(
+                            value.getString("access_token"),
+                            value.getString("expires_in"),
+                            AVUser.AVThirdPartyUserAuth.SNS_TENCENT_WEIBO, uid);
+                    AVUser.loginWithAuthData(userAuth, new LogInCallback<AVUser>() {
+                        @Override
+                        public void done(AVUser avUser, AVException e) {
+                            showMessage("qq登录成功", null, true);
+                        }
+                    });
+                    if (!TextUtils.isEmpty(uid)) {
+                        getUserInfo(platform);
+                    } else {
+                        Toast.makeText(getActivity(), "授权失败...", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onCancel(SHARE_MEDIA platform) {
+                }
+            });
+        }
+
+        private void getUserInfo(SHARE_MEDIA platform) {
+
+        }
+
 
         /**
          * 提交用户注册信息
@@ -199,8 +265,5 @@ public class SignupActivity extends BaseActivity {
             });
 
         }
-
-
-
     }
 }

@@ -15,14 +15,24 @@
     <color name="gray_dark">#333333</color>
     <color name="dark">#ff000000</color>
     <color name="blue_indigo">#274760</color>
+    <color name="blue_indigo_dark">#224057</color>
+    <color name="blue_indigo_light">#356489</color>
+
+    <color name="main_colorPrimary">#26a094</color>
+    <color name="main_colorPrimaryDark">#1e9085</color>
+    <color name="signinandup_colorPrimary">#33b5e5</color>
+    <color name="signinandup_colorPrimaryDark">#2aa0cc</color>
 
     <!--ActionBar、systembar、windowbackground、UI控件、导航菜单等的默认颜色配置-->
     <color name="color_primary">#22ac38</color> <!-- ActionBar背景颜色 -->
     <color name="color_primary_dark">#009944</color>  <!-- 系统状态栏颜色 -->
     <color name="color_accent">#33009944</color>    <!-- UI控件的默认颜色 -->
     <color name="textcolor_primary">@color/white</color>  <!-- ActionBar文本颜色 -->
-    <color name="window_background">@color/gray_light</color> <!-- Window背景色 -->
+    <color name="window_background">@color/white</color> <!-- Window背景色 -->
     <color name="navigationbar_color">@color/dark</color>   <!-- 导航菜单栏的背景色 -->
+
+    <drawable name="pressed_gray">#0c000000</drawable>
+    <drawable name="selected_gray">#2c000000</drawable>
 
     <!--zXing-->
     <color name="viewfinder_mask">#60000000</color>
@@ -30,5 +40,7 @@
     <color name="viewfinder_laser">#ffcc0000</color>
     <color name="possible_result_points">#c0ffbd21</color>
     <color name="result_points">#c099cc00</color> <!-- Android standard ICS color -->
+
+
 
 </resources>

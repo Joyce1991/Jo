@@ -63,10 +63,7 @@ public class LibraryListFragment extends BaseFragment implements IViewHolderClic
     public LibraryListFragment() {
         // Required empty public constructor
     }
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +80,7 @@ public class LibraryListFragment extends BaseFragment implements IViewHolderClic
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_library_list, container, false);
+
 
         /**Empty View 设置**/
         mEmptyView = (CardView) rootView.findViewById(R.id.empty_view);
@@ -271,36 +269,7 @@ public class LibraryListFragment extends BaseFragment implements IViewHolderClic
         startActivity(intentLibraryCreate);
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_library_list, menu);
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.action_new:
-                startLibraryCreate();
-                return true;
-            case R.id.action_scan:
-                Intent captureIntent = new Intent(getActivity(), CaptureActivity.class);
-                startActivity(captureIntent);
-                return true;
-            case R.id.action_search:
-                showMessage("点击了搜索页", null, true);
-                return true;
-            case R.id.action_settings:
-                showMessage("点击了设置", null, true);
-                return true;
-            case R.id.action_display_style:
-                showMessage("点击了样式", null, true);
-                return true;
-            case R.id.action_order_style:
-                showMessage("排序样式", null, true);
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public void onStop() {

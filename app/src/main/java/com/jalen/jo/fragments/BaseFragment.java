@@ -4,6 +4,7 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.AlertDialog;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -107,7 +108,9 @@ public class BaseFragment extends Fragment {
      */
     public void setActionBarTitle(CharSequence title){
         if (title != null) {
-            ((BaseActivity) getActivity()).getSupportActionBar().setTitle(title);
+            ActionBar actionBar = ((BaseActivity) getActivity()).getSupportActionBar();
+            actionBar.setDisplayShowTitleEnabled(true);
+            actionBar.setTitle(title);
         }else {
             throw new NullPointerException("this title is null, please verify");
         }
@@ -117,7 +120,7 @@ public class BaseFragment extends Fragment {
      * @param titleId 标题内容资源Id
      */
     public void setActionBarTitle(int titleId){
-        ((BaseActivity) getActivity()).getSupportActionBar().setTitle(titleId);
+        setActionBarTitle(getText(titleId));
     }
 }
 

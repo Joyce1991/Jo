@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jalen.jo.R;
@@ -40,19 +40,23 @@ public class SimpleListAdapter extends ArrayAdapter<DrawerOption>{
 
         holder = (ViewHolder) convertView.getTag();
         DrawerOption option = mOptions.get(position);
+        holder.icon.setImageResource(option.getIconId());
         holder.text.setText(option.getOption());
         holder.count.setText(String.valueOf(option.getCount()));
 
         return convertView;
     }
 
+
     class ViewHolder {
+        ImageView icon;
         TextView text;
         TextView count;
 
         public ViewHolder(View view) {
-            text = (TextView) view.findViewById(R.id.tv_option_text);
-            count = (TextView) view.findViewById(R.id.tv_option_count);
+            icon = (ImageView) view.findViewById(R.id.option_icon);
+            text = (TextView) view.findViewById(R.id.option_text);
+            count = (TextView) view.findViewById(R.id.option_count);
             view.setTag(this);
         }
     }

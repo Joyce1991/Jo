@@ -10,12 +10,13 @@ import com.jalen.jo.R;
 import com.jalen.jo.fragments.AccountCentralFragment;
 import com.jalen.jo.fragments.AccountEditFragment;
 import com.jalen.jo.fragments.BaseFragment;
+import com.jalen.jo.fragments.IFragmentReplaceListener;
 import com.jalen.jo.fragments.NicknameFragment;
 
 /**
  * 账户资料管理
  */
-public class AccountActivity extends BaseActivity {
+public class AccountActivity extends BaseActivity implements IFragmentReplaceListener{
     public static final String EXTRA_FRAGMENT_ID = "com.jalen.jo.activities.fragmentintent.fragment_id";
 
     private Intent mIntent; // 启动Intent
@@ -60,7 +61,20 @@ public class AccountActivity extends BaseActivity {
             return true;
         }
 
+        switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void requestReplaceFromFragment(int fragmentId) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, createFragmentById(fragmentId, "param1", "param2"))
+                .addToBackStack(null)
+                .commit();
+    }
 }

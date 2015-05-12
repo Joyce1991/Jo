@@ -40,4 +40,6 @@
     <dimen name="text_size_logo">24sp</dimen>
     <dimen name="text_size_normal">16sp</dimen>
     <dimen name="text_size_title">16sp</dimen>
+
+    <dimen name="toolbar_elevation">0dp</dimen>
 </resources>

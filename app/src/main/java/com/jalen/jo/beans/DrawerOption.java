@@ -6,10 +6,14 @@ package com.jalen.jo.beans;
  * Drawer item 所对应的数据对象模型
  */
 public class DrawerOption {
-    private String option;
-    private int count;
+    private String option;  // 选项标题
+    private int count;  // 选项计数
+    private int iconId; // 选项iconId
 
-    public DrawerOption(String option, int count){
+
+
+    public DrawerOption(int iconId, String option, int count){
+        this.iconId = iconId;
         this.option = option;
         this.count = count;
     }
@@ -28,5 +32,8 @@ public class DrawerOption {
 
     public void setCount(int count) {
         this.count = count;
+    }
+    public int getIconId() {
+        return iconId;
     }
 }

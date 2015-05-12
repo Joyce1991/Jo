@@ -37,7 +37,8 @@
         <activity
             android:name=".user.SignupActivity"
             android:label="@string/title_activity_signup"
-            android:parentActivityName=".activities.MainActivity" >
+            android:parentActivityName=".activities.MainActivity"
+            android:theme="@style/SigninAndUpTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jalen.jo.activities.MainActivity" />
@@ -45,7 +46,8 @@
         <activity
             android:name=".user.SigninActivity"
             android:label="@string/title_activity_signin"
-            android:parentActivityName=".activities.MainActivity" >
+            android:parentActivityName=".activities.MainActivity"
+            android:theme="@style/SigninAndUpTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jalen.jo.activities.MainActivity" />
@@ -100,6 +102,26 @@
             android:name=".library.LibraryActivity"
             android:label="@string/title_activity_library" >
         </activity>
+        <!-- ############ QQ空间和QQ SSO授权的Activity注册 ############ -->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="tencent你的QQ互联APPID" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.tencent.connect.common.AssistActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:screenOrientation="portrait">
+        </activity>
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="554ee08de0f55ae0b400880a" >
+        </meta-data>
     </application>
 
 </manifest>

@@ -8,7 +8,7 @@
         android:id="@+id/rl_account_head"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="@color/blue_light">
+        android:background="@color/blue_indigo_light">
         <com.jalen.jo.views.CircleImageView
             android:id="@+id/civ_account_pic"
             android:layout_width="72dp"
@@ -25,16 +25,16 @@
             android:padding="@dimen/jocomponent_paddin"
             android:textColor="@color/white"/>
         </RelativeLayout>
-    <!--水平指示器-->
+<!--    &lt;!&ndash;水平指示器&ndash;&gt;
     <com.viewpagerindicator.TabPageIndicator
         android:id="@+id/indicator_account"
         android:layout_width="match_parent"
         android:layout_height="36dp"
         android:layout_alignBottom="@id/rl_account_head"/>
-    <!--viewpager-->
+    &lt;!&ndash;viewpager&ndash;&gt;
     <android.support.v4.view.ViewPager
         android:id="@+id/pager_account"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/rl_account_head"/>
+        android:layout_below="@id/rl_account_head"/>-->
 </RelativeLayout>
